@@ -9,8 +9,9 @@
 import UIKit
 
 class MenuController: UITableViewController {
-    var menuItems = ["Username", "Friends", "Settings", "Register Location", "About", "Contact",
+    var menuItems = ["Cities", "About", "Username", "Friends", "Settings", "Register Location", "Contact",
                   "Logout"]
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class MenuController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 8
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -38,6 +39,19 @@ class MenuController: UITableViewController {
         cell.textLabel?.text = menuItems[indexPath.row]
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        NSLog("You selected cell number: \(indexPath.row)!")
+        if(menuItems[indexPath.row] == "Cities"){
+            self.revealViewController().setFront(appDelegate.citiesViewController, animated: false)
+        }
+        if(menuItems[indexPath.row] == "About"){
+            let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "about")
+            self.revealViewController().setFront(aboutViewController, animated: false)
+        }
+        self.revealViewController().revealToggle(animated: true)
+        
     }
 
 

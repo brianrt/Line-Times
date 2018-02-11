@@ -20,6 +20,8 @@ class CitiesController: UITableViewController {
     var counts = [4,5,3,4]
     
     func customSetup() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.citiesViewController = self.navigationController
         if self.revealViewController() != nil {
             revealButtonItem.target = self.revealViewController()
             revealButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))

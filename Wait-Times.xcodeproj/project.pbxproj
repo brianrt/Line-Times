@@ -20,6 +20,7 @@
 		28A68EA31FFB705E0055193B /* LocationListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68EA21FFB705E0055193B /* LocationListController.swift */; };
 		28A68EA51FFB707F0055193B /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68EA41FFB707F0055193B /* LocationController.swift */; };
 		28D90E572030BE0400D1EA36 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D90E562030BE0400D1EA36 /* CategoryTableViewCell.swift */; };
+		28D90E5B2030EC0F00D1EA36 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		28A68EA21FFB705E0055193B /* LocationListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListController.swift; sourceTree = "<group>"; };
 		28A68EA41FFB707F0055193B /* LocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
 		28D90E562030BE0400D1EA36 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			children = (
 				28A68E831FFB54980055193B /* MenuController.swift */,
 				28A68E991FFB62130055193B /* CitiesController.swift */,
+				28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */,
 				28A68EA01FFB6DB10055193B /* CategoryController.swift */,
 				28A68EA21FFB705E0055193B /* LocationListController.swift */,
 				28A68EA41FFB707F0055193B /* LocationController.swift */,
@@ -202,6 +205,7 @@
 				28A68EA11FFB6DB10055193B /* CategoryController.swift in Sources */,
 				28A68E841FFB54980055193B /* MenuController.swift in Sources */,
 				28A68E821FFB54980055193B /* AppDelegate.swift in Sources */,
+				28D90E5B2030EC0F00D1EA36 /* AboutViewController.swift in Sources */,
 				28A68E9A1FFB62130055193B /* CitiesController.swift in Sources */,
 				28A68EA31FFB705E0055193B /* LocationListController.swift in Sources */,
 				28A68E971FFB56EF0055193B /* SWRevealViewController.m in Sources */,

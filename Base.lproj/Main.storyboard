@@ -49,6 +49,38 @@
             </objects>
             <point key="canvasLocation" x="-799" y="466"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="kba-i6-Ju6">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eqH-VL-Zzr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="about" id="Pkx-NE-2Sr" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xmj-bO-deT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="30" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJr-TN-viM">
+                                <rect key="frame" x="16" y="117" width="343" height="430"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <mutableString key="text">TimeCrunch was created with the purpose of providing you with crowdsourced information from local restaurants, bars, dining halls, libraries, and gyms. By using TimeCrunch you are able to see how busy it is wherever you want to go before you leave! Next time you are going out to a bar you can check TimeCrunch and see how long the line is to get in and how much you will have to pay. If you want to get food you can see how long the line is and go to a restaurant with a shorter wait. When you are in line at a registered location don’t forget to report the wait time or how busy it is to receive a reward for your support. TimeCrunch is currently in its beta so any feedback would be more than welcome so we can provide you with the best service possible.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ztf-xj-SNr">
+                                <rect key="frame" x="0.0" y="10" width="377" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="About" id="mCb-B6-lIn"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="mcR-h8-VVd"/>
+                    </view>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="788" y="465.51724137931041"/>
+        </scene>
         <!--Menu Controller-->
         <scene sceneID="LG4-cp-XjN">
             <objects>
