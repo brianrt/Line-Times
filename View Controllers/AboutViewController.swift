@@ -19,7 +19,11 @@ class AboutViewController: UIViewController {
 
     
     func customSetup() {
-
+        if self.revealViewController() != nil {
+            revealButtonItem.target = self.revealViewController()
+            revealButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
     }
     
     override func didReceiveMemoryWarning() {

@@ -36,6 +36,15 @@ class CategoryController: UITableViewController {
        return 85
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "locationList") as? LocationListController {
+            if let navigator = navigationController {
+                viewController.categoryIndex = indexPath.row
+                navigator.pushViewController(viewController, animated: true)
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
         

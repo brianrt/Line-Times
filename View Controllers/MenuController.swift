@@ -47,7 +47,8 @@ class MenuController: UITableViewController {
             self.revealViewController().setFront(appDelegate.citiesViewController, animated: false)
         }
         if(menuItems[indexPath.row] == "About"){
-            let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "about")
+            let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "About")
+//            self.revealViewController().pushFrontViewController(aboutViewController, animated: false)
             self.revealViewController().setFront(aboutViewController, animated: false)
         }
         self.revealViewController().revealToggle(animated: true)

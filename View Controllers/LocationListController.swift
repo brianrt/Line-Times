@@ -9,7 +9,10 @@
 import UIKit
 
 class LocationListController: UITableViewController {
-    var categories = ["Chipotle", "Noodles & Company", "Panda", "Restaurant 4"]
+    var categoryIndex = 0
+    var categories = ["Restaurants", "Bars", "Libraries", "Gyms"]
+    var locations = ["Chipotle", "Noodles & Co.", "Panda", "Restaurant 4"]
+    var wait_times = [10,12,3,2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +34,31 @@ class LocationListController: UITableViewController {
         return 4
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 85
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch categoryIndex {
+            case 0:
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? RestaurantController {
+                    if let navigator = navigationController {
+                        viewController.restaurant = locations[indexPath.row]
+                        navigator.pushViewController(viewController, animated: true)
+                    }
+                }
+            default: break
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationListCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
         
-        cell.textLabel?.text = categories[indexPath.row]
+        cell.category.text = locations[indexPath.row]
+        cell.countInfo.text = "Wait time: \(wait_times[indexPath.row]) mins"
         
         return cell
     }
-    
-    
 }
 
