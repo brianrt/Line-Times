@@ -12,10 +12,16 @@ class MenuController: UITableViewController {
     var menuItems = ["Cities", "About", "Username", "Friends", "Settings", "Register Location", "Contact",
                   "Logout"]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
+    let defaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if defaults.object(forKey: "username") != nil {
+            menuItems[2] = defaults.object(forKey: "username") as! String
+        }
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,9 +52,13 @@ class MenuController: UITableViewController {
         if(menuItems[indexPath.row] == "Cities"){
             self.revealViewController().setFront(appDelegate.citiesViewController, animated: false)
         }
-        if(menuItems[indexPath.row] == "About"){
+        else if(menuItems[indexPath.row] == "About"){
             let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "About")
 //            self.revealViewController().pushFrontViewController(aboutViewController, animated: false)
+            self.revealViewController().setFront(aboutViewController, animated: false)
+        }
+        else if(menuItems[indexPath.row] == "Username" || menuItems[indexPath.row] == defaults.object(forKey: "username") as! String){
+            let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "Username")
             self.revealViewController().setFront(aboutViewController, animated: false)
         }
         self.revealViewController().revealToggle(animated: true)

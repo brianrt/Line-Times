@@ -9,8 +9,8 @@
 import UIKit
 
 class CategoryController: UITableViewController {
-    var categories = ["Restaurants", "Bars", "Libraries", "Gyms"]
-    var counts = [10,12,3,2]
+    var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
+    var counts = [10,12,3,5,2]
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Champaign"
@@ -28,7 +28,7 @@ class CategoryController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return categories.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat

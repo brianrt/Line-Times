@@ -10,13 +10,13 @@ import UIKit
 
 class LocationListController: UITableViewController {
     var categoryIndex = 0
-    var categories = ["Restaurants", "Bars", "Libraries", "Gyms"]
+    var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
     var locations = ["Chipotle", "Noodles & Co.", "Panda", "Restaurant 4"]
     var wait_times = [10,12,3,2]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Restaurants"
+        self.title = categories[categoryIndex]
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,6 +45,34 @@ class LocationListController: UITableViewController {
                 if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? RestaurantController {
                     if let navigator = navigationController {
                         viewController.restaurant = locations[indexPath.row]
+                        navigator.pushViewController(viewController, animated: true)
+                    }
+                }
+            case 1:
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? BarController {
+                    if let navigator = navigationController {
+                        viewController.bar = locations[indexPath.row]
+                        navigator.pushViewController(viewController, animated: true)
+                    }
+                }
+            case 2:
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? LibraryController {
+                    if let navigator = navigationController {
+                        viewController.library = locations[indexPath.row]
+                        navigator.pushViewController(viewController, animated: true)
+                    }
+                }
+            case 3:
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? DiningHallController {
+                    if let navigator = navigationController {
+                        viewController.diningHall = locations[indexPath.row]
+                        navigator.pushViewController(viewController, animated: true)
+                    }
+                }
+            case 4:
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? GymController {
+                    if let navigator = navigationController {
+                        viewController.gym = locations[indexPath.row]
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
