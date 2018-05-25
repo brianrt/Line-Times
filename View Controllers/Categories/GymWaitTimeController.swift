@@ -8,19 +8,24 @@
 
 import UIKit
 
-class GymWaitTimeController: UIViewController {
+class GymWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     var gym = ""
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var comments: UITextView!
+    @IBOutlet weak var busyField: UITextField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = gym
         
+        busyField.delegate = self
+        busyField.addDoneButtonToKeyboard(myAction:  #selector(self.busyField.resignFirstResponder))
+        
         comments.layer.borderColor = UIColor.lightGray.cgColor
         comments.layer.borderWidth = 0.5;
+        comments.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -30,6 +35,14 @@ class GymWaitTimeController: UIViewController {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
 }
 

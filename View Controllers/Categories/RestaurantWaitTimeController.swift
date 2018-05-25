@@ -8,12 +8,13 @@
 
 import UIKit
 
-class RestaurantWaitTimeController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class RestaurantWaitTimeController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     var waitTimes = [0, 5, 10, 15, 20, 25, 30]
     var restaurant = ""
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var timePicker: UIPickerView!
+    @IBOutlet weak var costField: UITextField!
     @IBOutlet weak var comments: UITextView!
     
     
@@ -22,9 +23,12 @@ class RestaurantWaitTimeController: UIViewController, UIPickerViewDataSource, UI
         self.title = restaurant
         timePicker.delegate = self
         timePicker.dataSource = self
+        costField.delegate = self
+        costField.addDoneButtonToKeyboard(myAction:  #selector(self.costField.resignFirstResponder))
         
         comments.layer.borderColor = UIColor.lightGray.cgColor
-        comments.layer.borderWidth = 0.5;
+        comments.layer.borderWidth = 0.5
+        comments.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,5 +47,24 @@ class RestaurantWaitTimeController: UIViewController, UIPickerViewDataSource, UI
         return "\(waitTimes[row]) mins"
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.25) {
+            self.view.frame.origin.y -= self.view.frame.height/3.0
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.25) {
+            self.view.frame.origin.y += self.view.frame.height/3.0
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
 }
-
