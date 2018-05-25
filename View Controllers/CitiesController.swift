@@ -16,8 +16,8 @@ class CitiesController: UITableViewController {
         customSetup()
     }
     
-    var cities = ["Champaign", "Chicago", "City 3", "City 4"]
-    var counts = [4,5,3,4]
+    var cities = ["Champaign"]
+    var counts = [5,5,3,4]
     
     func customSetup() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -41,7 +41,7 @@ class CitiesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
