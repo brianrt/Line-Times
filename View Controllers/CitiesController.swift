@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class CitiesController: UITableViewController {
     
@@ -21,6 +22,7 @@ class CitiesController: UITableViewController {
     var cities = ["Champaign"]
     var counts = [5,5,3,4]
     var defaults: UserDefaults!
+    var ref = Database.database().reference()
     
     func customSetup() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -34,22 +36,25 @@ class CitiesController: UITableViewController {
     }
     
     func checkIfLoggedIn() {
-//        do {
-//            try Auth.auth().signOut()
-//        } catch (let error) {
-//            print("Auth sign out failed: \(error)")
-//        }
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
-                
+                self.defaults.set(user?.uid, forKey: "userId")
+                self.ref.child("Users").child((user?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
+                    // Get user values
+                    let value = snapshot.value as? NSDictionary
+                    let username = value?["username"] as? String
+                    let entryCount = value?["entryCount"] as? Int
+                    self.defaults.set(username, forKey: "username")
+                    self.defaults.set(entryCount, forKey: "entryCount")
+                })
             } else {
                 let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "login") as? LoginViewController
                 self.navigationController?.pushViewController(viewController!, animated: true)
             }
         }
         
-//        self.defaults.set(nil, forKey: "user_id")
-//        if (defaults.object(forKey: "user_id") == nil){
+//        self.defaults.set(nil, forKey: "userId")
+//        if (defaults.object(forKey: "userId") == nil){
 //            //User has not registered before
 //
 //        }

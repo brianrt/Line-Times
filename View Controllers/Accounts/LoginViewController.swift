@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -15,6 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordField: UITextField!
 
     var defaults: UserDefaults!
+    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         logIn()
     }
     
+    @IBAction func sendResetPasswordEmail(_ sender: Any) {
+        let email = emailField.text
+        if email?.count == 0 {
+            self.displayAlert(title: "Email Empty", message: "Please provide your email in the email field")
+        } else {
+            Auth.auth().sendPasswordReset(withEmail: email!) { (error) in
+                if error == nil {
+                    self.displayAlert(title: "Success", message: "Please check your email for a password reset link")
+                } else {
+                    self.displayAlert(title: "Error", message: (error?.localizedDescription)!)
+                }
+            }
+        }
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if textField == emailField { // Switch focus to other text field
@@ -52,22 +68,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let password = passwordField.text
         
         if password?.count == 0 {
-            displayAlert(message: "Please enter a valid password")
+            displayAlert(title: "Error", message: "Please enter a valid password")
         } else {
-            // We are good to go
             Auth.auth().signIn(withEmail: email!, password: password!) { user, error in
-                if error == nil { //Successfuly logged in
-                    self.defaults.set(nil, forKey: "user_id")
-                    self.navigationController?.popViewController(animated: true)
+                if error != nil {
+                    self.displayAlert(title: "Error", message: (error?.localizedDescription)!)
                 } else {
-                    self.displayAlert(message: (error?.localizedDescription)!)
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
         }
     }
     
-    func displayAlert(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+    func displayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

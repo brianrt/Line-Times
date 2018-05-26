@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2816AA61207F4E640014B8DC /* WaitTimesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */; };
 		2816AA63207FD4270014B8DC /* RestaurantWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */; };
-		285045A820B6AC1200CF2291 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285045A720B6AC1200CF2291 /* UsernameViewController.swift */; };
+		285045A820B6AC1200CF2291 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285045A720B6AC1200CF2291 /* AccountViewController.swift */; };
 		285045AB20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */; };
 		285045AD20B7FAC900CF2291 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 285045AC20B7FAC700CF2291 /* GoogleService-Info.plist */; };
 		28A68E821FFB54980055193B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68E811FFB54980055193B /* AppDelegate.swift */; };
@@ -44,7 +44,7 @@
 /* Begin PBXFileReference section */
 		2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitTimesTableViewCell.swift; sourceTree = "<group>"; };
 		2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWaitTimeController.swift; sourceTree = "<group>"; };
-		285045A720B6AC1200CF2291 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
+		285045A720B6AC1200CF2291 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+DoneCancelToolbar.swift"; sourceTree = "<group>"; };
 		285045AC20B7FAC700CF2291 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		28A68E7E1FFB54980055193B /* Wait-Times.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wait-Times.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,11 +154,9 @@
 				28A68E831FFB54980055193B /* MenuController.swift */,
 				28A68E991FFB62130055193B /* CitiesController.swift */,
 				28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */,
-				285045A720B6AC1200CF2291 /* UsernameViewController.swift */,
-				28E9B6C820B8BE1500C5CE72 /* RegisterViewController.swift */,
-				28E9B6CC20B8D2F000C5CE72 /* LoginViewController.swift */,
 				28A68EA01FFB6DB10055193B /* CategoryController.swift */,
 				28A68EA21FFB705E0055193B /* LocationListController.swift */,
+				28E9B6D120B9DD8800C5CE72 /* Accounts */,
 				28B26165207F316400F08B0A /* Categories */,
 				28A68E931FFB56AF0055193B /* SWRevealViewController */,
 			);
@@ -218,6 +216,16 @@
 				2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */,
 			);
 			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		28E9B6D120B9DD8800C5CE72 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				285045A720B6AC1200CF2291 /* AccountViewController.swift */,
+				28E9B6C820B8BE1500C5CE72 /* RegisterViewController.swift */,
+				28E9B6CC20B8D2F000C5CE72 /* LoginViewController.swift */,
+			);
+			path = Accounts;
 			sourceTree = "<group>";
 		};
 		F27D6927949F91004765ABF9 /* Frameworks */ = {
@@ -370,7 +378,7 @@
 				28D90E5B2030EC0F00D1EA36 /* AboutViewController.swift in Sources */,
 				28E9B6CD20B8D2F000C5CE72 /* LoginViewController.swift in Sources */,
 				28E9B6D020B8D5AA00C5CE72 /* ReplaceSegue.swift in Sources */,
-				285045A820B6AC1200CF2291 /* UsernameViewController.swift in Sources */,
+				285045A820B6AC1200CF2291 /* AccountViewController.swift in Sources */,
 				28CD66AA20B699E2001657F7 /* LibraryWaitTimeController.swift in Sources */,
 				28A68E9A1FFB62130055193B /* CitiesController.swift in Sources */,
 				28CD66A820B699E2001657F7 /* GymWaitTimeController.swift in Sources */,

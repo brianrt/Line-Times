@@ -1,5 +1,5 @@
 //
-//  UsernameViewController.swift
+//  AccountViewController.swift
 //  Wait-Times
 //
 //  Created by Brian Thompson on 5/24/18.
@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
-class UsernameViewController: UIViewController, UITextFieldDelegate {
+class AccountViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var revealButtonItem: UIBarButtonItem!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var edit: UIButton!
     @IBOutlet weak var save: UIButton!
     @IBOutlet weak var userNameText: UITextField!
+    @IBOutlet weak var numEntriesLabel: UILabel!
     
     var defaults: UserDefaults!
     var username: String!
+    var ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,12 +34,8 @@ class UsernameViewController: UIViewController, UITextFieldDelegate {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         defaults = UserDefaults.standard
-        if defaults.object(forKey: "username") != nil {
-            username = defaults.object(forKey: "username") as! String
-            setCanEdit()
-        } else {
-            setCanSave()
-        }
+        username = defaults.object(forKey: "username") as! String
+        setCanEdit()
         edit.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
         save.addTarget(self, action: #selector(savePressed), for: .touchUpInside)
         userNameText.delegate = self
@@ -66,14 +65,26 @@ class UsernameViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func editPressed(sender: UIButton!) {
+        userNameText.becomeFirstResponder()
         setCanSave()
     }
     
     @objc func savePressed(sender: UIButton!) {
+        
+        // Update value of username in database
         username = userNameText.text
-        defaults.set(username, forKey: "username")
-        userNameText.endEditing(true)
-        setCanEdit()
+        let userID = defaults.object(forKey: "userId") as? String
+        self.ref.child("Users").child(userID!).updateChildValues(["username": username!]) { (error, reference) in
+            if error == nil {
+                self.defaults.set(self.username, forKey: "username")
+                self.userNameText.endEditing(true)
+                self.setCanEdit()
+            } else {
+                self.displayAlert(message: (error?.localizedDescription)!)
+                self.userNameText.endEditing(true)
+                self.setCanEdit()
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
@@ -81,5 +92,11 @@ class UsernameViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         savePressed(sender: nil)
         return true
+    }
+    
+    func displayAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
