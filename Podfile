@@ -8,5 +8,6 @@ target 'Wait-Times' do
   # Pods for Wait-Times
   pod 'Firebase/Core'
   pod 'Firebase/Database'
+  pod 'Firebase/Auth'
 
 end

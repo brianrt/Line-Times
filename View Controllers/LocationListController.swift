@@ -28,7 +28,7 @@ class LocationListController: UITableViewController {
     
     //Populate the locations array from the database
     func fetchLocations(){
-        ref.child(category).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("Categories").child(category).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let restaurants = snapshot.value as? NSDictionary
             for (name, _) in restaurants! {
