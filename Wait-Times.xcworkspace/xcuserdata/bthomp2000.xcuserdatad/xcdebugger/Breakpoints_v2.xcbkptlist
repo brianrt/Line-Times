@@ -90,12 +90,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "View Controllers/Categories/RestaurantWaitTimeController.swift"
-            timestampString = "549791373.894861"
+            timestampString = "550050746.054038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "pickerView(_:didSelectRow:inComponent:)"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "submitPressed(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "View Controllers/Categories/RestaurantController.swift"
+            timestampString = "550050746.054698"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "assignAverageLabel()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "View Controllers/Categories/BarController.swift"
+            timestampString = "550050746.055367"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "assignAverageLabel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,76 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "View Controllers/Categories/RestaurantWaitTimeController.swift"
-            timestampString = "549791373.894927"
+            timestampString = "550050801.788488"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "submitPressed(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Wait_Times.RestaurantWaitTimeController.submitPressed(Any) -&gt; ()"
-                  moduleName = "Wait-Times"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bthomp2000/Documents/SideProjects/WaitTimes/Wait-Times/View%20Controllers/Categories/RestaurantWaitTimeController.swift"
-                  timestampString = "549786605.9711159"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "3708">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;, __ObjC.DatabaseReference) -&gt; () in Wait_Times.RestaurantWaitTimeController.submitPressed(Any) -&gt; ()"
-                  moduleName = "Wait-Times"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bthomp2000/Documents/SideProjects/WaitTimes/Wait-Times/View%20Controllers/Categories/RestaurantWaitTimeController.swift"
-                  timestampString = "549786605.9736151"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "98"
-                  endingLineNumber = "98"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "View Controllers/Categories/RestaurantController.swift"
-            timestampString = "549792594.248896"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "fetchEntries()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "View Controllers/Categories/RestaurantController.swift"
-            timestampString = "549792594.249703"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "fetchEntries()"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

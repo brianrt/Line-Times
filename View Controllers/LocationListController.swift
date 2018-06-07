@@ -66,14 +66,14 @@ class LocationListController: UITableViewController {
             case 0:
                 if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? RestaurantController {
                     if let navigator = navigationController {
-                        viewController.restaurant = locations[indexPath.row] as! String
+                        viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
             case 1:
                 if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? BarController {
                     if let navigator = navigationController {
-                        viewController.bar = locations[indexPath.row] as! String
+                        viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
