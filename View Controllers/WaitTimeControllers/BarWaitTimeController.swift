@@ -24,7 +24,7 @@ class BarWaitTimeController: BasePickerWaitTimeController {
         ratingField.addDoneButtonToKeyboard(myAction:  #selector(self.ratingField.resignFirstResponder))
     }
     
-    override func augmentItemsToSubmit(items: [String : Any]) -> [String : Any] {
+    override func addItemsToSubmit(items: [String : Any]) -> [String : Any] {
         var augmentedItems = items
         var cover = "0.00"
         if(self.coverField.text != ""){

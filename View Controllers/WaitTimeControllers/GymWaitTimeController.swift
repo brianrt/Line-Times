@@ -12,7 +12,6 @@ class GymWaitTimeController: BaseWaitTimeController {
     
     @IBOutlet weak var busyField: UITextField!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

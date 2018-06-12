@@ -26,7 +26,7 @@ class RestaurantWaitTimeController: BasePickerWaitTimeController {
         costField.addDoneButtonToKeyboard(myAction:  #selector(self.costField.resignFirstResponder))
     }
     
-    override func augmentItemsToSubmit(items: [String : Any]) -> [String : Any] {
+    override func addItemsToSubmit(items: [String : Any]) -> [String : Any] {
         var augmentedItems = items
         var cost = "0.00"
         if(self.costField.text != ""){
