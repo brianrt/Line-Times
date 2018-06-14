@@ -15,7 +15,6 @@ class RestaurantWaitTimeController: BasePickerWaitTimeController {
     
     
     @IBOutlet weak var costField: UITextField!
-    @IBOutlet weak var submit: UIButton!
     
     
     override func viewDidLoad() {

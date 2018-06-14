@@ -35,6 +35,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         }
         defaults = UserDefaults.standard
         username = defaults.object(forKey: "username") as! String
+        numEntriesLabel.text = String((defaults.object(forKey: "entryCount") as? Int)!)
         setCanEdit()
         edit.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
         save.addTarget(self, action: #selector(savePressed), for: .touchUpInside)

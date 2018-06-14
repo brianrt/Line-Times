@@ -26,16 +26,16 @@ class BarWaitTimeController: BasePickerWaitTimeController {
     
     override func addItemsToSubmit(items: [String : Any]) -> [String : Any] {
         var augmentedItems = items
-        var cover = "0.00"
+        var cover = 0.0
         if(self.coverField.text != ""){
-            cover = self.coverField.text!
+            cover = Double(self.coverField.text!)!
         }
         var rating = "0"
         if(self.ratingField.text != ""){
             rating = self.ratingField.text!
         }
         augmentedItems["Wait Time"] = NSString(format: "%d", self.waitTime)
-        augmentedItems["Cost"] = cover
+        augmentedItems["Cover"] = cover
         augmentedItems["Rating"] = rating
         return augmentedItems
     }

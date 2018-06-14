@@ -27,6 +27,7 @@
 		28A68EA11FFB6DB10055193B /* CategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68EA01FFB6DB10055193B /* CategoryController.swift */; };
 		28A68EA31FFB705E0055193B /* LocationListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68EA21FFB705E0055193B /* LocationListController.swift */; };
 		28A68EA51FFB707F0055193B /* RestaurantController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68EA41FFB707F0055193B /* RestaurantController.swift */; };
+		28ADB49220D24AC700500798 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ADB49120D24AC700500798 /* SpinnerExtension.swift */; };
 		28CD669F20B69481001657F7 /* BarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD669E20B69481001657F7 /* BarController.swift */; };
 		28CD66A120B694DF001657F7 /* BarWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD66A020B694DF001657F7 /* BarWaitTimeController.swift */; };
 		28CD66A820B699E2001657F7 /* GymWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD66A220B699DF001657F7 /* GymWaitTimeController.swift */; };
@@ -69,6 +70,7 @@
 		28A68EA01FFB6DB10055193B /* CategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryController.swift; sourceTree = "<group>"; };
 		28A68EA21FFB705E0055193B /* LocationListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListController.swift; sourceTree = "<group>"; };
 		28A68EA41FFB707F0055193B /* RestaurantController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantController.swift; sourceTree = "<group>"; };
+		28ADB49120D24AC700500798 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
 		28CD669E20B69481001657F7 /* BarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarController.swift; sourceTree = "<group>"; };
 		28CD66A020B694DF001657F7 /* BarWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarWaitTimeController.swift; sourceTree = "<group>"; };
 		28CD66A220B699DF001657F7 /* GymWaitTimeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GymWaitTimeController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			children = (
 				285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */,
 				28E9B6CA20B8D0E600C5CE72 /* User.swift */,
+				28ADB49120D24AC700500798 /* SpinnerExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				282D31CA20C8FBE30038F8E0 /* BasePickerWaitTimeController.swift in Sources */,
 				28A68EA11FFB6DB10055193B /* CategoryController.swift in Sources */,
 				2816AA61207F4E640014B8DC /* WaitTimesTableViewCell.swift in Sources */,
+				28ADB49220D24AC700500798 /* SpinnerExtension.swift in Sources */,
 				28A68E841FFB54980055193B /* MenuController.swift in Sources */,
 				28A68E821FFB54980055193B /* AppDelegate.swift in Sources */,
 				285045AB20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift in Sources */,
