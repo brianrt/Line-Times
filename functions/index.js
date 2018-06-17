@@ -9,6 +9,33 @@ exports.getTimeStamp = functions.https.onRequest((req, res)=>{
   res.send(JSON.stringify({ timestamp: Date.now() / 1000.0 }));
 });
 
+
+
+//Updates single venue when an entry is created
+exports.refreshSingleVenue = functions.database.ref('Categories/{category}/{venue}/Entries/{pushID}').onCreate((snapshot, context) => {
+	console.log("running refreshSingleVenue full");
+	const currentTime = Date.now() / 1000.0;
+	var category = context.params.category;
+	var venue = context.params.venue;
+
+	return admin.database().ref(`Categories/${category}/${venue}`).once('value', (snapshot) => {
+		var content = snapshot.val();
+		var data = {};
+		data[venue] = content;
+		venues = [venue];
+
+		switch(category){
+			case "Restaurants":
+				return refreshSingleRestaurant(0, venues, category, data, currentTime);
+			case "Bars":
+				return refreshSingleBar(0, venues, category, data, currentTime);
+			default:
+				return refreshSingleDefault(0, venues, category, data, currentTime);
+		}
+	});
+});
+
+
 // Updates all venues' entries and average calculations
 exports.refreshVenues = functions.https.onRequest((req, res)=>{
   	const currentTime = Date.now() / 1000.0;
@@ -59,7 +86,6 @@ function refreshRestaurants(category, data, currentTime){
 
 function refreshSingleRestaurant(i, restaurants, category, data, currentTime){
 	var restaurant = restaurants[i];
-	console.log(i+": "+restaurant);
 	var restaurantData = data[restaurant];
 	var entryDataCandidate = restaurantData["Entries"];
 	if(entryDataCandidate == undefined){
@@ -79,8 +105,6 @@ function refreshSingleRestaurant(i, restaurants, category, data, currentTime){
 			for(var j = 0; j < entryKeys.length; j++){
 				var entryKey = entryKeys[j];
 				var entry = entryData[entryKey];
-				console.log(entryKey);
-				console.log(JSON.stringify(entry));
 				var waitTime = parseInt(entry["Wait Time"]);
 				averageWaitTime += waitTime;
 			}
@@ -108,7 +132,6 @@ function refreshBars(category, data, currentTime){
 
 function refreshSingleBar(i, bars, category, data, currentTime){
 	var bar = bars[i];
-	console.log(i+": "+bar);
 	var barData = data[bar];
 	var entryDataCandidate = barData["Entries"];
 	if(entryDataCandidate == undefined){
@@ -123,7 +146,6 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 	} else {
 		var entryData = removeOldEntries(entryDataCandidate, currentTime);
 		var entryKeys = Object.keys(entryData);
-		console.log("After removal: "+JSON.stringify(entryData));
 		var averageWaitTimeText = "N/A";
 		var mostFrequentCoverText = "N/A";
 		if(entryKeys.length > 0){
@@ -132,8 +154,6 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 			for(var j = 0; j < entryKeys.length; j++){
 				var entryKey = entryKeys[j];
 				var entry = entryData[entryKey];
-				console.log(entryKey);
-				console.log(JSON.stringify(entry));
 				var waitTime = parseInt(entry["Wait Time"]);
 				var cover = parseFloat(entry["Cover"]);
 				covers.push(cover);
@@ -167,7 +187,6 @@ function refreshDefault(category, data, currentTime){
 
 function refreshSingleDefault(i, defaults, category, data, currentTime){
 	var name = defaults[i];
-	console.log(i+": "+name);
 	var defaultData = data[name];
 	var entryDataCandidate = defaultData["Entries"];
 	if(entryDataCandidate == undefined){
@@ -186,8 +205,6 @@ function refreshSingleDefault(i, defaults, category, data, currentTime){
 			for(var j = 0; j < entryKeys.length; j++){
 				var entryKey = entryKeys[j];
 				var entry = entryData[entryKey];
-				console.log(entryKey);
-				console.log(JSON.stringify(entry));
 				var busyRating = parseInt(entry["Busy Rating"]);
 				averageBusyRating += busyRating;
 			}
