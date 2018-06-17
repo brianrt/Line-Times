@@ -79,6 +79,25 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
         }
     }
     
+    @IBAction func submitPressed(_ sender: Any) {
+        sv = UIViewController.displaySpinner(onView: self.view)
+        self.ref.child("Categories").child(categoryType).child(name).child("Address").observeSingleEvent(of: .value) { (snapshot) in
+            //Get the address and convert to coordinate
+            let address = snapshot.value as! String
+            self.getCoordinate(addressString: address, completionHandler: { (coordinate, error) in
+                if error == nil {
+                    //Verify user is within range of restaurant
+                    print(coordinate)
+                    self.venueLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                    self.locationManager.requestLocation()
+                } else {
+                    self.displayAlert(message: "This location has an issue right now.")
+                    UIViewController.removeSpinner(spinner: self.sv)
+                }
+            })
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation = locations.first
         if let distance = userLocation?.distance(from: venueLocation) {
@@ -98,25 +117,6 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         displayAlert(message: "Failed to find your location: \(error.localizedDescription)")
         UIViewController.removeSpinner(spinner: self.sv)
-    }
-    
-    @IBAction func submitPressed(_ sender: Any) {
-        sv = UIViewController.displaySpinner(onView: self.view)
-        self.ref.child("Categories").child(categoryType).child(name).child("Address").observeSingleEvent(of: .value) { (snapshot) in
-            //Get the address and convert to coordinate
-            let address = snapshot.value as! String
-            self.getCoordinate(addressString: address, completionHandler: { (coordinate, error) in
-                if error == nil {
-                    //Verify user is within range of restaurant
-                    print(coordinate)
-                    self.venueLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                    self.locationManager.requestLocation()
-                } else {
-                    self.displayAlert(message: "This location has an issue right now.")
-                    UIViewController.removeSpinner(spinner: self.sv)
-                }
-            })
-        }
     }
     
     func submitToDatabase() {
