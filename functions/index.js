@@ -9,9 +9,50 @@ exports.getTimeStamp = functions.https.onRequest((req, res)=>{
   res.send(JSON.stringify({ timestamp: Date.now() / 1000.0 }));
 });
 
+// Clears out old user entry time stamps under user data daily, runs daily at midnight
+exports.cleanUserData = functions.https.onRequest((req, res)=>{
+	const currentTime = Date.now() / 1000.0;
+    return admin.database().ref('Users/').once('value', (snapshot) => {
+		var data = snapshot.val();
+		var userIDs = Object.keys(snapshot.val());
+		return cleanSingleUser(0, userIDs, data, currentTime).then(() => {
+			return res.send("Done");
+		});
+	});
+});
 
 
-//Updates single venue when an entry is created
+function cleanSingleUser(i, userIDs, data, currentTime){
+	var timeDiff = 1800;
+	var userID = userIDs[i];
+	var user = data[userID];
+	var entryData = user["Entries"];
+	if(entryData != undefined){
+		var venues = Object.keys(entryData);
+		for(var j = 0; j < venues.length; j++){
+			var venue = venues[j];
+			var venueData = entryData[venue];
+			var pushID = Object.keys(venueData)[0];
+			var timeStamp = venueData[pushID];
+			if(currentTime - timeStamp >= timeDiff){
+				delete entryData[venue];
+			}
+		}
+		return admin.database().ref(`Users/${userID}/Entries`).set(entryData).then(() => {
+			if(i < userIDs.length - 1){
+				i = i + 1;
+				return cleanSingleUser(i, userIDs, data, currentTime);
+			}
+		});
+	} else {
+		if(i < userIDs.length - 1){
+			i = i + 1;
+			return cleanSingleUser(i, userIDs, data, currentTime);
+		}
+	}
+}
+
+// Updates single venue when an entry is created
 exports.refreshSingleVenue = functions.database.ref('Categories/{category}/{venue}/Entries/{pushID}').onCreate((snapshot, context) => {
 	console.log("running refreshSingleVenue full");
 	const currentTime = Date.now() / 1000.0;
@@ -36,7 +77,7 @@ exports.refreshSingleVenue = functions.database.ref('Categories/{category}/{venu
 });
 
 
-// Updates all venues' entries and average calculations
+// Updates all venues' entries and average calculations, run every 15 minutes
 exports.refreshVenues = functions.https.onRequest((req, res)=>{
   	const currentTime = Date.now() / 1000.0;
     return admin.database().ref('Categories/').once('value', (snapshot) => {

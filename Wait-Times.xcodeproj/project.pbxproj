@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2810898F20D7722800EBEDB0 /* Wait_TimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2810898E20D7722800EBEDB0 /* Wait_TimesTests.swift */; };
 		2816AA61207F4E640014B8DC /* WaitTimesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */; };
 		2816AA63207FD4270014B8DC /* RestaurantWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */; };
 		282D31C820C8F72E0038F8E0 /* BaseWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282D31C720C8F72E0038F8E0 /* BaseWaitTimeController.swift */; };
@@ -45,7 +46,20 @@
 		556E8E0496340AE343CADAFE /* Pods_Wait_Times.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11C4714D563AB1A919531FB /* Pods_Wait_Times.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2810899120D7722800EBEDB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 28A68E761FFB54980055193B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28A68E7D1FFB54980055193B;
+			remoteInfo = "Wait-Times";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		2810898C20D7722800EBEDB0 /* Wait-TimesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wait-TimesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2810898E20D7722800EBEDB0 /* Wait_TimesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wait_TimesTests.swift; sourceTree = "<group>"; };
+		2810899020D7722800EBEDB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitTimesTableViewCell.swift; sourceTree = "<group>"; };
 		2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWaitTimeController.swift; sourceTree = "<group>"; };
 		282D31C720C8F72E0038F8E0 /* BaseWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWaitTimeController.swift; sourceTree = "<group>"; };
@@ -92,6 +106,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2810898920D7722800EBEDB0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		28A68E7B1FFB54980055193B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -110,6 +131,15 @@
 				61AF143A6AD3B95A51672346 /* Pods-Wait-Times.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		2810898D20D7722800EBEDB0 /* Wait-TimesTests */ = {
+			isa = PBXGroup;
+			children = (
+				2810898E20D7722800EBEDB0 /* Wait_TimesTests.swift */,
+				2810899020D7722800EBEDB0 /* Info.plist */,
+			);
+			path = "Wait-TimesTests";
 			sourceTree = "<group>";
 		};
 		2816AA5F207F3BE80014B8DC /* Custom Segues */ = {
@@ -170,6 +200,7 @@
 				285045A920B7D82200CF2291 /* Utilities */,
 				28A68E801FFB54980055193B /* View Controllers */,
 				28A68E9B1FFB62B90055193B /* Supporting Files */,
+				2810898D20D7722800EBEDB0 /* Wait-TimesTests */,
 				28A68E7F1FFB54980055193B /* Products */,
 				1EEC28212053E80FEAB7366F /* Pods */,
 				F27D6927949F91004765ABF9 /* Frameworks */,
@@ -180,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				28A68E7E1FFB54980055193B /* Wait-Times.app */,
+				2810898C20D7722800EBEDB0 /* Wait-TimesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -259,6 +291,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2810898B20D7722800EBEDB0 /* Wait-TimesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2810899520D7722800EBEDB0 /* Build configuration list for PBXNativeTarget "Wait-TimesTests" */;
+			buildPhases = (
+				2810898820D7722800EBEDB0 /* Sources */,
+				2810898920D7722800EBEDB0 /* Frameworks */,
+				2810898A20D7722800EBEDB0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2810899220D7722800EBEDB0 /* PBXTargetDependency */,
+			);
+			name = "Wait-TimesTests";
+			productName = "Wait-TimesTests";
+			productReference = 2810898C20D7722800EBEDB0 /* Wait-TimesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		28A68E7D1FFB54980055193B /* Wait-Times */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28A68E901FFB54980055193B /* Build configuration list for PBXNativeTarget "Wait-Times" */;
@@ -284,10 +334,15 @@
 		28A68E761FFB54980055193B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "WaitTimes Inc.";
 				TargetAttributes = {
+					2810898B20D7722800EBEDB0 = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 28A68E7D1FFB54980055193B;
+					};
 					28A68E7D1FFB54980055193B = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
@@ -314,11 +369,19 @@
 			projectRoot = "";
 			targets = (
 				28A68E7D1FFB54980055193B /* Wait-Times */,
+				2810898B20D7722800EBEDB0 /* Wait-TimesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2810898A20D7722800EBEDB0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		28A68E7C1FFB54980055193B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -380,6 +443,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2810898820D7722800EBEDB0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2810898F20D7722800EBEDB0 /* Wait_TimesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		28A68E7A1FFB54980055193B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -418,6 +489,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		2810899220D7722800EBEDB0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28A68E7D1FFB54980055193B /* Wait-Times */;
+			targetProxy = 2810899120D7722800EBEDB0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		28A68E851FFB54980055193B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -438,6 +517,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2810899320D7722800EBEDB0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SEJZQ75A6;
+				INFOPLIST_FILE = "Wait-TimesTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.myCompany.Wait-TimesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wait-Times.app/Wait-Times";
+			};
+			name = Debug;
+		};
+		2810899420D7722800EBEDB0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6SEJZQ75A6;
+				INFOPLIST_FILE = "Wait-TimesTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.myCompany.Wait-TimesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wait-Times.app/Wait-Times";
+			};
+			name = Release;
+		};
 		28A68E8E1FFB54980055193B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -593,6 +712,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2810899520D7722800EBEDB0 /* Build configuration list for PBXNativeTarget "Wait-TimesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2810899320D7722800EBEDB0 /* Debug */,
+				2810899420D7722800EBEDB0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		28A68E791FFB54980055193B /* Build configuration list for PBXProject "Wait-Times" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
