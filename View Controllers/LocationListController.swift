@@ -23,6 +23,11 @@ class LocationListController: UITableViewController {
         self.title = category
         locations = []
         wait_times = []
+        
+        //Setup nib for custom cells
+        let nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "CategoriesCell")
+
         fetchLocations()
     }
     
@@ -80,7 +85,7 @@ class LocationListController: UITableViewController {
             case 2:
                 if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? LibraryController {
                     if let navigator = navigationController {
-                        viewController.library = locations[indexPath.row] as! String
+                        viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
@@ -105,8 +110,8 @@ class LocationListController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
         
-        cell.category.text = locations[indexPath.row] as? String
-        cell.countInfo.text = "Wait time: \(wait_times[indexPath.row]) mins"
+        cell.mainLabel.text = locations[indexPath.row] as? String
+        cell.infoLabel.text = "Wait time: \(wait_times[indexPath.row]) mins"
         
         return cell
     }

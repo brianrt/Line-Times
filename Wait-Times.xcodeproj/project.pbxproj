@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2810898F20D7722800EBEDB0 /* Wait_TimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2810898E20D7722800EBEDB0 /* Wait_TimesTests.swift */; };
-		2816AA61207F4E640014B8DC /* WaitTimesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */; };
+		2816AA61207F4E640014B8DC /* EntryTwoRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA60207F4E640014B8DC /* EntryTwoRowTableViewCell.swift */; };
 		2816AA63207FD4270014B8DC /* RestaurantWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */; };
 		282D31C820C8F72E0038F8E0 /* BaseWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282D31C720C8F72E0038F8E0 /* BaseWaitTimeController.swift */; };
 		282D31CA20C8FBE30038F8E0 /* BasePickerWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282D31C920C8FBE30038F8E0 /* BasePickerWaitTimeController.swift */; };
@@ -16,6 +16,10 @@
 		285045A820B6AC1200CF2291 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285045A720B6AC1200CF2291 /* AccountViewController.swift */; };
 		285045AB20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */; };
 		285045AD20B7FAC900CF2291 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 285045AC20B7FAC700CF2291 /* GoogleService-Info.plist */; };
+		2882E0E720DA282800A93CDB /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0E620DA282800A93CDB /* CategoryTableViewCell.xib */; };
+		2882E0E920DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */; };
+		2882E0EC20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */; };
+		2882E0ED20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */; };
 		28A68E821FFB54980055193B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68E811FFB54980055193B /* AppDelegate.swift */; };
 		28A68E841FFB54980055193B /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68E831FFB54980055193B /* MenuController.swift */; };
 		28A68E871FFB54980055193B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A68E851FFB54980055193B /* Main.storyboard */; };
@@ -60,7 +64,7 @@
 		2810898C20D7722800EBEDB0 /* Wait-TimesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wait-TimesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2810898E20D7722800EBEDB0 /* Wait_TimesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wait_TimesTests.swift; sourceTree = "<group>"; };
 		2810899020D7722800EBEDB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitTimesTableViewCell.swift; sourceTree = "<group>"; };
+		2816AA60207F4E640014B8DC /* EntryTwoRowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryTwoRowTableViewCell.swift; sourceTree = "<group>"; };
 		2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWaitTimeController.swift; sourceTree = "<group>"; };
 		282D31C720C8F72E0038F8E0 /* BaseWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWaitTimeController.swift; sourceTree = "<group>"; };
 		282D31C920C8FBE30038F8E0 /* BasePickerWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePickerWaitTimeController.swift; sourceTree = "<group>"; };
@@ -68,6 +72,10 @@
 		285045A720B6AC1200CF2291 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+DoneCancelToolbar.swift"; sourceTree = "<group>"; };
 		285045AC20B7FAC700CF2291 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2882E0E620DA282800A93CDB /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
+		2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryTwoRowTableViewCell.xib; sourceTree = "<group>"; };
+		2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryThreeRowTableViewCell.xib; sourceTree = "<group>"; };
+		2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryThreeRowTableViewCell.swift; sourceTree = "<group>"; };
 		28A68E7E1FFB54980055193B /* Wait-Times.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wait-Times.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A68E811FFB54980055193B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28A68E831FFB54980055193B /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -265,7 +273,11 @@
 			isa = PBXGroup;
 			children = (
 				28D90E562030BE0400D1EA36 /* CategoryTableViewCell.swift */,
-				2816AA60207F4E640014B8DC /* WaitTimesTableViewCell.swift */,
+				2882E0E620DA282800A93CDB /* CategoryTableViewCell.xib */,
+				2816AA60207F4E640014B8DC /* EntryTwoRowTableViewCell.swift */,
+				2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */,
+				2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */,
+				2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -387,11 +399,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				28A68E9E1FFB62D00055193B /* reveal-icon@2x.png in Resources */,
+				2882E0E720DA282800A93CDB /* CategoryTableViewCell.xib in Resources */,
 				28A68E8C1FFB54980055193B /* LaunchScreen.storyboard in Resources */,
 				28A68E891FFB54980055193B /* Assets.xcassets in Resources */,
+				2882E0E920DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib in Resources */,
 				28A68E871FFB54980055193B /* Main.storyboard in Resources */,
 				28A68E9F1FFB62D00055193B /* reveal-icon.png in Resources */,
 				285045AD20B7FAC900CF2291 /* GoogleService-Info.plist in Resources */,
+				2882E0EC20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +479,8 @@
 				28CD66AB20B699E2001657F7 /* DiningHallWaitTimeController.swift in Sources */,
 				282D31CA20C8FBE30038F8E0 /* BasePickerWaitTimeController.swift in Sources */,
 				28A68EA11FFB6DB10055193B /* CategoryController.swift in Sources */,
-				2816AA61207F4E640014B8DC /* WaitTimesTableViewCell.swift in Sources */,
+				2816AA61207F4E640014B8DC /* EntryTwoRowTableViewCell.swift in Sources */,
+				2882E0ED20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift in Sources */,
 				28ADB49220D24AC700500798 /* SpinnerExtension.swift in Sources */,
 				28A68E841FFB54980055193B /* MenuController.swift in Sources */,
 				28A68E821FFB54980055193B /* AppDelegate.swift in Sources */,

@@ -46,11 +46,11 @@ class DiningHallController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! WaitTimesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! EntryTwoRowTableViewCell
         
-        cell.userName.text = userNames[indexPath.row]
-        cell.waitTime.text = "How Busy \(howBusy[indexPath.row])/10"
-        cell.reportTime.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
+        cell.mainLabel.text = userNames[indexPath.row]
+        cell.firstInfoLabel.text = "How Busy \(howBusy[indexPath.row])/10"
+        cell.secondInfoLabel.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
         return cell
     }
 }

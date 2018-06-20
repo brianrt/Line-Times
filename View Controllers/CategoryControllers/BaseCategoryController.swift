@@ -11,9 +11,9 @@ import FirebaseDatabase
 
 class BaseCategoryController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var userNames: NSMutableArray!
-    var entriesList: NSMutableArray!
-    var reportedTimes: NSMutableArray!
+    var userNames: NSMutableArray = []
+    var entriesList: NSMutableArray = []
+    var reportedTimes: NSMutableArray = []
     var name = ""
     var ref = Database.database().reference()
     var averageValue = 0
@@ -33,7 +33,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         averageLabel.layer.borderWidth = 0.5;
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    func initLists() {
         userNames = []
         entriesList = []
         reportedTimes = []
@@ -44,10 +44,37 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    func fetchEntries(){}
+    //The standard fetchEntries function for Library, Dining Hall, Gym
+    func fetchEntries(){
+        ref.child("Categories").child(categoryType).child(name).child("Entries").queryOrdered(byChild: "Time Stamp").observe(.value) { (snapshot) in
+            self.initLists()
+            for child in (snapshot.children.allObjects as! [DataSnapshot]).reversed() {
+                let entry = child.value as? NSDictionary
+                self.userNames.add(entry!["Username"]!)
+                self.entriesList.add(entry!["Busy Rating"]!)
+                
+                //Convert timestamp to time since in minutes
+                let timeStamp = entry!["Time Stamp"] as! Double
+                let date = Date(timeIntervalSince1970: TimeInterval(timeStamp))
+                let elapsed = Date().timeIntervalSince(date)
+                self.reportedTimes.add(Int(elapsed/60))
+            }
+            self.entries.reloadData()
+            self.assignAverageLabel()
+        }
+    }
     
-    //Subclasses need to implement this
-    func assignAverageLabel(){}
+    //The standard assignAverageLabel function for Library, Dining Hall, Gym
+    func assignAverageLabel(){
+        ref.child("Categories").child(categoryType).child(name).child("Average Busy Rating").observe(.value) { (snapshot) in
+            let averageBusyRating = snapshot.value as! String
+            if(averageBusyRating == "N/A"){
+                self.averageLabel.text = "   How Full: \(averageBusyRating)"
+            } else {
+                self.averageLabel.text = "   How Full: \(averageBusyRating)/10"
+            }
+        }
+    }
     
     
     // MARK: - Table view data source
@@ -65,11 +92,11 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! WaitTimesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EntryTwoCell", for: indexPath) as! EntryTwoRowTableViewCell
         
-        cell.userName.text = userNames[indexPath.row] as? String
-        cell.waitTime.text = "How Busy \(entriesList[indexPath.row])/10"
-        cell.reportTime.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
+        cell.mainLabel.text = userNames[indexPath.row] as? String
+        cell.firstInfoLabel.text = "How Busy \(entriesList[indexPath.row])/10"
+        cell.secondInfoLabel.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
         return cell
     }
     

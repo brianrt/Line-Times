@@ -1,5 +1,5 @@
 //
-//  WaitTimesTableViewCell.swift
+//  EntryThreeRowTableViewCell.swift
 //  Wait-Times
 //
 //  Created by Brian Thompson on 4/12/18.
@@ -8,12 +8,13 @@
 
 import UIKit
 
-class WaitTimesTableViewCell: UITableViewCell {
+class EntryThreeRowTableViewCell: UITableViewCell {
     //MARK: Properties
     
-    @IBOutlet weak var userName: UILabel!
-    @IBOutlet weak var waitTime: UILabel!
-    @IBOutlet weak var reportTime: UILabel!
+    @IBOutlet weak var mainLabel: UILabel!
+    @IBOutlet weak var firstInfoLabel: UILabel!
+    @IBOutlet weak var secondInfoLabel: UILabel!
+    @IBOutlet weak var thirdInfoLabel: UILabel!
     
     
     override func awakeFromNib() {

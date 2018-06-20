@@ -11,9 +11,14 @@ import UIKit
 class CategoryController: UITableViewController {
     var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
     var counts = [10,12,3,5,2]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Champaign"
+        
+        //Setup nib for custom cells
+        let nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "CategoriesCell")
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,8 +53,8 @@ class CategoryController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
         
-        cell.category.text = categories[indexPath.row]
-        cell.countInfo.text = "\(counts[indexPath.row]) " + categories[indexPath.row]
+        cell.mainLabel.text = categories[indexPath.row]
+        cell.infoLabel.text = "\(counts[indexPath.row]) " + categories[indexPath.row]
         
         return cell
     }

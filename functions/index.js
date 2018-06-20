@@ -149,7 +149,7 @@ function refreshSingleRestaurant(i, restaurants, category, data, currentTime){
 				var waitTime = parseInt(entry["Wait Time"]);
 				averageWaitTime += waitTime;
 			}
-			averageWaitTime = (averageWaitTime / entryKeys.length).toFixed(2);
+			averageWaitTime = (averageWaitTime / entryKeys.length).toFixed(1);
 			averageWaitTimeText = averageWaitTime.toString();
 		}
 
@@ -200,7 +200,7 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 				covers.push(cover);
 				averageWaitTime += waitTime;
 			}
-			averageWaitTime = (averageWaitTime / entryKeys.length).toFixed(2);
+			averageWaitTime = (averageWaitTime / entryKeys.length).toFixed(1);
 			var mostFrequentCover = mode(covers).toFixed(2);
 
 			averageWaitTimeText = averageWaitTime.toString()

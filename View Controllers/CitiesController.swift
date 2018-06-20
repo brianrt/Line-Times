@@ -33,6 +33,10 @@ class CitiesController: UITableViewController {
             revealButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        
+        //Setup nib for custom cells
+        let nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "CategoriesCell")
     }
     
     func checkIfLoggedIn() {
@@ -52,12 +56,6 @@ class CitiesController: UITableViewController {
                 self.navigationController?.pushViewController(viewController!, animated: true)
             }
         }
-        
-//        self.defaults.set(nil, forKey: "userId")
-//        if (defaults.object(forKey: "userId") == nil){
-//            //User has not registered before
-//
-//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,14 +82,18 @@ class CitiesController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
         
-        cell.category.text = cities[indexPath.row]
-        cell.countInfo.text = "\(counts[indexPath.row]) Categories"
+        cell.mainLabel.text = cities[indexPath.row]
+        cell.infoLabel.text = "\(counts[indexPath.row]) Categories"
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CategoryController") as? CategoryController {
+            if let navigator = navigationController {
+                navigator.pushViewController(viewController, animated: true)
+            }
+        }
     }
     
     

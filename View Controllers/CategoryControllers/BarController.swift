@@ -11,14 +11,20 @@ import FirebaseDatabase
 
 class BarController: BaseCategoryController {
 
-    @IBOutlet weak var cover: UILabel!
+    @IBOutlet weak var coverLabel: UILabel!
+    
+    var covers: NSMutableArray = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryType = "Bars"
         waitIdentifier = "BarWait"
-        cover.layer.borderColor = UIColor.lightGray.cgColor
-        cover.layer.borderWidth = 0.5;
+        coverLabel.layer.borderColor = UIColor.lightGray.cgColor
+        coverLabel.layer.borderWidth = 0.5;
+        
+        //Setup nib for custom cells
+        let nib = UINib(nibName: "EntryThreeRowTableViewCell", bundle: nil)
+        entries.register(nib, forCellReuseIdentifier: "EntryThreeCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,50 +33,52 @@ class BarController: BaseCategoryController {
     }
     
     override func fetchEntries(){
-        let covers: NSMutableArray = []
-        ref.child("Categories").child(categoryType).child(name).child("Entries").queryOrdered(byChild: "Time Stamp").observeSingleEvent(of: .value) { (snapshot) in
-            if(snapshot.value != nil){
-                self.averageValue = 0
-                var count = 0
-                for child in (snapshot.children.allObjects as! [DataSnapshot]).reversed() {
-                    let entry = child.value as? NSDictionary
-                    self.userNames.add(entry!["Username"]!)
-                    covers.add(entry!["Cover"]!)
-                    let wait = entry!["Wait Time"]!
-                    self.entriesList.add(wait)
-                    self.averageValue += Int(wait as! String)!
-                    count += 1
-                    
-                    //Convert timestamp to time since in minutes
-                    let timeStamp = entry!["Time Stamp"] as! Double
-                    let date = Date(timeIntervalSince1970: TimeInterval(timeStamp))
-                    let elapsed = Date().timeIntervalSince(date)
-                    self.reportedTimes.add(Int(elapsed/60))
-                }
-                if count != 0 {
-                    self.averageValue = Int(self.averageValue / count)
-                    self.assignAverageLabel()
-                    
-                    //Calculate mode of cover
-                    let countedSet = NSCountedSet(array: covers as! [Any])
-                    let coverValue = countedSet.max { countedSet.count(for: $0) < countedSet.count(for: $1) }
-                    self.cover.text = String(format:"   Cover: $%.2f", coverValue as! Double)
-                }
-                self.entries.reloadData()
+        ref.child("Categories").child(categoryType).child(name).child("Entries").queryOrdered(byChild: "Time Stamp").observe(.value) { (snapshot) in
+            self.initLists()
+            for child in (snapshot.children.allObjects as! [DataSnapshot]).reversed() {
+                let entry = child.value as? NSDictionary
+                self.userNames.add(entry!["Username"]!)
+                self.entriesList.add(entry!["Wait Time"]!)
+                self.covers.add(entry!["Cover"]!)
+                
+                //Convert timestamp to time since in minutes
+                let timeStamp = entry!["Time Stamp"] as! Double
+                let date = Date(timeIntervalSince1970: TimeInterval(timeStamp))
+                let elapsed = Date().timeIntervalSince(date)
+                self.reportedTimes.add(Int(elapsed/60))
             }
+            self.entries.reloadData()
+            self.assignAverageLabel()
         }
     }
     
     override func assignAverageLabel(){
-        self.averageLabel.text = "   Average Wait: \(self.averageValue) mins"
+        ref.child("Categories").child(categoryType).child(name).child("Average Wait Time").observe(.value) { (snapshot) in
+            let averageWaitTime = snapshot.value as! String
+            if(averageWaitTime == "N/A"){
+                self.averageLabel.text = "   Average Wait: \(averageWaitTime)"
+            } else {
+                self.averageLabel.text = "   Average Wait: \(averageWaitTime) mins"
+            }
+        }
+        
+        ref.child("Categories").child(categoryType).child(name).child("Most Frequent Cover").observe(.value) { (snapshot) in
+            let cover = snapshot.value as! String
+            if(cover == "N/A"){
+                self.coverLabel.text = "   Cover: \(cover)"
+            } else {
+                self.coverLabel.text = "   Cover: $\(cover)"
+            }
+        }
     }
         
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath) as! WaitTimesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EntryThreeCell", for: indexPath) as! EntryThreeRowTableViewCell
         
-        cell.userName.text = userNames[indexPath.row] as? String
-        cell.waitTime.text = "Wait time \(entriesList[indexPath.row]) mins"
-        cell.reportTime.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
+        cell.mainLabel.text = userNames[indexPath.row] as? String
+        cell.firstInfoLabel.text = "Wait time \(entriesList[indexPath.row]) mins"
+        cell.secondInfoLabel.text = "Cover: $\(covers[indexPath.row])"
+        cell.thirdInfoLabel.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
         return cell
     }
     
