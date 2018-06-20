@@ -20,6 +20,7 @@
 		2882E0E920DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */; };
 		2882E0EC20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */; };
 		2882E0ED20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */; };
+		2882E0EF20DAF15500A93CDB /* BorderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882E0EE20DAF15500A93CDB /* BorderExtension.swift */; };
 		28A68E821FFB54980055193B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68E811FFB54980055193B /* AppDelegate.swift */; };
 		28A68E841FFB54980055193B /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68E831FFB54980055193B /* MenuController.swift */; };
 		28A68E871FFB54980055193B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A68E851FFB54980055193B /* Main.storyboard */; };
@@ -76,6 +77,7 @@
 		2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryTwoRowTableViewCell.xib; sourceTree = "<group>"; };
 		2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryThreeRowTableViewCell.xib; sourceTree = "<group>"; };
 		2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryThreeRowTableViewCell.swift; sourceTree = "<group>"; };
+		2882E0EE20DAF15500A93CDB /* BorderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderExtension.swift; sourceTree = "<group>"; };
 		28A68E7E1FFB54980055193B /* Wait-Times.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wait-Times.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A68E811FFB54980055193B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28A68E831FFB54980055193B /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */,
 				28E9B6CA20B8D0E600C5CE72 /* User.swift */,
 				28ADB49120D24AC700500798 /* SpinnerExtension.swift */,
+				2882E0EE20DAF15500A93CDB /* BorderExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				28D90E572030BE0400D1EA36 /* CategoryTableViewCell.swift in Sources */,
 				28CD669F20B69481001657F7 /* BarController.swift in Sources */,
 				282D31C820C8F72E0038F8E0 /* BaseWaitTimeController.swift in Sources */,
+				2882E0EF20DAF15500A93CDB /* BorderExtension.swift in Sources */,
 				28E9B6CB20B8D0E600C5CE72 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

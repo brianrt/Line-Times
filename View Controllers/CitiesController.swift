@@ -13,16 +13,17 @@ import FirebaseDatabase
 class CitiesController: UITableViewController {
     
     @IBOutlet var revealButtonItem: UIBarButtonItem!
+
+    var cities = ["Champaign"]
+    var counts = [5,5,3,4]
+    var defaults: UserDefaults!
+    var ref = Database.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkIfLoggedIn()
         customSetup()
     }
-    
-    var cities = ["Champaign"]
-    var counts = [5,5,3,4]
-    var defaults: UserDefaults!
-    var ref = Database.database().reference()
     
     func customSetup() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

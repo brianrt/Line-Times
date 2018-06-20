@@ -17,6 +17,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var save: UIButton!
     @IBOutlet weak var userNameText: UITextField!
     @IBOutlet weak var numEntriesLabel: UILabel!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     var defaults: UserDefaults!
     var username: String!
@@ -40,6 +41,12 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         edit.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
         save.addTarget(self, action: #selector(savePressed), for: .touchUpInside)
         userNameText.delegate = self
+        let LocationEnabled = defaults.object(forKey: "LocationEnabled")
+        if(LocationEnabled != nil && (LocationEnabled as! Bool) == false){
+            segmentedControl.selectedSegmentIndex = 1;
+        } else {
+            segmentedControl.selectedSegmentIndex = 0;
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -100,4 +107,19 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    //Function for enabling location options
+    @IBAction func didSwitchEnableLocation(_ sender: Any) {
+        switch segmentedControl.selectedSegmentIndex {
+            case 0:
+                defaults.set(true, forKey: "LocationEnabled")
+                break
+            case 1:
+                defaults.set(false, forKey: "LocationEnabled")
+                break
+            default:
+                break
+        }
+    }
+    
 }

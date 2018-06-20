@@ -19,8 +19,7 @@ class BarController: BaseCategoryController {
         super.viewDidLoad()
         categoryType = "Bars"
         waitIdentifier = "BarWait"
-        coverLabel.layer.borderColor = UIColor.lightGray.cgColor
-        coverLabel.layer.borderWidth = 0.5;
+        coverLabel.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.lightGray, thickness: 0.5)
         
         //Setup nib for custom cells
         let nib = UINib(nibName: "EntryThreeRowTableViewCell", bundle: nil)

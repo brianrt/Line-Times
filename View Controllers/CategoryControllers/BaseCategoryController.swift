@@ -91,6 +91,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         return 85
     }
     
+    //The standard cellForRowAt function for Library, Dining Hall, Gym
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EntryTwoCell", for: indexPath) as! EntryTwoRowTableViewCell
         

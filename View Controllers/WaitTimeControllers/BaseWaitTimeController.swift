@@ -101,7 +101,10 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation = locations.first
         if let distance = userLocation?.distance(from: venueLocation) {
-            if (distance >= radius) { //TODO: change this back to a <=
+            if (distance <= radius) {
+                submitToDatabase()
+            } else if defaults.object(forKey: "LocationEnabled") != nil && (defaults.object(forKey: "LocationEnabled") as! Bool) == false {
+                //Check if we bypass location restriction in developer options
                 submitToDatabase()
             } else {
                 displayAlert(message: "You must be at the venue location to submit an entry.")

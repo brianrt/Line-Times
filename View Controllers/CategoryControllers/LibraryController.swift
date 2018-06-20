@@ -10,7 +10,6 @@ import UIKit
 
 class LibraryController: BaseCategoryController {
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryType = "Libraries"
@@ -22,4 +21,3 @@ class LibraryController: BaseCategoryController {
         fetchEntries()
     }
 }
-

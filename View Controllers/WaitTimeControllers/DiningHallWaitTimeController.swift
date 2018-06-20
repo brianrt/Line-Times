@@ -14,9 +14,19 @@ class DiningHallWaitTimeController: BaseWaitTimeController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        categoryType = "Dining Halls"
         busyField.delegate = self
         busyField.addDoneButtonToKeyboard(myAction:  #selector(self.busyField.resignFirstResponder))
+    }
+    
+    override func addItemsToSubmit(items: [String : Any]) -> [String : Any] {
+        var augmentedItems = items
+        var busyRating = 0.0
+        if(self.busyField.text != ""){
+            busyRating = Double(self.busyField.text!)!
+        }
+        augmentedItems["Busy Rating"] = busyRating
+        return augmentedItems
     }
 }
 

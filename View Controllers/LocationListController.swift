@@ -12,8 +12,9 @@ import FirebaseDatabase
 class LocationListController: UITableViewController {
     var categoryIndex = 0
     var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
-    var locations: NSMutableArray!
-    var wait_times: NSMutableArray!
+    var locations: NSMutableArray = []
+    var entries: NSMutableArray = []
+    var covers: NSMutableArray = []
     var ref = Database.database().reference()
     var category: String!
     
@@ -21,28 +22,61 @@ class LocationListController: UITableViewController {
         super.viewDidLoad()
         category = categories[categoryIndex]
         self.title = category
-        locations = []
-        wait_times = []
         
         //Setup nib for custom cells
-        let nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
+        var nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
+        if(category == "Bars"){
+            nib = UINib(nibName: "EntryTwoRowTableViewCell", bundle: nil)
+        }
         tableView.register(nib, forCellReuseIdentifier: "CategoriesCell")
-
         fetchLocations()
+    }
+    
+    func initLists(){
+        locations = []
+        entries = []
+        covers = []
     }
     
     //Populate the locations array from the database
     func fetchLocations(){
-        ref.child("Categories").child(category).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("Categories").child(category).observe(.value) { (snapshot) in
+            self.initLists()
             // Get user value
-            let restaurants = snapshot.value as? NSDictionary
-            for (name, _) in restaurants! {
+            let venue = snapshot.value as? NSDictionary
+            for (name, value) in venue! {
+                let data = value as! NSDictionary
                 self.locations.add(name)
-                self.wait_times.add(0)
+                if(self.category == "Bars"){
+                    let cover = data["Most Frequent Cover"] as! String
+                    if(cover == "N/A"){
+                        self.covers.add(cover)
+                    } else {
+                        self.covers.add("$" + cover)
+                    }
+                    let waitTime = data["Average Wait Time"] as! String
+                    if(waitTime == "N/A"){
+                        self.entries.add(waitTime)
+                    } else {
+                        self.entries.add(waitTime+" mins")
+                    }
+                } else if(self.category == "Restaurants"){
+                    let waitTime = data["Average Wait Time"] as! String
+                    if(waitTime == "N/A"){
+                        self.entries.add(waitTime)
+                    } else {
+                        self.entries.add(waitTime+" mins")
+                    }
+                } else {
+                    let busyRating = data["Average Busy Rating"] as! String
+                    if(busyRating == "N/A"){
+                        self.entries.add(busyRating)
+                    } else {
+                        self.entries.add(busyRating+"/10")
+                    }
+                }
             }
             self.tableView.reloadData()
-        }) { (error) in
-            print(error.localizedDescription)
         }
     }
     
@@ -69,37 +103,37 @@ class LocationListController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch categoryIndex {
             case 0:
-                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? RestaurantController {
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? RestaurantController {
                     if let navigator = navigationController {
                         viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
             case 1:
-                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? BarController {
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? BarController {
                     if let navigator = navigationController {
                         viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
             case 2:
-                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? LibraryController {
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? LibraryController {
                     if let navigator = navigationController {
                         viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
             case 3:
-                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? DiningHallController {
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? DiningHallController {
                     if let navigator = navigationController {
-                        viewController.diningHall = locations[indexPath.row] as! String
+                        viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
             case 4:
-                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: categories[categoryIndex]) as? GymController {
+                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? GymController {
                     if let navigator = navigationController {
-                        viewController.gym = locations[indexPath.row] as! String
+                        viewController.name = locations[indexPath.row] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
@@ -108,12 +142,23 @@ class LocationListController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
-        
-        cell.mainLabel.text = locations[indexPath.row] as? String
-        cell.infoLabel.text = "Wait time: \(wait_times[indexPath.row]) mins"
-        
-        return cell
+        if(category == "Bars"){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! EntryTwoRowTableViewCell
+            cell.mainLabel.text = locations[indexPath.row] as? String
+            cell.firstInfoLabel.text = "Wait time: \(entries[indexPath.row])"
+            cell.secondInfoLabel.text = "Cover: \(covers[indexPath.row])"
+            return cell
+        } else if(category == "Restaurants"){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
+            cell.mainLabel.text = locations[indexPath.row] as? String
+            cell.infoLabel.text = "Wait time: \(entries[indexPath.row])"
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
+            cell.mainLabel.text = locations[indexPath.row] as? String
+            cell.infoLabel.text = "Busy: \(entries[indexPath.row])"
+            return cell
+        }
     }
 }
 
