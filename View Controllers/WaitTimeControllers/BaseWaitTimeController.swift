@@ -28,7 +28,6 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var comments: UITextView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         defaults = UserDefaults.standard
@@ -37,9 +36,7 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
         comments.layer.borderColor = UIColor.lightGray.cgColor
         comments.layer.borderWidth = 0.5;
         comments.delegate = self
-        
         initiateLocation()
-                
     }
     
     //Set up location

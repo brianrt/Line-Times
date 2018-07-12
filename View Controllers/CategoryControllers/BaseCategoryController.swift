@@ -22,6 +22,8 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet var entries: UITableView!
     @IBOutlet var averageLabel: UILabel!
+    @IBOutlet var recordEntry: UIButton!
+    @IBOutlet var recordLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +32,24 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         entries.dataSource = self
         
         averageLabel.layer.borderColor = UIColor.lightGray.cgColor
-        averageLabel.layer.borderWidth = 0.5;
+        averageLabel.layer.borderWidth = 0.5
+        
+        setHeights()
     }
     
     func initLists() {
         userNames = []
         entriesList = []
         reportedTimes = []
+    }
+    
+    func setHeights(){
+        let topY = self.navigationController?.navigationBar.frame.maxY
+        let offset = topY! - recordEntry.frame.minY
+        recordEntry.frame.origin.y += offset
+        recordLabel.frame.origin.y += offset
+        averageLabel.frame.origin.y += offset
+        entries.frame.origin.y += offset
     }
     
     override func didReceiveMemoryWarning() {

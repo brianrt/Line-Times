@@ -24,11 +24,16 @@ class BarController: BaseCategoryController {
         //Setup nib for custom cells
         let nib = UINib(nibName: "EntryThreeRowTableViewCell", bundle: nil)
         entries.register(nib, forCellReuseIdentifier: "EntryThreeCell")
+        setHeightsBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchEntries()
+    }
+    
+    func setHeightsBar(){
+        coverLabel.frame.origin.y = averageLabel.frame.maxY
     }
     
     override func fetchEntries(){
