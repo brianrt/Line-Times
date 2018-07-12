@@ -15,14 +15,13 @@ exports.cleanUserData = functions.https.onRequest((req, res)=>{
     return admin.database().ref('Users/').once('value', (snapshot) => {
 		var data = snapshot.val();
 		var userIDs = Object.keys(snapshot.val());
-		return cleanSingleUser(0, userIDs, data, currentTime).then(() => {
-			return res.send("Done");
-		});
+		return cleanSingleUser(0, userIDs, data, currentTime, res);
 	});
 });
 
 
-function cleanSingleUser(i, userIDs, data, currentTime){
+function cleanSingleUser(i, userIDs, data, currentTime, res){
+	console.log(i);
 	var timeDiff = 1800;
 	var userID = userIDs[i];
 	var user = data[userID];
@@ -41,13 +40,19 @@ function cleanSingleUser(i, userIDs, data, currentTime){
 		return admin.database().ref(`Users/${userID}/Entries`).set(entryData).then(() => {
 			if(i < userIDs.length - 1){
 				i = i + 1;
-				return cleanSingleUser(i, userIDs, data, currentTime);
+				return cleanSingleUser(i, userIDs, data, currentTime, res);
+			} else {
+				res.send("Done");
+				return;
 			}
 		});
 	} else {
 		if(i < userIDs.length - 1){
 			i = i + 1;
-			return cleanSingleUser(i, userIDs, data, currentTime);
+			return cleanSingleUser(i, userIDs, data, currentTime, res);
+		} else {
+			res.send("Done");
+			return;
 		}
 	}
 }
