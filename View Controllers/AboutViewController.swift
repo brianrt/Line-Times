@@ -24,6 +24,7 @@ class AboutViewController: UIViewController {
             revealButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        self.title = "About"
     }
     
     override func didReceiveMemoryWarning() {

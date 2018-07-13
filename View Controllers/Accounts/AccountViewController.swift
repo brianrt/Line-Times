@@ -47,6 +47,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         } else {
             segmentedControl.selectedSegmentIndex = 0;
         }
+        self.title = "Account"
     }
     
     override func didReceiveMemoryWarning() {

@@ -47,7 +47,6 @@ class MenuController: UITableViewController {
         }
         else if(menuItems[indexPath.row] == "About"){
             let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "About")
-//            self.revealViewController().pushFrontViewController(aboutViewController, animated: false)
             self.revealViewController().setFront(aboutViewController, animated: false)
         }
         else if(menuItems[indexPath.row] == "Account"){
