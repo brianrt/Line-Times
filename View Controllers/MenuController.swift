@@ -53,6 +53,10 @@ class MenuController: UITableViewController {
             let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "Account")
             self.revealViewController().setFront(aboutViewController, animated: false)
         }
+        else if(menuItems[indexPath.row] == "Feedback"){
+            let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "Feedback")
+            self.revealViewController().setFront(aboutViewController, animated: false)
+        }
         else if(menuItems[indexPath.row] == "Logout"){
             do {
                 try Auth.auth().signOut()

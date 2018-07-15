@@ -21,6 +21,7 @@
 		2882E0EC20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */; };
 		2882E0ED20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */; };
 		2882E0EF20DAF15500A93CDB /* BorderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2882E0EE20DAF15500A93CDB /* BorderExtension.swift */; };
+		289EEFE820F9832E00D01CA8 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289EEFE720F9832E00D01CA8 /* FeedbackViewController.swift */; };
 		28A68E821FFB54980055193B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68E811FFB54980055193B /* AppDelegate.swift */; };
 		28A68E841FFB54980055193B /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68E831FFB54980055193B /* MenuController.swift */; };
 		28A68E871FFB54980055193B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28A68E851FFB54980055193B /* Main.storyboard */; };
@@ -78,6 +79,7 @@
 		2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryThreeRowTableViewCell.xib; sourceTree = "<group>"; };
 		2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryThreeRowTableViewCell.swift; sourceTree = "<group>"; };
 		2882E0EE20DAF15500A93CDB /* BorderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderExtension.swift; sourceTree = "<group>"; };
+		289EEFE720F9832E00D01CA8 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		28A68E7E1FFB54980055193B /* Wait-Times.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wait-Times.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A68E811FFB54980055193B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28A68E831FFB54980055193B /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				28A68E831FFB54980055193B /* MenuController.swift */,
 				28A68E991FFB62130055193B /* CitiesController.swift */,
 				28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */,
+				289EEFE720F9832E00D01CA8 /* FeedbackViewController.swift */,
 				28A68EA01FFB6DB10055193B /* CategoryController.swift */,
 				28A68EA21FFB705E0055193B /* LocationListController.swift */,
 				28E9B6D120B9DD8800C5CE72 /* Accounts */,
@@ -500,6 +503,7 @@
 				28CD66A120B694DF001657F7 /* BarWaitTimeController.swift in Sources */,
 				28A68EA51FFB707F0055193B /* RestaurantController.swift in Sources */,
 				28D90E572030BE0400D1EA36 /* CategoryTableViewCell.swift in Sources */,
+				289EEFE820F9832E00D01CA8 /* FeedbackViewController.swift in Sources */,
 				28CD669F20B69481001657F7 /* BarController.swift in Sources */,
 				282D31C820C8F72E0038F8E0 /* BaseWaitTimeController.swift in Sources */,
 				2882E0EF20DAF15500A93CDB /* BorderExtension.swift in Sources */,
