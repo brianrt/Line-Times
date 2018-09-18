@@ -24,8 +24,20 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const functionsOauthClient = new OAuth2Client(CONFIG_CLIENT_ID, CONFIG_CLIENT_SECRET,
   FUNCTIONS_REDIRECT);
 
+// Radius for location check
+var radius = 50.0 //meters
+
+// Time for time check
+var timeInterval = 1800.0 //seconds
+
 // OAuth token cached locally.
 let oauthTokens = null;
+
+//Things for authenticated https request
+const express = require('express');
+const cookieParser = require('cookie-parser')();
+const cors = require('cors')({origin: true});
+const app = express();
 
 // visit the URL for this Function to request tokens
 exports.authgoogleapi = functions.https.onRequest((req, res) => {
@@ -53,6 +65,128 @@ exports.oauthcallback = functions.https.onRequest((req, res) => {
   	});
 });
 
+// Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
+// The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
+// `Authorization: Bearer <Firebase ID Token>`.
+// when decoded successfully, the ID Token content will be added as `req.user`.
+const validateFirebaseIdToken = (req, res, next) => {
+ 	console.log('Check if request is authorized with Firebase ID token');
+
+	if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) && !(req.cookies && req.cookies.__session)) {
+		console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.',
+		    'Make sure you authorize your request by providing the following HTTP header:',
+		    'Authorization: Bearer <Firebase ID Token>',
+		    'or by passing a "__session" cookie.');
+		res.status(403).send('Unauthorized');
+		return;
+	}
+
+	let idToken;
+	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+		console.log('Found "Authorization" header');
+		// Read the ID Token from the Authorization header.
+		idToken = req.headers.authorization.split('Bearer ')[1];
+	} else if(req.cookies) {
+		console.log('Found "__session" cookie');
+		// Read the ID Token from cookie.
+		idToken = req.cookies.__session;
+	} else {
+		// No cookie
+		res.status(403).send('Unauthorized');
+		return;
+	}
+	admin.auth().verifyIdToken(idToken).then((decodedIdToken) => {
+		console.log('ID Token correctly decoded', decodedIdToken);
+		req.user = decodedIdToken;
+		return next();
+	}).catch((error) => {
+		console.error('Error while verifying Firebase ID token:', error);
+		res.status(403).send('Unauthorized');
+	});
+};
+
+
+// More things for https authentication
+app.use(cors);
+app.use(cookieParser);
+app.use(validateFirebaseIdToken);
+
+// Main business logic for handling a userSubmitEntry request
+app.post('/:userSubmitEntry', (req, res) => {
+	var body = req.body;
+
+	//Grab common variables from request
+	var username = body.Username;
+	var uid = body.Uid;
+	var userLat = body.Latitude;
+	var userLon = body.Longitude;
+	var category = body.CategoryType;
+	var name = body.VenueName;
+	var comment = body.VenueName;
+	var locationDisabled = body.DisableLocation;
+
+	//************ Perform multiple checks to see if it is an allowed request ************
+
+	// Check location to see if they are at the venue
+	return admin.database().ref(`Categories/${category}/${name}/coord`).once('value', (snapshot) => {
+		var data = snapshot.val();
+		var venueLat = data["lat"];
+		var venueLon = data["lng"];
+
+		var distance = calculateDistance(userLat,userLon,venueLat,venueLon);
+
+		if (distance < radius || locationDisabled){ // We are at the venue, can continue with our checks
+			// Check for a past entry here for this user in the past 30 minutes
+			return admin.database().ref(`Users/${uid}`).once('value', (snapshot) => {
+				var data = snapshot.val();
+				var entryCount = data["entryCount"];
+				console.log("entryCount: "+entryCount);
+			});
+
+			res.send(JSON.stringify({ title: "Success", message: "Thanks for your submission." }));
+
+
+		} else { // We are not at the venue, stop here and return an error
+			res.send(JSON.stringify({ title: "Not at Location", message: "You must be at the venue location to submit an entry." }));
+			return;
+		}
+	});
+});
+
+function calculateDistance(lat1,lon1,lat2,lon2) {
+	var R = 6371; // Radius of the earth in km
+	var dLat = deg2rad(lat2-lat1);  // deg2rad below
+	var dLon = deg2rad(lon2-lon1); 
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *  Math.sin(dLon/2) * Math.sin(dLon/2); 
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	var d = R * c; // Distance in km
+	return d * 1000;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
+// This HTTPS endpoint can only be accessed by your Firebase Users.
+// Requests need to be authorized by providing an `Authorization` HTTP header
+// with value `Bearer <Firebase ID Token>`.
+exports.app = functions.https.onRequest(app);
+
+function getToday(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+
+	var yyyy = today.getFullYear();
+	if(dd<10){
+	    dd='0'+dd;
+	} 
+	if(mm<10){
+	    mm='0'+mm;
+	} 
+	return mm+'/'+dd+'/'+yyyy;
+}
+
 // trigger function to write to Sheet when new data comes in on Feedback
 exports.appendFeedbackToSpreadsheet = functions.database.ref(`Feedback/{ITEM}`).onCreate((snapshot, context) => {
 	const newRecord = snapshot.val();
@@ -60,13 +194,14 @@ exports.appendFeedbackToSpreadsheet = functions.database.ref(`Feedback/{ITEM}`).
 	var userID = Object.keys(snapshot.val())[0];
 	var email = context.auth.token.email
 	var feedback = newRecord[userID];
+	var date = getToday();
 	return appendPromise({
 		spreadsheetId: CONFIG_SHEET_ID,
-		range: 'A:C',
+		range: 'A:D',
 		valueInputOption: 'USER_ENTERED',
 		insertDataOption: 'INSERT_ROWS',
 		resource: {
-			values: [[userID, email, feedback]],
+			values: [[userID, email, feedback, date]],
 		},
 	});
 });

@@ -324,7 +324,6 @@
         <!--Navigation Controller-->
         <scene sceneID="a4H-Pd-NV9">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MJR-lF-tbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="Feedback" id="dxD-cu-OI2" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XYM-VX-0re">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -334,6 +333,7 @@
                         <segue destination="VL2-dv-WsN" kind="relationship" relationship="rootViewController" id="8lZ-Nc-Yhb"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MJR-lF-tbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-799" y="1971"/>
         </scene>

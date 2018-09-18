@@ -9,11 +9,13 @@
 import UIKit
 import CoreLocation
 import FirebaseDatabase
+import FirebaseAuth
 
 class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate {
     
     var name = ""
     var categoryType = ""
+    var locationIsEnabled = true
     
     var sv: UIView!
     var ref = Database.database().reference()
@@ -22,7 +24,9 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
     var timeInterval = 1800.0 //seconds
     let locationManager = CLLocationManager()
     var venueLocation: CLLocation!
+    var currentLocation: CLLocationCoordinate2D!
     var timeStampUrl = URL(string: "https://us-central1-time-crunch-e109e.cloudfunctions.net/getTimeStamp")
+    var userSubmitEntryUrl = URL(string: "https://us-central1-time-crunch-e109e.cloudfunctions.net/app/userSubmitEntry")
 
     
     @IBOutlet weak var navBar: UINavigationBar!
@@ -39,11 +43,22 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
         initiateLocation()
     }
     
+    //Stop requesting location updates when exiting this view
+    override func viewWillDisappear(_ animated: Bool) {
+        locationManager.stopUpdatingLocation()
+    }
+    
     //Set up location
     func initiateLocation() {
         // For use in foreground
         locationManager.requestWhenInUseAuthorization()
-        locationManager.delegate = self
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+        } else {
+            self.displayAlert(message: "You will not be able to add an entry if your location isn't enabled.")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,46 +92,113 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
     }
     
     @IBAction func submitPressed(_ sender: Any) {
-        sv = UIViewController.displaySpinner(onView: self.view)
-        self.ref.child("Categories").child(categoryType).child(name).child("Address").observeSingleEvent(of: .value) { (snapshot) in
-            //Get the address and convert to coordinate
-            let address = snapshot.value as! String
-            self.getCoordinate(addressString: address, completionHandler: { (coordinate, error) in
-                if error == nil {
-                    //Verify user is within range of restaurant
-                    print(coordinate)
-                    self.venueLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                    self.locationManager.requestLocation()
-                } else {
-                    self.displayAlert(message: "This location has an issue right now.")
-                    UIViewController.removeSpinner(spinner: self.sv)
+        if(locationIsEnabled){
+            while(currentLocation == nil){
+                print(currentLocation)
+            }
+            print("got location!")
+            print(currentLocation)
+            let currentUser = Auth.auth().currentUser
+            currentUser?.getIDTokenForcingRefresh(true, completion: { (tokenID, error) in
+                if let error = error {
+                    self.displayAlert(message: error.localizedDescription)
+                    return
                 }
+                // Send token to backend via HTTPS
+                var request = URLRequest(url: self.userSubmitEntryUrl!)
+                request.allHTTPHeaderFields = ["Authorization" : "Bearer " + tokenID!]
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.addValue("application/json", forHTTPHeaderField: "Accept")
+                request.httpMethod = "POST"
+                
+                // Build up parameters
+                let parameters = self.buildParameters()
+                let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+                request.httpBody = jsonData
+                
+                //Send the request
+                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data!) as? NSDictionary
+                        let title = (json!.value(forKey: "title") as! String) //message response title
+                        let message = (json!.value(forKey: "message") as! String) //message response message
+                        self.displayAlert(title: title, message: message)
+                    } catch {
+                        print("Error deserializing JSON: \(error)")
+                    }
+                }
+                
+                task.resume()
+                
             })
+            
+//            sv = UIViewController.displaySpinner(onView: self.view)
+//            self.ref.child("Categories").child(categoryType).child(name).child("Address").observeSingleEvent(of: .value) { (snapshot) in
+//                //Get the address and convert to coordinate
+//                let address = snapshot.value as! String
+//                self.getCoordinate(addressString: address, completionHandler: { (coordinate, error) in
+//                    if error == nil {
+//                        //Verify user is within range of restaurant
+//                        print(coordinate)
+//                        self.venueLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+//                        self.locationManager.requestLocation()
+//                    } else {
+//                        self.displayAlert(message: "This location has an issue right now.")
+//                        UIViewController.removeSpinner(spinner: self.sv)
+//                    }
+//                })
+//            }
+        } else {
+            displayAlert(message: "Failed to find your location, please make sure location is enabled for this app.")
         }
+    }
+    
+    // Build parameters to send in request to server
+    func buildParameters() -> [String: Any] {
+        let username = self.defaults.object(forKey: "username") as! String
+        let uid = self.defaults.object(forKey: "userId") as! String
+        let comment = self.comments.text!
+        let locationEnabled = defaults.object(forKey: "LocationEnabled")
+        let locationCheckDisabled = (locationEnabled != nil) && ((locationEnabled as! Bool) == false)
+        let parameters = ["Username": username,
+                          "Uid": uid,
+                          "Latitude": currentLocation.latitude,
+                          "Longitude": currentLocation.longitude,
+                          "CategoryType": categoryType,
+                          "VenueName": name,
+                          "Comment": comment,
+                          "DisableLocation": locationCheckDisabled
+                        ] as [String : Any]
+        return self.addItemsToSubmit(items: parameters)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation = locations.first
-        if let distance = userLocation?.distance(from: venueLocation) {
-            if (distance <= radius) {
-                submitToDatabase()
-            } else if defaults.object(forKey: "LocationEnabled") != nil && (defaults.object(forKey: "LocationEnabled") as! Bool) == false {
-                //Check if we bypass location restriction in developer options
-                submitToDatabase()
-            } else {
-                displayAlert(message: "You must be at the venue location to submit an entry.")
-                UIViewController.removeSpinner(spinner: self.sv)
-            }
-        } else {
-            displayAlert(message: "Unable to get your location. Please make sure location is enabled.")
-            UIViewController.removeSpinner(spinner: self.sv)
-        }
-        
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        self.currentLocation = locValue
+//        let userLocation = locations.first
+//        if let distance = userLocation?.distance(from: venueLocation) {
+//            if (distance <= radius) {
+//                submitToDatabase()
+//            } else if defaults.object(forKey: "LocationEnabled") != nil && (defaults.object(forKey: "LocationEnabled") as! Bool) == false {
+//                //Check if we bypass location restriction in developer options
+//                submitToDatabase()
+//            } else {
+//                displayAlert(message: "You must be at the venue location to submit an entry.")
+//                UIViewController.removeSpinner(spinner: self.sv)
+//            }
+//        } else {
+//            displayAlert(message: "Unable to get your location. Please make sure location is enabled.")
+//            UIViewController.removeSpinner(spinner: self.sv)
+//        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        displayAlert(message: "Failed to find your location: \(error.localizedDescription)")
-        UIViewController.removeSpinner(spinner: self.sv)
+        self.locationIsEnabled = false
+        self.displayAlert(message: "Heads up! You will not be able to submit an entry unless you allow location for this app.")
+        if(self.sv != nil){
+            UIViewController.removeSpinner(spinner: self.sv)
+        }
     }
     
     func submitToDatabase() {
@@ -196,6 +278,12 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
     
     func displayAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func displayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
