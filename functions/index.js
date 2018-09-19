@@ -122,7 +122,7 @@ app.post('/:userSubmitEntry', (req, res) => {
 	var userLon = body.Longitude;
 	var category = body.CategoryType;
 	var name = body.VenueName;
-	var comment = body.VenueName;
+	var comment = body.Comment;
 	var locationDisabled = body.DisableLocation;
 
 	//************ Perform multiple checks to see if it is an allowed request ************
@@ -140,14 +140,68 @@ app.post('/:userSubmitEntry', (req, res) => {
 			return admin.database().ref(`Users/${uid}`).once('value', (snapshot) => {
 				var data = snapshot.val();
 				var entryCount = data["entryCount"];
-				console.log("entryCount: "+entryCount);
+				var canSubmit = false;
+				var currentTime = Date.now() / 1000.0;
+
+				if (data["Entries"] != null && data["Entries"][name] != null){
+					//We have children, check to submit
+					var pastEntry = data["Entries"][name];
+					var lastPostedTime = 0.0;
+					for(var postID in pastEntry) {
+				        lastPostedTime = pastEntry[postID];
+					}
+
+					//Check if within 30 minutes
+					var timeDiff = currentTime - lastPostedTime;
+					if (timeDiff >= timeInterval){
+						canSubmit = true;
+					}
+				} else {
+					//Don't have children, can submit
+					canSubmit = true;
+				}
+				if (canSubmit){
+
+					// build our data to add to database
+					var items = {"Username": username, "Time Stamp": currentTime, "Comment": comment};
+
+					switch(category){
+						case "Restaurants":
+							items["Wait Time"] = body.WaitTime;
+							items["Cost"] = body.Cost;
+							break;
+						case "Bars":
+							items["Wait Time"] = body.WaitTime;
+							items["Cover"] = body.Cover;
+							items["Rating"] = body.Rating;
+							break;
+						default:
+							items["Busy Rating"] = body.BusyRating;
+					}
+
+					// Add our data to the database
+					return admin.database().ref(`Categories/${category}/${name}/Entries`).push(items).then(pushRes => {
+
+						// Update User information
+						var pushID = pushRes.getKey();
+						var items = {};
+						items[pushID] = currentTime;
+
+						return admin.database().ref(`Users/${uid}/Entries/${name}`).set(items).then(() => {
+							entryCount += 1;
+							return admin.database().ref(`Users/${uid}/entryCount`).set(entryCount).then(() => {
+								res.send(JSON.stringify({ error: false, entryCount: entryCount}));
+								return;
+							});
+						});
+					});
+				} else {
+					res.send(JSON.stringify({ error: true, title: "Too Soon!", message: "Entries can only be made every " + Math.round(timeInterval/60.0) + " minutes for a single location. You have " + Math.round((timeInterval - timeDiff)/60.0) + " minutes remaining here." }));
+					return;
+				}
 			});
-
-			res.send(JSON.stringify({ title: "Success", message: "Thanks for your submission." }));
-
-
 		} else { // We are not at the venue, stop here and return an error
-			res.send(JSON.stringify({ title: "Not at Location", message: "You must be at the venue location to submit an entry." }));
+			res.send(JSON.stringify({ error: true, title: "Not at Location", message: "You must be at the venue location to submit an entry." }));
 			return;
 		}
 	});

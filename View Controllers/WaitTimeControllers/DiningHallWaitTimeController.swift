@@ -25,7 +25,7 @@ class DiningHallWaitTimeController: BaseWaitTimeController {
         if(self.busyField.text != ""){
             busyRating = Double(self.busyField.text!)!
         }
-        augmentedItems["Busy Rating"] = busyRating
+        augmentedItems["BusyRating"] = busyRating
         return augmentedItems
     }
 }

@@ -120,9 +120,15 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
                 let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                     do {
                         let json = try JSONSerialization.jsonObject(with: data!) as? NSDictionary
-                        let title = (json!.value(forKey: "title") as! String) //message response title
-                        let message = (json!.value(forKey: "message") as! String) //message response message
-                        self.displayAlert(title: title, message: message)
+                        let error = (json!.value(forKey: "error") as! Bool) //If there was an error or not
+                        if (error) {
+                            let title = (json!.value(forKey: "title") as! String) //message response title
+                            let message = (json!.value(forKey: "message") as! String) //message response message
+                            self.displayAlert(title: title, message: message)
+                        } else {
+                            let entryCount = (json!.value(forKey: "entryCount") as! Int)
+                            self.displayAlert(title: "Success", message: "Entry count: \(entryCount)")
+                        }
                     } catch {
                         print("Error deserializing JSON: \(error)")
                     }

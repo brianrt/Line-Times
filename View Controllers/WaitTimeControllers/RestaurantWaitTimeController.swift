@@ -31,7 +31,7 @@ class RestaurantWaitTimeController: BasePickerWaitTimeController {
         if(self.costField.text != ""){
             cost = self.costField.text!
         }
-        augmentedItems["Wait Time"] = NSString(format: "%d", self.waitTime)
+        augmentedItems["WaitTime"] = NSString(format: "%d", self.waitTime)
         augmentedItems["Cost"] = cost
         return augmentedItems
     }

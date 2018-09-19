@@ -34,7 +34,7 @@ class BarWaitTimeController: BasePickerWaitTimeController {
         if(self.ratingField.text != ""){
             rating = self.ratingField.text!
         }
-        augmentedItems["Wait Time"] = NSString(format: "%d", self.waitTime)
+        augmentedItems["WaitTime"] = NSString(format: "%d", self.waitTime)
         augmentedItems["Cover"] = cover
         augmentedItems["Rating"] = rating
         return augmentedItems
