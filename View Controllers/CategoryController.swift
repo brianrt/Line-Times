@@ -46,6 +46,7 @@ class CategoryController: UITableViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
     }
+
     
     func checkIfLoggedIn() {
         Auth.auth().addStateDidChangeListener { auth, user in

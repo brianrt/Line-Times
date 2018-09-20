@@ -13,8 +13,24 @@ class MenuController: UITableViewController {
     var menuItems = ["Champaign", "About", "Account", "Feedback", "Logout"] //TEMP
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let defaults = UserDefaults.standard
+    var tap: UITapGestureRecognizer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tap = UITapGestureRecognizer(target: self, action: #selector(categoryTapped))
+        appDelegate.champaignViewController.view.addGestureRecognizer(tap)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        appDelegate.champaignViewController.view.removeGestureRecognizer(tap)
+    }
+    
+    @objc func categoryTapped() {
+        self.revealViewController().setFront(self.appDelegate.champaignViewController, animated: false)
+        self.revealViewController().revealToggle(animated: true)
     }
 
     override func didReceiveMemoryWarning() {
