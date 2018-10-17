@@ -15,6 +15,7 @@ import FirebaseDatabase
 class CategoryController: UITableViewController {
     var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
     var counts = [10,12,3,5,2]
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
      //TEMP
     var defaults: UserDefaults!
@@ -47,24 +48,41 @@ class CategoryController: UITableViewController {
         }
     }
 
-    
     func checkIfLoggedIn() {
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
-                self.defaults.set(user?.uid, forKey: "userId")
-                self.ref.child("Users").child((user?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
-                    // Get user values
-                    let value = snapshot.value as? NSDictionary
-                    let username = value?["username"] as? String
-                    let entryCount = value?["entryCount"] as? Int
-                    self.defaults.set(username, forKey: "username")
-                    self.defaults.set(entryCount, forKey: "entryCount")
-                })
+                //reload user in case things are cached
+                if self.appDelegate.isRegistering {
+                    self.appDelegate.isRegistering = false
+                } else {
+                    user?.reload(completion: { (error) in
+                        if (user?.isEmailVerified)!{
+                            self.defaults.set(user?.uid, forKey: "userId")
+                            self.ref.child("Users").child((user?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
+                                // Get user values
+                                let data = snapshot.value
+                                let value = data as? NSDictionary
+                                let username = value?["username"] as? String
+                                let entryCount = value?["entryCount"] as? Int
+                                self.defaults.set(username, forKey: "username")
+                                self.defaults.set(entryCount, forKey: "entryCount")
+                            })
+                        } else {
+                            // User exists but email not verified
+                            let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "unverified")
+                            self.navigationController?.pushViewController(viewController, animated: true)
+                        }
+                    })
+                }
             } else {
-                let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "login") as? LoginViewController
-                self.navigationController?.pushViewController(viewController!, animated: true)
+                self.goToLogin()
             }
         }
+    }
+    
+    func goToLogin() {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "login") as? LoginViewController
+        self.navigationController?.pushViewController(viewController!, animated: true)
     }
     //######################### End Temporary skipping over Cities controller #########################
     
@@ -106,5 +124,10 @@ class CategoryController: UITableViewController {
         return cell
     }
     
+    func displayAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }

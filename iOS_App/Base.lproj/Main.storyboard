@@ -303,7 +303,7 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Have an account? Login"/>
                                 <connections>
-                                    <segue destination="7Ip-46-FLl" kind="custom" customClass="ReplaceSegue" customModule="Wait_Times" customModuleProvider="target" id="BCS-Rv-00j"/>
+                                    <segue destination="7Ip-46-FLl" kind="custom" identifier="toLogin" customClass="ReplaceSegue" customModule="Wait_Times" customModuleProvider="target" id="BCS-Rv-00j"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -315,6 +315,7 @@
                         <outlet property="emailField" destination="ZZV-qg-cQd" id="aBe-3m-fnQ"/>
                         <outlet property="passwordField" destination="SVC-L1-W7Y" id="shj-E3-UxR"/>
                         <outlet property="usernameField" destination="afd-lF-d7r" id="17P-D3-afz"/>
+                        <segue destination="bEb-nf-RPS" kind="custom" identifier="toUnverified" customClass="ReplaceSegue" customModule="Wait_Times" customModuleProvider="target" id="RiN-vX-If3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HV5-ru-KDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -386,6 +387,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EjJ-DN-h2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-15.199999999999999" y="1969.5652173913045"/>
+        </scene>
+        <!--Unverified View Controller-->
+        <scene sceneID="X8N-Cb-xFD">
+            <objects>
+                <viewController storyboardIdentifier="unverified" id="bEb-nf-RPS" customClass="UnverifiedViewController" customModule="Wait_Times" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zPd-rr-AvQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email Unverified" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTL-na-zfU">
+                                <rect key="frame" x="121" y="85" width="133" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You may not proceed to use the app until your email is verified. If you need to resend a verification email, click resend" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zi0-nd-kHR">
+                                <rect key="frame" x="16" y="127" width="343" height="77"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46U-9d-rJI">
+                                <rect key="frame" x="142" y="283" width="91" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Resend"/>
+                                <connections>
+                                    <action selector="sendVerificationEmail:" destination="bEb-nf-RPS" eventType="touchUpInside" id="EYg-xk-Iqc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Mld-9B-MgR"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="57I-Cl-1hZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="788" y="1969.5652173913045"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Gd8-A9-88G">
@@ -1229,6 +1269,6 @@
         <image name="reveal-icon.png" width="22" height="17"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BCS-Rv-00j"/>
+        <segue reference="rBw-wW-WXC"/>
     </inferredMetricsTieBreakers>
 </document>

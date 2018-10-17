@@ -19,6 +19,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     var defaults: UserDefaults!
     var ref = Database.database().reference()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,22 +70,22 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         else if password != confirm {
             displayAlert(message: "Please ensure passwords match")
         } else {
-            // We are good to go
-            Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!) { user, error in
+            self.appDelegate.isRegistering = true
+            Auth.auth().createUser(withEmail: email!, password: password!) { user, error in
                 if error == nil { //Successfuly created user
-                    //Here we will upload the username and 0 for count entries
-                    self.ref.child("Users").child((user?.uid)!).setValue(["username": username!, "entryCount": 0], withCompletionBlock: { (error, reference) in
-                        Auth.auth().signIn(withEmail: email!, password: password!, completion: { (user, error) in
-                            if error == nil { //Successfuly signed in
-                                self.navigationController?.popViewController(animated: true)
-                            } else {
-                                self.displayAlert(message: (error?.localizedDescription)!)
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        })
-                    })
+                    //Send a validation email here
+                    Auth.auth().currentUser?.sendEmailVerification { (error) in
+                        if error == nil {
+                            self.defaults.set(username, forKey: "username")
+                            self.displayVerificationAlert(title: "Email Verification Sent", message: "Thank you for registering! Please check your email and click on the link to verify your account. You will not be able to use the app until you have verified your email!")
+                        } else {
+                            self.displayAlert(message: (error?.localizedDescription)!)
+                            self.appDelegate.isRegistering = false
+                        }
+                    }
                 } else {
                     self.displayAlert(message: (error?.localizedDescription)!)
+                    self.appDelegate.isRegistering = false
                 }
             }
         }
@@ -93,6 +94,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     func displayAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func displayVerificationAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            self.performSegue(withIdentifier: "toUnverified", sender: nil)
+        }
+        alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
 }
