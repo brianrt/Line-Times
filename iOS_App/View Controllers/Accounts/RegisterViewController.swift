@@ -16,6 +16,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmField: UITextField!
+    @IBOutlet weak var registerButton: UIButton!
     
     var defaults: UserDefaults!
     var ref = Database.database().reference()
@@ -27,17 +28,34 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func customSetup() {
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.title = "Welcome to Time Crunch!"
+        //Hide nav bar
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         //Set text field delegates
         emailField.delegate = self
         passwordField.delegate = self
         confirmField.delegate = self
         usernameField.delegate = self
-        emailField.becomeFirstResponder()
+        
+        //Set underlines to text fields
+        emailField.underlined()
+        passwordField.underlined()
+        confirmField.underlined()
+        usernameField.underlined()
+        
+        //Set button UI
+        registerButton.backgroundColor = .clear
+        registerButton.layer.cornerRadius = 15
+        registerButton.layer.borderWidth = 0.25
+        registerButton.layer.borderColor = UIColor.lightGray.cgColor
         
         defaults = UserDefaults.standard
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        // Show the Navigation Bar
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     @IBAction func didPressContinue(_ sender: Any) {
@@ -105,6 +123,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.25) {
+            self.view.frame.origin.y -= self.view.frame.height/5.0
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textView: UITextField) {
+        UIView.animate(withDuration: 0.25) {
+            self.view.frame.origin.y += self.view.frame.height/5.0
+        }
     }
 }
 

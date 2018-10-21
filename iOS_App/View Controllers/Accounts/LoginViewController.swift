@@ -14,7 +14,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-
+    @IBOutlet weak var loginButton: UIButton!
+    
+    
     var defaults: UserDefaults!
     var ref = Database.database().reference()
     
@@ -24,15 +26,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func customSetup() {
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.title = "Welcome to Time Crunch!"
+        //Hide nav bar
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         //Set text field delegates
         emailField.delegate = self
         passwordField.delegate = self
-        emailField.becomeFirstResponder()
+        
+        //Set underlines to text fields
+        emailField.underlined()
+        passwordField.underlined()
+        
+        //Set button UI
+        loginButton.backgroundColor = .clear
+        loginButton.layer.cornerRadius = 15
+        loginButton.layer.borderWidth = 0.25
+        loginButton.layer.borderColor = UIColor.lightGray.cgColor
         
         defaults = UserDefaults.standard
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        // Show the Navigation Bar
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     @IBAction func didPressContinue(_ sender: Any) {
@@ -84,6 +101,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    //Move screen up and down when editing and done editing
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.25) {
+            self.view.frame.origin.y -= self.view.frame.height/5.0
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textView: UITextField) {
+        UIView.animate(withDuration: 0.25) {
+            self.view.frame.origin.y += self.view.frame.height/5.0
+        }
     }
 }
 

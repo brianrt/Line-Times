@@ -44,6 +44,7 @@
 		28CD66AB20B699E2001657F7 /* DiningHallWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD66A520B699E1001657F7 /* DiningHallWaitTimeController.swift */; };
 		28CD66AC20B699E2001657F7 /* GymController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD66A620B699E1001657F7 /* GymController.swift */; };
 		28CD66AD20B699E2001657F7 /* DiningHallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD66A720B699E2001657F7 /* DiningHallController.swift */; };
+		28D16985217D2B4E009997B0 /* underlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D16984217D2B4E009997B0 /* underlineView.swift */; };
 		28D90E572030BE0400D1EA36 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D90E562030BE0400D1EA36 /* CategoryTableViewCell.swift */; };
 		28D90E5B2030EC0F00D1EA36 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */; };
 		28E9B6C920B8BE1500C5CE72 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E9B6C820B8BE1500C5CE72 /* RegisterViewController.swift */; };
@@ -107,6 +108,7 @@
 		28CD66A520B699E1001657F7 /* DiningHallWaitTimeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallWaitTimeController.swift; sourceTree = "<group>"; };
 		28CD66A620B699E1001657F7 /* GymController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GymController.swift; sourceTree = "<group>"; };
 		28CD66A720B699E2001657F7 /* DiningHallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHallController.swift; sourceTree = "<group>"; };
+		28D16984217D2B4E009997B0 /* underlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = underlineView.swift; sourceTree = "<group>"; };
 		28D90E562030BE0400D1EA36 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		28E9B6C720B8B96200C5CE72 /* Wait-Times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wait-Times.entitlements"; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		285045A920B7D82200CF2291 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				28D16984217D2B4E009997B0 /* underlineView.swift */,
 				285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */,
 				28E9B6CA20B8D0E600C5CE72 /* User.swift */,
 				28ADB49120D24AC700500798 /* SpinnerExtension.swift */,
@@ -486,6 +489,7 @@
 				283404C620C9059C00E8B7F0 /* BaseCategoryController.swift in Sources */,
 				28CD66A920B699E2001657F7 /* LibraryController.swift in Sources */,
 				28CD66AB20B699E2001657F7 /* DiningHallWaitTimeController.swift in Sources */,
+				28D16985217D2B4E009997B0 /* underlineView.swift in Sources */,
 				282D31CA20C8FBE30038F8E0 /* BasePickerWaitTimeController.swift in Sources */,
 				28A68EA11FFB6DB10055193B /* CategoryController.swift in Sources */,
 				2816AA61207F4E640014B8DC /* EntryTwoRowTableViewCell.swift in Sources */,
