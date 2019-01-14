@@ -56,8 +56,8 @@ class RestaurantController: BaseCategoryController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EntryTwoCell", for: indexPath) as! EntryTwoRowTableViewCell
         
         cell.mainLabel.text = userNames[indexPath.row] as? String
-        cell.firstInfoLabel.text = "Wait time \(entriesList[indexPath.row]) mins"
-        cell.secondInfoLabel.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
+        cell.firstInfoLabel.text = "\(entriesList[indexPath.row]) mins"
+        cell.secondInfoLabel.text = "\(reportedTimes[indexPath.row]) mins ago"
         return cell
     }
     

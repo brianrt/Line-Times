@@ -290,7 +290,7 @@
                                     <color key="titleColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="7Ip-46-FLl" kind="custom" identifier="toLogin" customClass="ReplaceSegue" customModule="Wait_Times" customModuleProvider="target" id="BCS-Rv-00j"/>
+                                    <segue destination="7Ip-46-FLl" kind="custom" identifier="toLogin" customClass="ReplaceSegue" customModule="Wait_Times" customModuleProvider="target" animates="NO" id="BCS-Rv-00j"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="koM-c8-hMv">
@@ -1204,7 +1204,7 @@
                                     <color key="titleColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="fhs-9L-Wq4" kind="custom" customClass="ReplaceSegue" customModule="Wait_Times" customModuleProvider="target" id="rBw-wW-WXC"/>
+                                    <segue destination="fhs-9L-Wq4" kind="custom" customClass="ReplaceSegue" customModule="Wait_Times" customModuleProvider="target" animates="NO" id="rBw-wW-WXC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sm8-ui-pCq">
@@ -1269,6 +1269,6 @@
         <image name="reveal-icon.png" width="22" height="17"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rBw-wW-WXC"/>
+        <segue reference="BCS-Rv-00j"/>
     </inferredMetricsTieBreakers>
 </document>

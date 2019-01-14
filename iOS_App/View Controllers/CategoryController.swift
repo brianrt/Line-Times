@@ -14,7 +14,7 @@ import FirebaseDatabase
 
 class CategoryController: UITableViewController {
     var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
-    var counts = [10,12,3,5,2]
+    var counts = [46,6,7,6,2]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
      //TEMP
@@ -119,7 +119,7 @@ class CategoryController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
         
         cell.mainLabel.text = categories[indexPath.row]
-        cell.infoLabel.text = "\(counts[indexPath.row]) " + categories[indexPath.row]
+        cell.infoLabel.text = "(\(counts[indexPath.row]))"
         
         return cell
     }

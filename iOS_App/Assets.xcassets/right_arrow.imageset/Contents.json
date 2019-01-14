@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "login_screen.jpg",
+      "filename" : "right_arrow.png",
       "scale" : "1x"
     },
     {
@@ -11,7 +11,6 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "login_screen_X.jpg",
       "scale" : "3x"
     }
   ],

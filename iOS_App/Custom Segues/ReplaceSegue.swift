@@ -12,6 +12,6 @@ class ReplaceSegue: UIStoryboardSegue {
     override func perform() {
         var controllers = source.navigationController?.viewControllers
         controllers![(controllers?.count)!-1] = destination
-        source.navigationController?.setViewControllers(controllers!, animated: true)
+        source.navigationController?.setViewControllers(controllers!, animated: false)
     }
 }

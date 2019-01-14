@@ -180,13 +180,13 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         if(category == "Bars"){
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! EntryTwoRowTableViewCell
             cell.mainLabel.text = displayLocations[indexPath.row] as? String
-            cell.firstInfoLabel.text = "Wait time: \(displayEntries[indexPath.row])"
-            cell.secondInfoLabel.text = "Cover: \(displayCovers[indexPath.row])"
+            cell.firstInfoLabel.text = "\(displayEntries[indexPath.row])"
+            cell.secondInfoLabel.text = "\(displayCovers[indexPath.row])"
             return cell
         } else if(category == "Restaurants"){
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
             cell.mainLabel.text = displayLocations[indexPath.row] as? String
-            cell.infoLabel.text = "Wait time: \(displayEntries[indexPath.row])"
+            cell.infoLabel.text = "(\(displayEntries[indexPath.row]))"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
