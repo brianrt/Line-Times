@@ -47,6 +47,10 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
             nib = UINib(nibName: "EntryTwoRowTableViewCell", bundle: nil)
         }
         tableView.register(nib, forCellReuseIdentifier: "CategoriesCell")
+        
+        //Setup top label nib
+        let topNib = UINib(nibName: "TwoRowTopLabelTableViewCell", bundle: nil)
+        tableView.register(topNib, forCellReuseIdentifier: "TopLabelCell")
         fetchLocations()
     }
     
@@ -110,14 +114,24 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var numRows = 0
         if isSearching {
-            return filteredLocations.count
+            numRows = filteredLocations.count
+        } else {
+            numRows = locations.count
         }
-        return locations.count
+        
+        if categoryIndex == 1 {
+            numRows += 1
+        }
+        return numRows
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
+        if categoryIndex == 1 && indexPath.row == 0 {
+            return 25
+        }
         return 85
     }
     
@@ -138,7 +152,7 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
             case 1:
                 if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? BarController {
                     if let navigator = navigationController {
-                        viewController.name = displayedLocations[indexPath.row] as! String
+                        viewController.name = displayedLocations[indexPath.row - 1] as! String
                         navigator.pushViewController(viewController, animated: true)
                     }
                 }
@@ -178,10 +192,16 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
             displayCovers = filteredCovers
         }
         if(category == "Bars"){
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TopLabelCell", for: indexPath) as! TwoRowTopLabelTableViewCell
+                cell.firstInfoLabel.text = "wait time"
+                cell.secondInfoLabel.text = "cover"
+                return cell
+            }
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! EntryTwoRowTableViewCell
-            cell.mainLabel.text = displayLocations[indexPath.row] as? String
-            cell.firstInfoLabel.text = "\(displayEntries[indexPath.row])"
-            cell.secondInfoLabel.text = "\(displayCovers[indexPath.row])"
+            cell.mainLabel.text = displayLocations[indexPath.row - 1] as? String
+            cell.firstInfoLabel.text = "\(displayEntries[indexPath.row - 1])"
+            cell.secondInfoLabel.text = "\(displayCovers[indexPath.row - 1])"
             return cell
         } else if(category == "Restaurants"){
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
