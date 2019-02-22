@@ -8,10 +8,13 @@
 
 import UIKit
 import FirebaseDatabase
+import Cosmos
 
 class BarController: BaseCategoryController {
 
     @IBOutlet weak var coverLabel: UILabel!
+    @IBOutlet weak var coverAmount: UILabel!
+    @IBOutlet weak var ratings: CosmosView!
     
     var covers: NSMutableArray = []
     
@@ -19,12 +22,11 @@ class BarController: BaseCategoryController {
         super.viewDidLoad()
         categoryType = "Bars"
         waitIdentifier = "BarWait"
-        coverLabel.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.lightGray, thickness: 0.5)
+        
         
         //Setup nib for custom cells
         let nib = UINib(nibName: "EntryThreeRowTableViewCell", bundle: nil)
         entries.register(nib, forCellReuseIdentifier: "EntryThreeCell")
-        setHeightsBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,8 +34,21 @@ class BarController: BaseCategoryController {
         fetchEntries()
     }
     
-    func setHeightsBar(){
-        coverLabel.frame.origin.y = averageLabel.frame.maxY
+    override func initLists() {
+        super.initLists()
+        self.covers = []
+    }
+    
+    override func setHeights() {
+        super.setHeights()
+        coverLabel.frame.origin.y = entryLabel.frame.origin.y
+        coverAmount.frame.origin.y = averageLabel.frame.origin.y
+        ratings.frame.origin.y = averageLabel.frame.maxY + 5
+        
+        //Overriding from super functio
+        divider.frame.origin.y = ratings.frame.maxY + 20
+        entries.frame.origin.y = divider.frame.origin.y + divider.frame.height
+        entries.frame.size.height = self.view.frame.height - entries.frame.origin.y
     }
     
     override func fetchEntries(){
@@ -60,29 +75,36 @@ class BarController: BaseCategoryController {
         ref.child("Categories").child(categoryType).child(name).child("Average Wait Time").observe(.value) { (snapshot) in
             let averageWaitTime = snapshot.value as! String
             if(averageWaitTime == "N/A"){
-                self.averageLabel.text = "   Average Wait: \(averageWaitTime)"
+                self.averageLabel.text = "n/a"
             } else {
-                self.averageLabel.text = "   Average Wait: \(averageWaitTime) mins"
+                self.averageLabel.text = "\(averageWaitTime) min"
             }
         }
         
         ref.child("Categories").child(categoryType).child(name).child("Most Frequent Cover").observe(.value) { (snapshot) in
             let cover = snapshot.value as! String
             if(cover == "N/A"){
-                self.coverLabel.text = "   Cover: \(cover)"
+                self.coverAmount.text = "n/a"
             } else {
-                self.coverLabel.text = "   Cover: $\(cover)"
+                self.coverAmount.text = "$\(cover)"
             }
         }
+        
+        ref.child("Categories").child(categoryType).child(name).child("Average Rating").observe(.value) { (snapshot) in
+            let rating = snapshot.value as! String
+            self.ratings.rating = Double(rating)!
+        }
+        
     }
         
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EntryThreeCell", for: indexPath) as! EntryThreeRowTableViewCell
         
         cell.mainLabel.text = userNames[indexPath.row] as? String
-        cell.firstInfoLabel.text = "Wait time \(entriesList[indexPath.row]) mins"
-        cell.secondInfoLabel.text = "Cover: $\(covers[indexPath.row])"
-        cell.thirdInfoLabel.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
+        cell.firstInfoLabel.text = "\(entriesList[indexPath.row]) min"
+        cell.secondInfoLabel.text = "$\(covers[indexPath.row])"
+        cell.thirdInfoLabel.text = "\(reportedTimes[indexPath.row]) min ago"
+        cell.thirdInfoLabel.textColor = UIColor.lightGray
         return cell
     }
     

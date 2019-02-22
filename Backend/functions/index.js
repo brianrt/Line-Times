@@ -441,7 +441,7 @@ function refreshSingleRestaurant(i, restaurants, category, data, currentTime){
 				var waitTime = parseInt(entry["Wait Time"]);
 				averageWaitTime += waitTime;
 			}
-			averageWaitTime = (averageWaitTime / entryKeys.length).toFixed(1);
+			averageWaitTime = Math.trunc(averageWaitTime / entryKeys.length);
 			averageWaitTimeText = averageWaitTime.toString();
 		}
 
@@ -470,10 +470,12 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 	if(entryDataCandidate == undefined){
 		return admin.database().ref(`Categories/${category}/${bar}/Average Wait Time`).set("N/A").then(() => {
 			return admin.database().ref(`Categories/${category}/${bar}/Most Frequent Cover`).set("N/A").then(() => {
-	            if(i < bars.length-1){
-	                i = i+1;
-	                return refreshSingleBar(i, bars, category, data, currentTime);
-	            }
+				return admin.database().ref(`Categories/${category}/${bar}/Average Rating`).set("0.0").then(() => {
+		            if(i < bars.length-1){
+		                i = i+1;
+		                return refreshSingleBar(i, bars, category, data, currentTime);
+		            }
+		        });
 	        });                      
         });
 	} else {
@@ -481,6 +483,7 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 		var entryKeys = Object.keys(entryData);
 		var averageWaitTimeText = "N/A";
 		var mostFrequentCoverText = "N/A";
+		var averageRating = 0.0;
 		if(entryKeys.length > 0){
 			var averageWaitTime = 0.0;
 			var covers = [];
@@ -489,10 +492,13 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 				var entry = entryData[entryKey];
 				var waitTime = parseInt(entry["Wait Time"]);
 				var cover = parseFloat(entry["Cover"]);
+				var rating = parseFloat(entry["Rating"]);
 				covers.push(cover);
 				averageWaitTime += waitTime;
+				averageRating += rating;
 			}
-			averageWaitTime = (averageWaitTime / entryKeys.length).toFixed(1);
+			averageWaitTime = Math.trunc(averageWaitTime / entryKeys.length);
+			averageRating = (averageRating / entryKeys.length).toFixed(1);
 			var mostFrequentCover = mode(covers).toFixed(2);
 
 			averageWaitTimeText = averageWaitTime.toString()
@@ -500,12 +506,14 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 		}
 		return admin.database().ref(`Categories/${category}/${bar}/Average Wait Time`).set(averageWaitTimeText).then(() => {
 			return admin.database().ref(`Categories/${category}/${bar}/Most Frequent Cover`).set(mostFrequentCoverText).then(() => {
-				return admin.database().ref(`Categories/${category}/${bar}/Entries`).set(entryData).then(() => {
-		            if(i < bars.length-1){
-		                i = i+1;
-		                return refreshSingleBar(i, bars, category, data, currentTime);
-		            }
-       			});
+				return admin.database().ref(`Categories/${category}/${bar}/Average Rating`).set(averageRating).then(() => {
+					return admin.database().ref(`Categories/${category}/${bar}/Entries`).set(entryData).then(() => {
+			            if(i < bars.length-1){
+			                i = i+1;
+			                return refreshSingleBar(i, bars, category, data, currentTime);
+			            }
+	       			});
+				});
        		});
         });
 	}

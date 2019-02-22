@@ -24,20 +24,41 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var averageLabel: UILabel!
     @IBOutlet var recordEntry: UIButton!
     @IBOutlet var recordLabel: UILabel!
+    @IBOutlet weak var venueName: UILabel!
+    @IBOutlet weak var entryLabel: UILabel!
+    @IBOutlet weak var divider: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = name
+        venueName.text = name
         entries.delegate = self
         entries.dataSource = self
         
-        averageLabel.layer.borderColor = UIColor.lightGray.cgColor
-        averageLabel.layer.borderWidth = 0.5
+//        averageLabel.layer.borderColor = UIColor.lightGray.cgColor
+//        averageLabel.layer.borderWidth = 0.5
+        
+
+        
+        //Add button shadow
+        recordEntry.backgroundColor = UIColor.white
+        recordEntry.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        recordEntry.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        recordEntry.layer.masksToBounds = false
+        recordEntry.layer.shadowRadius = 2.0
+        recordEntry.layer.shadowOpacity = 1.0
+        recordEntry.layer.cornerRadius = 15
+        recordEntry.layer.borderColor = UIColor.black.cgColor
+        recordEntry.layer.borderWidth = 1.0
+        
+        
+        divider.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor(red: 0.13, green: 0.46, blue: 0.85, alpha: 1.0), thickness: 2.0)
+        
+        
         
         setHeights()
     }
     
-    func initLists() {
+func initLists() {
         userNames = []
         entriesList = []
         reportedTimes = []
@@ -45,11 +66,21 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     
     func setHeights(){
         let topY = self.navigationController?.navigationBar.frame.maxY
-        let offset = topY! - recordEntry.frame.minY
-        recordEntry.frame.origin.y += offset
-        recordLabel.frame.origin.y += offset
-        averageLabel.frame.origin.y += offset
-        entries.frame.origin.y += offset
+//        let offset = topY! - recordEntry.frame.minY
+//        recordEntry.frame.origin.y += offset
+//        recordLabel.frame.origin.y += offset
+//        averageLabel.frame.origin.y += offset
+//        entries.frame.origin.y += offset
+        
+        
+        venueName.frame.origin.y = topY! + 20
+        entryLabel.frame.origin.y = venueName.frame.maxY + 30
+        recordEntry.frame.origin.y = entryLabel.frame.origin.y
+        averageLabel.frame.origin.y = entryLabel.frame.origin.y + entryLabel.frame.height
+        divider.frame.origin.y = averageLabel.frame.maxY + 30
+        entries.frame.origin.y = divider.frame.origin.y + divider.frame.height
+        entries.frame.size.height = self.view.frame.height - entries.frame.origin.y
+        
     }
     
     override func didReceiveMemoryWarning() {

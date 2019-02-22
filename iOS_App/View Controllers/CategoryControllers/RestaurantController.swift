@@ -45,9 +45,9 @@ class RestaurantController: BaseCategoryController {
         ref.child("Categories").child(categoryType).child(name).child("Average Wait Time").observe(.value) { (snapshot) in
             let averageWaitTime = snapshot.value as! String
             if(averageWaitTime == "N/A"){
-                self.averageLabel.text = "   Average Wait: \(averageWaitTime)"
+                self.averageLabel.text = "n/a"
             } else {
-                self.averageLabel.text = "   Average Wait: \(averageWaitTime) mins"
+                self.averageLabel.text = "\(averageWaitTime) min"
             }
         }
     }
@@ -56,8 +56,11 @@ class RestaurantController: BaseCategoryController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EntryTwoCell", for: indexPath) as! EntryTwoRowTableViewCell
         
         cell.mainLabel.text = userNames[indexPath.row] as? String
-        cell.firstInfoLabel.text = "\(entriesList[indexPath.row]) mins"
-        cell.secondInfoLabel.text = "\(reportedTimes[indexPath.row]) mins ago"
+        cell.firstInfoLabel.text = "\(entriesList[indexPath.row]) min"
+        cell.rightArrow.isHidden = true
+        cell.secondInfoLabel.text = "\(reportedTimes[indexPath.row]) min ago"
+        cell.secondInfoLabel.frame.size.width = 150
+        cell.secondInfoLabel.textColor = UIColor.lightGray
         return cell
     }
     

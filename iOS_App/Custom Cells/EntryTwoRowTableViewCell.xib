@@ -47,6 +47,7 @@
             <connections>
                 <outlet property="firstInfoLabel" destination="Dib-Ph-Mu2" id="fUE-y6-165"/>
                 <outlet property="mainLabel" destination="CBg-Fe-SQB" id="gpz-2k-ZqB"/>
+                <outlet property="rightArrow" destination="VHA-yD-aS1" id="zjb-SY-M0s"/>
                 <outlet property="secondInfoLabel" destination="4Wr-PI-DHr" id="V8j-We-Px4"/>
             </connections>
             <point key="canvasLocation" x="-108.5" y="210.5"/>

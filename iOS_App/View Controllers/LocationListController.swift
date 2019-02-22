@@ -40,6 +40,8 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         //Setup search bar
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
+        searchBar.barTintColor = UIColor(red: 0.13, green: 0.46, blue: 0.85, alpha: 1.0)
+        
         
         //Setup nib for custom cells
         var nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
@@ -150,10 +152,12 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
                     }
                 }
             case 1:
-                if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? BarController {
-                    if let navigator = navigationController {
-                        viewController.name = displayedLocations[indexPath.row - 1] as! String
-                        navigator.pushViewController(viewController, animated: true)
+                if indexPath.row > 0 {
+                    if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: category) as? BarController {
+                        if let navigator = navigationController {
+                            viewController.name = displayedLocations[indexPath.row - 1] as! String
+                            navigator.pushViewController(viewController, animated: true)
+                        }
                     }
                 }
             case 2:
@@ -196,6 +200,7 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TopLabelCell", for: indexPath) as! TwoRowTopLabelTableViewCell
                 cell.firstInfoLabel.text = "wait time"
                 cell.secondInfoLabel.text = "cover"
+                cell.selectionStyle = UITableViewCellSelectionStyle.none
                 return cell
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! EntryTwoRowTableViewCell
@@ -242,4 +247,3 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         view.endEditing(true)
     }
 }
-

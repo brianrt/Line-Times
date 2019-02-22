@@ -197,6 +197,13 @@
 			path = WaitTimeControllers;
 			sourceTree = "<group>";
 		};
+		28347A3D2219157E0052E46B /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
 		285045A920B7D82200CF2291 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +225,7 @@
 				28A68E881FFB54980055193B /* Assets.xcassets */,
 				28A68E8A1FFB54980055193B /* LaunchScreen.storyboard */,
 				2816AA5F207F3BE80014B8DC /* Custom Segues */,
+				28347A3D2219157E0052E46B /* Custom Views */,
 				28D90E552030BC3D00D1EA36 /* Custom Cells */,
 				285045A920B7D82200CF2291 /* Utilities */,
 				28A68E801FFB54980055193B /* View Controllers */,
@@ -457,6 +465,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Wait-Times/Pods-Wait-Times-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -464,6 +473,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",

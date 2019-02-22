@@ -14,7 +14,7 @@ class EntryTwoRowTableViewCell: UITableViewCell {
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var firstInfoLabel: UILabel!
     @IBOutlet weak var secondInfoLabel: UILabel!
-    
+    @IBOutlet weak var rightArrow: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
