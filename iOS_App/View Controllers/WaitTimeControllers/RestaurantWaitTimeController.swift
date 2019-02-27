@@ -12,27 +12,14 @@ import CoreLocation
 
 class RestaurantWaitTimeController: BasePickerWaitTimeController {
     
-    
-    
-    @IBOutlet weak var costField: UITextField!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryType = "Restaurants"
-        
-        costField.delegate = self
-        costField.addDoneButtonToKeyboard(myAction:  #selector(self.costField.resignFirstResponder))
     }
     
     override func addItemsToSubmit(items: [String : Any]) -> [String : Any] {
         var augmentedItems = items
-        var cost = "0.00"
-        if(self.costField.text != ""){
-            cost = self.costField.text!
-        }
         augmentedItems["WaitTime"] = NSString(format: "%d", self.waitTime)
-        augmentedItems["Cost"] = cost
         return augmentedItems
     }
 

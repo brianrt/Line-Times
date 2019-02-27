@@ -23,7 +23,6 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var entries: UITableView!
     @IBOutlet var averageLabel: UILabel!
     @IBOutlet var recordEntry: UIButton!
-    @IBOutlet var recordLabel: UILabel!
     @IBOutlet weak var venueName: UILabel!
     @IBOutlet weak var entryLabel: UILabel!
     @IBOutlet weak var divider: UIView!
@@ -113,9 +112,9 @@ func initLists() {
         ref.child("Categories").child(categoryType).child(name).child("Average Busy Rating").observe(.value) { (snapshot) in
             let averageBusyRating = snapshot.value as! String
             if(averageBusyRating == "N/A"){
-                self.averageLabel.text = "   How Full: \(averageBusyRating)"
+                self.averageLabel.text = "n/a"
             } else {
-                self.averageLabel.text = "   How Full: \(averageBusyRating)/10"
+                self.averageLabel.text = "\(averageBusyRating)/10"
             }
         }
     }
@@ -140,8 +139,11 @@ func initLists() {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EntryTwoCell", for: indexPath) as! EntryTwoRowTableViewCell
         
         cell.mainLabel.text = userNames[indexPath.row] as? String
-        cell.firstInfoLabel.text = "How Busy \(entriesList[indexPath.row])/10"
-        cell.secondInfoLabel.text = "Reported \(reportedTimes[indexPath.row]) mins ago"
+        cell.firstInfoLabel.text = "\(entriesList[indexPath.row])/10"
+        cell.secondInfoLabel.text = "\(reportedTimes[indexPath.row]) min ago"
+        cell.secondInfoLabel.textColor = UIColor.lightGray
+        cell.secondInfoLabel.frame.size.width = 150
+        cell.rightArrow.isHidden = true
         return cell
     }
     

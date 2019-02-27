@@ -216,7 +216,7 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
             cell.mainLabel.text = displayLocations[indexPath.row] as? String
-            cell.infoLabel.text = "Busy: \(displayEntries[indexPath.row])"
+            cell.infoLabel.text = "(\(displayEntries[indexPath.row]))"
             return cell
         }
     }

@@ -168,7 +168,6 @@ app.post('/:userSubmitEntry', (req, res) => {
 					switch(category){
 						case "Restaurants":
 							items["Wait Time"] = body.WaitTime;
-							items["Cost"] = body.Cost;
 							break;
 						case "Bars":
 							items["Wait Time"] = body.WaitTime;
@@ -483,9 +482,10 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 		var entryKeys = Object.keys(entryData);
 		var averageWaitTimeText = "N/A";
 		var mostFrequentCoverText = "N/A";
-		var averageRating = 0.0;
+		var averageRatingText = "0.0";
 		if(entryKeys.length > 0){
 			var averageWaitTime = 0.0;
+			var averageRating = 0.0;
 			var covers = [];
 			for(var j = 0; j < entryKeys.length; j++){
 				var entryKey = entryKeys[j];
@@ -503,10 +503,11 @@ function refreshSingleBar(i, bars, category, data, currentTime){
 
 			averageWaitTimeText = averageWaitTime.toString()
 			mostFrequentCoverText = mostFrequentCover.toString()
+			averageRatingText = averageRating.toString();
 		}
 		return admin.database().ref(`Categories/${category}/${bar}/Average Wait Time`).set(averageWaitTimeText).then(() => {
 			return admin.database().ref(`Categories/${category}/${bar}/Most Frequent Cover`).set(mostFrequentCoverText).then(() => {
-				return admin.database().ref(`Categories/${category}/${bar}/Average Rating`).set(averageRating).then(() => {
+				return admin.database().ref(`Categories/${category}/${bar}/Average Rating`).set(averageRatingText).then(() => {
 					return admin.database().ref(`Categories/${category}/${bar}/Entries`).set(entryData).then(() => {
 			            if(i < bars.length-1){
 			                i = i+1;
@@ -549,7 +550,7 @@ function refreshSingleDefault(i, defaults, category, data, currentTime){
 				var busyRating = parseInt(entry["Busy Rating"]);
 				averageBusyRating += busyRating;
 			}
-			averageBusyRating = (averageBusyRating / entryKeys.length).toFixed(1);
+			averageBusyRating = Math.trunc(averageBusyRating / entryKeys.length);
 			averageBusyRatingText = averageBusyRating.toString();
 		}
 		return admin.database().ref(`Categories/${category}/${name}/Average Busy Rating`).set(averageBusyRatingText).then(() => {

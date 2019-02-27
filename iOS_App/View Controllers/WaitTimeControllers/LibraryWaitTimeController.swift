@@ -15,6 +15,7 @@ class LibraryWaitTimeController: BaseWaitTimeController {
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryType = "Libraries"
+        busyField.layer.addBorder(edge: .bottom, color: UIColor.darkGray, thickness: 1.0)
         busyField.delegate = self
         busyField.addDoneButtonToKeyboard(myAction:  #selector(self.busyField.resignFirstResponder))
         

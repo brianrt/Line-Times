@@ -26,8 +26,8 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
     var userSubmitEntryUrl = URL(string: "https://us-central1-time-crunch-e109e.cloudfunctions.net/app/userSubmitEntry")
 
     
-    @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var comments: UITextView!
+    @IBOutlet weak var submitButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,10 @@ class BaseWaitTimeController: UIViewController, UITextFieldDelegate, UITextViewD
         comments.layer.borderColor = UIColor.lightGray.cgColor
         comments.layer.borderWidth = 0.5;
         comments.delegate = self
+        
+        submitButton.layer.cornerRadius = 15
+        submitButton.layer.borderColor = UIColor.black.cgColor
+        submitButton.layer.borderWidth = 1.0
         initiateLocation()
     }
     

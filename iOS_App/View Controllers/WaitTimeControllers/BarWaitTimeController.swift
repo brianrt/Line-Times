@@ -7,32 +7,36 @@
 //
 
 import UIKit
+import Cosmos
 
-class BarWaitTimeController: BasePickerWaitTimeController {
+class BarWaitTimeController: BasePickerWaitTimeController  {
     
     @IBOutlet weak var coverField: UITextField!
-    @IBOutlet weak var ratingField: UITextField!
+    @IBOutlet weak var ratingsDisplay: CosmosView!
+    @IBOutlet weak var ratingsSlider: UISlider!
+    
+    var rating = 2.5
     
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryType = "Bars"
         
+        coverField.layer.addBorder(edge: .bottom, color: UIColor.gray, thickness: 1.0)
         coverField.delegate = self
         coverField.addDoneButtonToKeyboard(myAction:  #selector(self.coverField.resignFirstResponder))
-        
-        ratingField.delegate = self
-        ratingField.addDoneButtonToKeyboard(myAction:  #selector(self.ratingField.resignFirstResponder))
     }
+    
+    @IBAction func ratingsSliderChanged(_ sender: UISlider) {
+        rating = Double(ratingsSlider.value)
+        ratingsDisplay.rating = rating
+    }
+    
     
     override func addItemsToSubmit(items: [String : Any]) -> [String : Any] {
         var augmentedItems = items
         var cover = 0.0
         if(self.coverField.text != ""){
             cover = Double(self.coverField.text!)!
-        }
-        var rating = 1.0
-        if(self.ratingField.text != ""){
-            rating = Double(self.ratingField.text!)!
         }
         augmentedItems["WaitTime"] = NSString(format: "%d", self.waitTime)
         augmentedItems["Cover"] = cover
