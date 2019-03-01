@@ -2,27 +2,6 @@ const functions = require('firebase-functions'),
       admin = require('firebase-admin')
 
 admin.initializeApp();
-const {OAuth2Client} = require('google-auth-library');
-const {google} = require('googleapis');
-
-// TODO: Use firebase functions:config:set to configure your googleapi object:
-// googleapi.client_id = Google API client ID,
-// googleapi.client_secret = client secret, and
-// googleapi.sheet_id = Google Sheet id (long string in middle of sheet URL)
-const CONFIG_CLIENT_ID = functions.config().googleapi.client_id;
-const CONFIG_CLIENT_SECRET = functions.config().googleapi.client_secret;
-const CONFIG_SHEET_ID = functions.config().googleapi.sheet_id;
-
-// setup for OauthCallback
-const DB_TOKEN_PATH = '/api_tokens';
-
-// The OAuth Callback Redirect.
-const FUNCTIONS_REDIRECT = `https://us-central1-${process.env.GCLOUD_PROJECT}.cloudfunctions.net/oauthcallback`;
-
-// setup for authGoogleAPI
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-const functionsOauthClient = new OAuth2Client(CONFIG_CLIENT_ID, CONFIG_CLIENT_SECRET,
-  FUNCTIONS_REDIRECT);
 
 // Radius for location check
 var radius = 50.0 //meters
@@ -38,32 +17,6 @@ const express = require('express');
 const cookieParser = require('cookie-parser')();
 const cors = require('cors')({origin: true});
 const app = express();
-
-// visit the URL for this Function to request tokens
-exports.authgoogleapi = functions.https.onRequest((req, res) => {
-  res.set('Cache-Control', 'private, max-age=0, s-maxage=0');
-  res.redirect(functionsOauthClient.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-    prompt: 'consent',
-  }));
-});
-
-// after you grant access, you will be redirected to the URL for this Function
-// this Function stores the tokens to your Firebase database
-exports.oauthcallback = functions.https.onRequest((req, res) => {
-	res.set('Cache-Control', 'private, max-age=0, s-maxage=0');
-	const code = req.query.code;
-	functionsOauthClient.getToken(code, (err, tokens) => {
-	    // Now tokens contains an access_token and an optional refresh_token. Save them.
-	    if (err) {
-	      	return res.status(400).send(err);
-	    }
-	    return admin.database().ref(DB_TOKEN_PATH).set(tokens).then(() => {
-			return res.status(200).send('App successfully configured with new Credentials. ' + 'You can now close this page.');
-		});
-  	});
-});
 
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
@@ -238,55 +191,6 @@ function getToday(){
 	    mm='0'+mm;
 	} 
 	return mm+'/'+dd+'/'+yyyy;
-}
-
-// trigger function to write to Sheet when new data comes in on Feedback
-exports.appendFeedbackToSpreadsheet = functions.database.ref(`Feedback/{ITEM}`).onCreate((snapshot, context) => {
-	const newRecord = snapshot.val();
-	console.log(newRecord);
-	var userID = Object.keys(snapshot.val())[0];
-	var email = context.auth.token.email
-	var feedback = newRecord[userID];
-	var date = getToday();
-	return appendPromise({
-		spreadsheetId: CONFIG_SHEET_ID,
-		range: 'A:D',
-		valueInputOption: 'USER_ENTERED',
-		insertDataOption: 'INSERT_ROWS',
-		resource: {
-			values: [[userID, email, feedback, date]],
-		},
-	});
-});
-
-// accepts an append request, returns a Promise to append it, enriching it with auth
-function appendPromise(requestWithoutAuth) {
-  return new Promise((resolve, reject) => {
-    return getAuthorizedClient().then((client) => {
-      const sheets = google.sheets('v4');
-      const request = requestWithoutAuth;
-      request.auth = client;
-      return sheets.spreadsheets.values.append(request, (err, response) => {
-        if (err) {
-          console.log(`The API returned an error: ${err}`);
-          return reject(err);
-        }
-        return resolve(response.data);
-      });
-    });
-  });
-}
-
-// checks if oauthTokens have been loaded into memory, and if not, retrieves them
-function getAuthorizedClient() {
-  if (oauthTokens) {
-    return Promise.resolve(functionsOauthClient);
-  }
-  return admin.database().ref(DB_TOKEN_PATH).once('value').then((snapshot) => {
-    oauthTokens = snapshot.val();
-    functionsOauthClient.setCredentials(oauthTokens);
-    return functionsOauthClient;
-  });
 }
 
 // Requests a timestamp so we don't have to rely on the local device time
