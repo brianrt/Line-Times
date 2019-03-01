@@ -14,6 +14,7 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var revealButtonItem: UIBarButtonItem!
     @IBOutlet weak var feedback: UITextView!
+    @IBOutlet weak var submitButton: UIButton!
     
     var ref = Database.database().reference()
     var defaults: UserDefaults!
@@ -38,6 +39,10 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         feedback.delegate = self
         feedback.becomeFirstResponder()
         defaults = UserDefaults.standard
+        
+        submitButton.layer.cornerRadius = 15
+        submitButton.layer.borderColor = UIColor.black.cgColor
+        submitButton.layer.borderWidth = 1.0
     }
     
     @IBAction func submitPressed(_ sender: Any) {

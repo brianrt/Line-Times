@@ -91,16 +91,32 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.appDelegate.isRegistering = true
             Auth.auth().createUser(withEmail: email!, password: password!) { user, error in
                 if error == nil { //Successfuly created user
-                    //Send a validation email here
-                    Auth.auth().currentUser?.sendEmailVerification { (error) in
-                        if error == nil {
-                            self.defaults.set(username, forKey: "username")
-                            self.displayVerificationAlert(title: "Email Verification Sent", message: "Thank you for registering! Please check your email and click on the link to verify your account. You will not be able to use the app until you have verified your email!")
-                        } else {
-                            self.displayAlert(message: (error?.localizedDescription)!)
-                            self.appDelegate.isRegistering = false
-                        }
-                    }
+                    //Here we will upload the username and 0 for count entries
+                    let entryCount = 0
+                    
+                    self.defaults.set(0, forKey: "entryCount")
+                    self.defaults.set(user?.uid, forKey: "userId")
+                    self.defaults.set(username, forKey: "username")
+                    
+                    self.ref.child("Users").child((user?.uid)!).setValue(["username": username!, "entryCount": entryCount], withCompletionBlock: { (error, reference) in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    
+                    
+                    //SKIP EMAIL VERIFICATION FOR V1
+//                    Auth.auth().currentUser?.sendEmailVerification { (error) in
+//                        if error == nil {
+//                            self.defaults.set(username, forKey: "username")
+//                            self.displayVerificationAlert(title: "Email Verification Sent", message: "Thank you for registering! Please check your email and click on the link to verify your account. You will not be able to use the app until you have verified your email!")
+//                        } else {
+//                            self.displayAlert(message: (error?.localizedDescription)!)
+//                            self.appDelegate.isRegistering = false
+//                        }
+//                    }
+                    //END SKIP
+                    
+                    
+                    
                 } else {
                     self.displayAlert(message: (error?.localizedDescription)!)
                     self.appDelegate.isRegistering = false

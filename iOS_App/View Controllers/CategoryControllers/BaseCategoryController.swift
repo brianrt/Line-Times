@@ -14,6 +14,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     var userNames: NSMutableArray = []
     var entriesList: NSMutableArray = []
     var reportedTimes: NSMutableArray = []
+    var comments: NSMutableArray = []
     var name = ""
     var ref = Database.database().reference()
     var averageValue = 0
@@ -32,6 +33,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         venueName.text = name
         entries.delegate = self
         entries.dataSource = self
+        entries.allowsSelection = false
         
 //        averageLabel.layer.borderColor = UIColor.lightGray.cgColor
 //        averageLabel.layer.borderWidth = 0.5
@@ -51,16 +53,14 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         
         
         divider.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor(red: 0.13, green: 0.46, blue: 0.85, alpha: 1.0), thickness: 2.0)
-        
-        
-        
         setHeights()
     }
     
-func initLists() {
+    func initLists() {
         userNames = []
         entriesList = []
         reportedTimes = []
+        comments = []
     }
     
     func setHeights(){
@@ -95,6 +95,7 @@ func initLists() {
                 let entry = child.value as? NSDictionary
                 self.userNames.add(entry!["Username"]!)
                 self.entriesList.add(entry!["Busy Rating"]!)
+                self.comments.add(entry!["Comment"]!)
                 
                 //Convert timestamp to time since in minutes
                 let timeStamp = entry!["Time Stamp"] as! Double

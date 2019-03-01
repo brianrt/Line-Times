@@ -56,7 +56,8 @@ class CategoryController: UITableViewController {
                     self.appDelegate.isRegistering = false
                 } else {
                     user?.reload(completion: { (error) in
-                        if (user?.isEmailVerified)!{
+//                        if (user?.isEmailVerified)!{ //TEMP DISABLING EMAIL VERIFICATION
+                        if (true) {
                             self.defaults.set(user?.uid, forKey: "userId")
                             self.ref.child("Users").child((user?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
                                 // Get user values

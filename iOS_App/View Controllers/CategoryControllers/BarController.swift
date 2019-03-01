@@ -59,6 +59,7 @@ class BarController: BaseCategoryController {
                 self.userNames.add(entry!["Username"]!)
                 self.entriesList.add(entry!["Wait Time"]!)
                 self.covers.add(entry!["Cover"]!)
+                self.comments.add(entry!["Comment"]!)
                 
                 //Convert timestamp to time since in minutes
                 let timeStamp = entry!["Time Stamp"] as! Double
