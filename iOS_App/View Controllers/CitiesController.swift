@@ -49,8 +49,11 @@ class CitiesController: UITableViewController {
                     let value = snapshot.value as? NSDictionary
                     let username = value?["username"] as? String
                     let entryCount = value?["entryCount"] as? Int
+                    let referalCode = value?["referalCode"] as? Int
+                    
                     self.defaults.set(username, forKey: "username")
                     self.defaults.set(entryCount, forKey: "entryCount")
+                    self.defaults.set(referalCode, forKey: "referralCode")
                 })
             } else {
                 let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "login") as? LoginViewController

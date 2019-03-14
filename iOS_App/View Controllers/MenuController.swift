@@ -79,6 +79,7 @@ class MenuController: UITableViewController {
                 self.defaults.set(nil, forKey: "userId")
                 self.defaults.set(nil, forKey: "username")
                 self.defaults.set(nil, forKey: "entryCount")
+                self.defaults.set(nil, forKey: "referralCode")
                 self.revealViewController().setFront(appDelegate.champaignViewController, animated: false) //TEMP
             } catch (let error) {
                 displayAlert(message: "Sign out failed: \(error)")

@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import MessageUI
 import FirebaseDatabase
 
-class AccountViewController: UIViewController, UITextFieldDelegate {
+class AccountViewController: UIViewController, UITextFieldDelegate, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet var revealButtonItem: UIBarButtonItem!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -18,6 +19,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var userNameText: UITextField!
     @IBOutlet weak var numEntriesLabel: UILabel!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var referAFriend: UIButton!
     
     var defaults: UserDefaults!
     var username: String!
@@ -48,6 +50,25 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
             segmentedControl.selectedSegmentIndex = 0;
         }
         self.title = "Account"
+        
+        //Button UI
+        
+        save.backgroundColor = .clear
+        save.layer.cornerRadius = 5
+        save.layer.borderWidth = 0.25
+        save.layer.borderColor = UIColor.lightGray.cgColor
+        
+        edit.backgroundColor = .clear
+        edit.layer.cornerRadius = 5
+        edit.layer.borderWidth = 0.25
+        edit.layer.borderColor = UIColor.lightGray.cgColor
+        
+        referAFriend.backgroundColor = .clear
+        referAFriend.layer.cornerRadius = 10
+        referAFriend.layer.borderWidth = 0.25
+        referAFriend.layer.borderColor = UIColor.lightGray.cgColor
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,8 +117,27 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
+    @IBAction func referAFriendPressed(_ sender: Any) {
+        
+        if !MFMessageComposeViewController.canSendText() {
+            displayAlert(message: "SMS services are not available")
+        } else {
+            let composeVC = MFMessageComposeViewController()
+            composeVC.messageComposeDelegate = self
+            
+            // Configure the fields of the interface.
+            composeVC.body = "Hello from California!"
+            
+            // Present the view controller modally.
+            self.present(composeVC, animated: true, completion: nil)
+        }
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         savePressed(sender: nil)
         return true

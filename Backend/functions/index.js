@@ -209,6 +209,53 @@ exports.cleanUserData = functions.https.onRequest((req, res)=>{
 	});
 });
 
+// Generate a random 5 character code
+function generateCode(length) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < length; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+// Create a referral code for new accounts
+exports.createReferalCode = functions.auth.user().onCreate((user) => {
+	var code = generateCode(5);
+	return addUniqueCodeForUser(code, user.uid);
+});
+
+function addUniqueCodeForUser(code, userID) {
+	return admin.database().ref(`ReferralCodes/${code}`).once("value", snapshot => {
+		if (snapshot.exists()) {
+			var newCode = generateCode(5);
+			return addUniqueCodeForUser(newCode, userID);
+		} else {
+			return admin.database().ref(`ReferralCodes/${code}`).set(userID).then(() => {
+				return admin.database().ref(`Users/${userID}/referralCode`).set(code);
+			});
+		}
+	});
+}
+
+// Delete user from Users if accout is deleted
+exports.deleteUser = functions.auth.user().onDelete((user) => {
+	return admin.database().ref(`Users/${user.uid}/referralCode`).once("value", snapshot => {
+		if (snapshot.exists()) {
+			var code = snapshot.val();
+			return admin.database().ref(`ReferralCodes/${code}`).remove().then(() => {
+				return deleteUserHelper(user.uid);
+			});
+		} else {
+			return deleteUserHelper(user.uid);
+		}
+	});
+});
+
+function deleteUserHelper(userId) {
+	return admin.database().ref(`Users/${userId}`).remove();
+}
 
 function cleanSingleUser(i, userIDs, data, currentTime, res){
 	console.log(i);
