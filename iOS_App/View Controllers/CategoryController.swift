@@ -24,7 +24,7 @@ class CategoryController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Champaign"
+        self.title = "LineTimes"
         
         //Setup nib for custom cells
         let nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
@@ -46,6 +46,15 @@ class CategoryController: UITableViewController {
             revealButtonItem.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+        
+        //Add shadows
+        self.navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        self.navigationController?.navigationBar.layer.shadowRadius = 4.0
+        self.navigationController?.navigationBar.layer.shadowOpacity = 1.0
+        self.navigationController?.navigationBar.layer.masksToBounds = false
+        self.navigationController?.navigationBar.isTranslucent = false
+
     }
 
     func checkIfLoggedIn() {

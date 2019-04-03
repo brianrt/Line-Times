@@ -20,10 +20,12 @@ class AccountViewController: UIViewController, UITextFieldDelegate, MFMessageCom
     @IBOutlet weak var numEntriesLabel: UILabel!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var referAFriend: UIButton!
+    @IBOutlet weak var yourCode: UILabel!
     
     var defaults: UserDefaults!
     var username: String!
     var ref = Database.database().reference()
+    var referralCode: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +39,17 @@ class AccountViewController: UIViewController, UITextFieldDelegate, MFMessageCom
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         defaults = UserDefaults.standard
+//        defaults.set(false, forKey: "LocationEnabled")
         username = defaults.object(forKey: "username") as! String
-        numEntriesLabel.text = String((defaults.object(forKey: "entryCount") as? Int)!)
+        
+        //Add observer for entryCount
+        let userID = defaults.object(forKey: "userId") as? String
+        self.ref.child("Users").child(userID!).child("entryCount").observe(.value) { (snapshot) in
+            let entryCount = snapshot.value as? Int
+            self.numEntriesLabel.text = String(entryCount!)
+            self.defaults.set(entryCount, forKey: "entryCount")
+        }
+        
         setCanEdit()
         edit.addTarget(self, action: #selector(editPressed), for: .touchUpInside)
         save.addTarget(self, action: #selector(savePressed), for: .touchUpInside)
@@ -68,7 +79,19 @@ class AccountViewController: UIViewController, UITextFieldDelegate, MFMessageCom
         referAFriend.layer.borderWidth = 0.25
         referAFriend.layer.borderColor = UIColor.lightGray.cgColor
         
-        
+        //Grab the referal code from
+        let referralCodePossible = self.defaults.object(forKey: "referralCode")
+        if referralCodePossible == nil {
+            let userId = self.defaults.object(forKey: "userId") as? String
+            self.ref.child("Users").child(userId!).child("referralCode").observeSingleEvent(of: .value, with: { (snapshot) in
+                self.referralCode = snapshot.value as! String
+                self.defaults.set(self.referralCode, forKey: "referralCode")
+                self.yourCode.text = self.referralCode
+            })
+        } else {
+            referralCode = referralCodePossible as! String
+            yourCode.text = referralCode
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -126,7 +149,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate, MFMessageCom
             composeVC.messageComposeDelegate = self
             
             // Configure the fields of the interface.
-            composeVC.body = "Hello from California!"
+            composeVC.body = "Try out Line Time! https://testflight.apple.com/join/KuyDmwWe. Use my code: " + referralCode
             
             // Present the view controller modally.
             self.present(composeVC, animated: true, completion: nil)

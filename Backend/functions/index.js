@@ -159,6 +159,38 @@ app.post('/:userSubmitEntry', (req, res) => {
 	});
 });
 
+// Function for handling a useReferralCode request
+// Gets the user associated with the code and adds 10 to that code
+// Returns initial entryCount of user being created
+exports.useReferralCode = functions.https.onCall((data, context) => {
+	const referralCode = data.ReferralCode;
+
+	//Check if referral code exists
+	const getReferredUserPromise = admin.database().ref(`ReferralCodes/${referralCode}`).once("value");
+	return getReferredUserPromise.then(snapshot => {
+		if (snapshot.exists()) {
+			//Add 10 to the UserID associated with the referral code
+			var userID = snapshot.val();
+			const getReferredUserEntryCountPromise = admin.database().ref(`Users/${userID}/entryCount`).once("value");
+			return getReferredUserEntryCountPromise.then(snap => {
+				var entryCount = snap.val();
+				entryCount += 10;
+				const setEntryCountPromise = admin.database().ref(`Users/${userID}/entryCount`).set(entryCount);
+				return setEntryCountPromise.then(() => {
+					return {
+						entryCount: 10
+					};
+				});
+			});
+				
+		} else {
+			return {
+				entryCount: 0
+			};
+		}
+	});
+});
+
 function calculateDistance(lat1,lon1,lat2,lon2) {
 	var R = 6371; // Radius of the earth in km
 	var dLat = deg2rad(lat2-lat1);  // deg2rad below

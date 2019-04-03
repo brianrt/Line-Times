@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
+import FirebaseFunctions
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     
@@ -16,11 +17,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmField: UITextField!
+    @IBOutlet weak var referralCodeField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     
     var defaults: UserDefaults!
     var ref = Database.database().reference()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var sv: UIView! //spinner
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +39,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         confirmField.delegate = self
         usernameField.delegate = self
+        referralCodeField.delegate = self
+        
         
         //Set underlines to text fields
         emailField.underlined()
         passwordField.underlined()
         confirmField.underlined()
         usernameField.underlined()
+        referralCodeField.underlined()
         
         //Set button UI
         registerButton.backgroundColor = .clear
@@ -81,6 +87,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let password = passwordField.text
         let confirm = confirmField.text
         let username = usernameField.text
+        let referralCode = referralCodeField.text
         
         if password?.count == 0 {
             displayAlert(message: "Please enter a valid password")
@@ -88,19 +95,47 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         else if password != confirm {
             displayAlert(message: "Please ensure passwords match")
         } else {
+            sv = UIViewController.displaySpinner(onView: self.view) //Start spinner
             self.appDelegate.isRegistering = true
             Auth.auth().createUser(withEmail: email!, password: password!) { user, error in
+                let user = Auth.auth().currentUser
                 if error == nil { //Successfuly created user
-                    //Here we will upload the username and 0 for count entries
-                    let entryCount = 0
                     
-                    self.defaults.set(0, forKey: "entryCount")
-                    self.defaults.set(user?.uid, forKey: "userId")
-                    self.defaults.set(username, forKey: "username")
-                    
-                    self.ref.child("Users").child((user?.uid)!).setValue(["username": username!, "entryCount": entryCount], withCompletionBlock: { (error, reference) in
-                        self.navigationController?.popViewController(animated: true)
-                    })
+                    // Reward user of referral code if one is provided
+                    if (!(referralCode?.isEmpty)!) {
+                        
+                        let functions = Functions.functions()
+                        let parameters = ["ReferralCode": referralCode as Any] as [String : Any]
+                        functions.httpsCallable("useReferralCode").call(parameters) { (result, error) in
+                            if let entryCount = (result?.data as? [String: Any])?["entryCount"] as? Int {
+                                self.defaults.set(entryCount, forKey: "entryCount")
+                                self.defaults.set(user?.uid, forKey: "userId")
+                                self.defaults.set(username, forKey: "username")
+
+                                let keyUsername = "Users/"+(user?.uid)!+"/username"
+                                let keyEntryCount = "Users/"+(user?.uid)!+"/entryCount"
+                                let childUpdates = [keyUsername: username!, keyEntryCount: entryCount] as [String : Any]
+                                self.ref.updateChildValues(childUpdates, withCompletionBlock: { (error, reference) in
+                                    self.navigationController?.popViewController(animated: true)
+                                })
+                            }
+                        }
+                        
+                    } else {
+                        //Here we will upload the username and 0 for count entries
+                        let entryCount = 0
+
+                        self.defaults.set(entryCount, forKey: "entryCount")
+                        self.defaults.set(user?.uid, forKey: "userId")
+                        self.defaults.set(username, forKey: "username")
+
+                        let keyUsername = "Users/"+(user?.uid)!+"/username"
+                        let keyEntryCount = "Users/"+(user?.uid)!+"/entryCount"
+                        let childUpdates = [keyUsername: username!, keyEntryCount: entryCount] as [String : Any]
+                        self.ref.updateChildValues(childUpdates, withCompletionBlock: { (error, reference) in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    }
                     
                     
                     //SKIP EMAIL VERIFICATION FOR V1
@@ -118,6 +153,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                     
                     
                 } else {
+                    UIViewController.removeSpinner(spinner: self.sv) //remove spinner
                     self.displayAlert(message: (error?.localizedDescription)!)
                     self.appDelegate.isRegistering = false
                 }

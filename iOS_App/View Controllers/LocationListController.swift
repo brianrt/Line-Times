@@ -12,6 +12,7 @@ import FirebaseDatabase
 class LocationListController: UITableViewController, UISearchBarDelegate {
     var categoryIndex = 0
     var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
+    var searchBarFrame: CGRect!
     
     //holds the venue name
     var locations: NSMutableArray = []
@@ -40,8 +41,12 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         //Setup search bar
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
-        searchBar.barTintColor = UIColor(red: 0.13, green: 0.46, blue: 0.85, alpha: 1.0)
-        
+        searchBar.barTintColor = UIColor(red: 0.23, green: 0.44, blue: 1, alpha: 1.0)
+        searchBarFrame = searchBar.frame
+        searchBar.frame = CGRect(x: searchBar.frame.origin.x, y: searchBar.frame.origin.y, width: searchBar.frame.width, height: 0)
+
+        //Setup magnifying glass in nav bar
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
         
         //Setup nib for custom cells
         var nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
@@ -54,6 +59,36 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         let topNib = UINib(nibName: "TwoRowTopLabelTableViewCell", bundle: nil)
         tableView.register(topNib, forCellReuseIdentifier: "TopLabelCell")
         fetchLocations()
+    }
+
+    @objc func searchTapped() {
+        //Hide magnifying glass
+        self.navigationItem.rightBarButtonItem = nil
+        
+        //Remove shadow from nav bar
+        self.navigationController?.navigationBar.layer.shadowOpacity = 0.0
+        self.searchBar.frame = self.searchBarFrame
+        
+        //Add shadows to searchBar
+        self.searchBar.layer.shadowColor = UIColor.black.cgColor
+        self.searchBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        self.searchBar.layer.shadowRadius = 4.0
+        self.searchBar.layer.shadowOpacity = 1.0
+        self.searchBar.layer.masksToBounds = false
+        self.searchBar.isTranslucent = false
+        self.tableView.reloadData()
+    
+        //Show keyboard
+        self.searchBar.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.layer.shadowOpacity = 1.0
+        searchBar.frame = CGRect(x: searchBar.frame.origin.x, y: searchBar.frame.origin.y, width: searchBar.frame.width, height: 0)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
+        searchBar.text = ""
+        isSearching = false
+        self.tableView.reloadData()
     }
     
     func initLists(){
