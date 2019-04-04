@@ -18,6 +18,7 @@
 		285045A820B6AC1200CF2291 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285045A720B6AC1200CF2291 /* AccountViewController.swift */; };
 		285045AB20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */; };
 		285045AD20B7FAC900CF2291 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 285045AC20B7FAC700CF2291 /* GoogleService-Info.plist */; };
+		2850CF742255D1FC00AD96AB /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2850CF732255D1FC00AD96AB /* CommentView.swift */; };
 		287B85E8216DC8EA00BA951F /* UnverifiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287B85E7216DC8EA00BA951F /* UnverifiedViewController.swift */; };
 		2882E0E720DA282800A93CDB /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0E620DA282800A93CDB /* CategoryTableViewCell.xib */; };
 		2882E0E920DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */; };
@@ -80,6 +81,7 @@
 		285045A720B6AC1200CF2291 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		285045AA20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+DoneCancelToolbar.swift"; sourceTree = "<group>"; };
 		285045AC20B7FAC700CF2291 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2850CF732255D1FC00AD96AB /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		287B85E7216DC8EA00BA951F /* UnverifiedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnverifiedViewController.swift; sourceTree = "<group>"; };
 		2882E0E620DA282800A93CDB /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
 		2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryTwoRowTableViewCell.xib; sourceTree = "<group>"; };
@@ -153,6 +155,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		2806F00E2255D1A0009CCBC1 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				2850CF732255D1FC00AD96AB /* CommentView.swift */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
 		2810898D20D7722800EBEDB0 /* Wait-TimesTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +227,7 @@
 				28A68E851FFB54980055193B /* Main.storyboard */,
 				28A68E881FFB54980055193B /* Assets.xcassets */,
 				28A68E8A1FFB54980055193B /* LaunchScreen.storyboard */,
+				2806F00E2255D1A0009CCBC1 /* Custom Views */,
 				2816AA5F207F3BE80014B8DC /* Custom Segues */,
 				28D90E552030BC3D00D1EA36 /* Custom Cells */,
 				285045A920B7D82200CF2291 /* Utilities */,
@@ -509,6 +520,7 @@
 				285045AB20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift in Sources */,
 				28D90E5B2030EC0F00D1EA36 /* AboutViewController.swift in Sources */,
 				28E9B6CD20B8D2F000C5CE72 /* LoginViewController.swift in Sources */,
+				2850CF742255D1FC00AD96AB /* CommentView.swift in Sources */,
 				28E9B6D020B8D5AA00C5CE72 /* ReplaceSegue.swift in Sources */,
 				285045A820B6AC1200CF2291 /* AccountViewController.swift in Sources */,
 				28CD66AA20B699E2001657F7 /* LibraryWaitTimeController.swift in Sources */,

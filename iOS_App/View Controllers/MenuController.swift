@@ -25,6 +25,9 @@ class MenuController: UITableViewController {
         self.navigationController?.navigationBar.layer.shadowOpacity = 1.0
         self.navigationController?.navigationBar.layer.masksToBounds = false
         self.navigationController?.navigationBar.isTranslucent = false
+        
+        //Adjust tableview UI
+        super.tableView.isScrollEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +62,9 @@ class MenuController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
         
+        //Adjust font
         cell.textLabel?.text = menuItems[indexPath.row]
+        cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 17)
         
         return cell
     }

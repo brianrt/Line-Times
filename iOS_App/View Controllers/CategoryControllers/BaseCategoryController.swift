@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseDatabase
 
-class BaseCategoryController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BaseCategoryController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     var userNames: NSMutableArray = []
     var entriesList: NSMutableArray = []
@@ -20,6 +20,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     var averageValue = 0
     var categoryType = ""
     var waitIdentifier = ""
+    var commentView: CommentView!
     
     @IBOutlet var entries: UITableView!
     @IBOutlet var averageLabel: UILabel!
@@ -33,6 +34,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         venueName.text = name
         entries.delegate = self
         entries.dataSource = self
+        setupLongPressGesture()
         entries.allowsSelection = false
         
 //        averageLabel.layer.borderColor = UIColor.lightGray.cgColor
@@ -51,9 +53,39 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
         recordEntry.layer.borderColor = UIColor.black.cgColor
         recordEntry.layer.borderWidth = 1.0
         
+        // For iPhone 5
+        let buttonFrame = recordEntry.frame
+        if (buttonFrame.maxX > view.frame.width) {
+            recordEntry.frame = CGRect(x: buttonFrame.minX-30, y: buttonFrame.minY, width: buttonFrame.width-10, height: buttonFrame.height)
+        }
+        
         
         divider.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor(red: 0.13, green: 0.46, blue: 0.85, alpha: 1.0), thickness: 2.0)
         setHeights()
+    }
+    
+    func setupLongPressGesture() {
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
+        longPressGesture.minimumPressDuration = 0.1
+        longPressGesture.delegate = self
+        self.entries.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
+        let touchPoint = gestureRecognizer.location(in: self.entries)
+        if let indexPath = entries.indexPathForRow(at: touchPoint) {
+            let comment = comments[indexPath.row] as! String
+            if (!comment.isEmpty) {
+                if gestureRecognizer.state == .began {
+                    let height: CGFloat = 80
+                    self.commentView = CommentView(frame: CGRect(x: 20, y: touchPoint.y+height-30, width: view.frame.width-40, height: height))
+                    commentView.setComment(comment: comments[indexPath.row] as! String)
+                    self.view.addSubview(commentView);
+                } else if (gestureRecognizer.state == .ended) {
+                    self.commentView.removeFromSuperview()
+                }
+            }
+        }
     }
     
     func initLists() {
@@ -65,14 +97,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     
     func setHeights(){
         let topY = self.navigationController?.navigationBar.frame.maxY
-//        let offset = topY! - recordEntry.frame.minY
-//        recordEntry.frame.origin.y += offset
-//        recordLabel.frame.origin.y += offset
-//        averageLabel.frame.origin.y += offset
-//        entries.frame.origin.y += offset
-        
-        
-        venueName.frame.origin.y = topY! + 20
+        venueName.frame.origin.y = topY! - 40
         entryLabel.frame.origin.y = venueName.frame.maxY + 30
         recordEntry.frame.origin.y = entryLabel.frame.origin.y
         averageLabel.frame.origin.y = entryLabel.frame.origin.y + entryLabel.frame.height
@@ -134,6 +159,12 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
     }
+    
+//    //Display comment when pressed
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//
+//    }
     
     //The standard cellForRowAt function for Library, Dining Hall, Gym
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

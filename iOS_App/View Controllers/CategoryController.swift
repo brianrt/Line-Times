@@ -47,7 +47,7 @@ class CategoryController: UITableViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
-        //Add shadows
+        //Add shadows to nav bar
         self.navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         self.navigationController?.navigationBar.layer.shadowRadius = 4.0

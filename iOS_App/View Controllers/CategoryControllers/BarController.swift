@@ -27,6 +27,12 @@ class BarController: BaseCategoryController {
         //Setup nib for custom cells
         let nib = UINib(nibName: "EntryThreeRowTableViewCell", bundle: nil)
         entries.register(nib, forCellReuseIdentifier: "EntryThreeCell")
+        
+        //For smaller iPhone
+        if (recordEntry.frame.width < 100) {
+            let buttonFrame = recordEntry.frame
+            recordEntry.frame = CGRect(x: buttonFrame.minX-75, y: venueName.frame.minY-5, width: buttonFrame.width+65, height: buttonFrame.height)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -10,6 +10,7 @@ import UIKit
 
 class AboutViewController: UIViewController {
     
+    @IBOutlet weak var aboutText: UILabel!
     @IBOutlet var revealButtonItem: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,18 @@ class AboutViewController: UIViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         self.title = "About"
+        
+        //Add shadows to nav bar
+        self.navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        self.navigationController?.navigationBar.layer.shadowRadius = 4.0
+        self.navigationController?.navigationBar.layer.shadowOpacity = 1.0
+        self.navigationController?.navigationBar.layer.masksToBounds = false
+        self.navigationController?.navigationBar.isTranslucent = false
+        
+        //Adjust y of text
+        let topY = self.navigationController?.navigationBar.frame.maxY
+        aboutText.frame.origin.y = topY! - 40
     }
     
     override func didReceiveMemoryWarning() {

@@ -92,6 +92,14 @@ class AccountViewController: UIViewController, UITextFieldDelegate, MFMessageCom
             referralCode = referralCodePossible as! String
             yourCode.text = referralCode
         }
+        
+        //Add shadows to nav bar
+        self.navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        self.navigationController?.navigationBar.layer.shadowRadius = 4.0
+        self.navigationController?.navigationBar.layer.shadowOpacity = 1.0
+        self.navigationController?.navigationBar.layer.masksToBounds = false
+        self.navigationController?.navigationBar.isTranslucent = false
     }
     
     override func didReceiveMemoryWarning() {
