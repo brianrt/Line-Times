@@ -65,6 +65,13 @@ class CategoryController: UITableViewController {
                     self.appDelegate.isRegistering = false
                 } else {
                     user?.reload(completion: { (error) in
+                        //Check here if it's the first time launching the app
+                        if self.defaults.object(forKey: "appHasBeenLaunched") == nil {
+                            self.displayAlert(title: "Welcome to LineTimes!", message: "Every entry you make will add to your points. The more points you have, the better your odds for getting a reward like a weekly gift card drawing!")
+                            self.defaults.set(true, forKey: "appHasBeenLaunched")
+                        }
+                        
+                        
 //                        if (user?.isEmailVerified)!{ //TEMP DISABLING EMAIL VERIFICATION
                         if (true) {
                             self.defaults.set(user?.uid, forKey: "userId")
@@ -136,6 +143,12 @@ class CategoryController: UITableViewController {
     
     func displayAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func displayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

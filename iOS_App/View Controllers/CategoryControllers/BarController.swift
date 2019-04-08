@@ -17,6 +17,8 @@ class BarController: BaseCategoryController {
     @IBOutlet weak var ratings: CosmosView!
     
     var covers: NSMutableArray = []
+    var barNameButton: UIButton!
+    var specialsButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +33,10 @@ class BarController: BaseCategoryController {
         //For smaller iPhone
         if (recordEntry.frame.width < 100) {
             let buttonFrame = recordEntry.frame
-            recordEntry.frame = CGRect(x: buttonFrame.minX-75, y: venueName.frame.minY-5, width: buttonFrame.width+65, height: buttonFrame.height)
+            recordEntry.frame = CGRect(x: buttonFrame.minX-50, y: coverLabel.frame.maxY+5, width: buttonFrame.width+55, height: buttonFrame.height)
         }
+        
+        setSpecialsButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +59,43 @@ class BarController: BaseCategoryController {
         divider.frame.origin.y = ratings.frame.maxY + 20
         entries.frame.origin.y = divider.frame.origin.y + divider.frame.height
         entries.frame.size.height = self.view.frame.height - entries.frame.origin.y
+    }
+    
+    func setSpecialsButtons() {
+        let yPos: CGFloat = 0.0
+        barNameButton = UIButton(frame: CGRect(x: 0.0, y: yPos, width: view.frame.width/2.0 , height: 65.0))
+        specialsButton = UIButton(frame: CGRect(x: view.frame.width/2, y: yPos, width: view.frame.width/2 , height: 65.0))
+        
+        // Style the buttons
+        barNameButton.layer.addBorder(edge: .bottom, color: UIColor.black, thickness: 0.5)
+        barNameButton.layer.addBorder(edge: .right, color: UIColor.black, thickness: 0.5)
+        barNameButton.setTitleColor(UIColor.black, for: .normal)
+        barNameButton.backgroundColor = UIColor(red: 0.94, green: 0.972, blue: 1.0, alpha: 1.0)
+        barNameButton.addTarget(self, action: #selector(barSelected), for: .touchUpInside)
+        
+        specialsButton.layer.addBorder(edge: .bottom, color: UIColor.black, thickness: 0.5)
+        specialsButton.setTitleColor(UIColor.black, for: .normal)
+        specialsButton.backgroundColor = UIColor.white
+        specialsButton.addTarget(self, action: #selector(specialsSelected), for: .touchUpInside)
+        
+        barNameButton.setTitle(name, for: .normal)
+        specialsButton.setTitle("Specials", for: .normal)
+        view.addSubview(barNameButton)
+        view.addSubview(specialsButton)
+    }
+    
+    @objc func barSelected() {
+        UIView.animate(withDuration: 0.15) {
+            self.barNameButton.backgroundColor = UIColor(red: 0.94, green: 0.972, blue: 1.0, alpha: 1.0)
+            self.specialsButton.backgroundColor = UIColor.white
+        }
+    }
+    
+    @objc func specialsSelected() {
+        UIView.animate(withDuration: 0.15) {
+            self.barNameButton.backgroundColor = UIColor.white
+            self.specialsButton.backgroundColor = UIColor(red: 0.94, green: 0.972, blue: 1.0, alpha: 1.0)
+        }
     }
     
     override func fetchEntries(){
