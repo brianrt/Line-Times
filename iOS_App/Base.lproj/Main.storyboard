@@ -760,7 +760,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cover" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwx-YM-lQS">
-                                        <rect key="frame" x="210" y="0.0" width="53" height="25"/>
+                                        <rect key="frame" x="210" y="0.0" width="51" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -817,6 +817,7 @@
                     <connections>
                         <outlet property="averageLabel" destination="KlU-ZM-ZFP" id="pJK-wU-19O"/>
                         <outlet property="coverAmount" destination="3I1-NP-cx7" id="hyZ-Gp-5wE"/>
+                        <outlet property="coverDivider" destination="bwx-YM-lQS" id="1nr-9h-5wO"/>
                         <outlet property="coverLabel" destination="crV-9G-g9f" id="v2O-Nv-iEY"/>
                         <outlet property="divider" destination="08k-Ou-yoB" id="Ixg-Iu-XaX"/>
                         <outlet property="entries" destination="dV2-nw-rLz" id="wLT-0x-H15"/>
@@ -824,6 +825,7 @@
                         <outlet property="ratings" destination="EGq-9l-x8z" id="q47-Ue-pbz"/>
                         <outlet property="recordEntry" destination="qoF-Au-Y4K" id="Hh0-Lg-dyN"/>
                         <outlet property="venueName" destination="bng-SJ-4bL" id="eIR-jb-jBy"/>
+                        <outlet property="waitTimeDivider" destination="ScJ-qX-4Gt" id="yUj-8z-mpn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Vl-ij-VIk" userLabel="First Responder" sceneMemberID="firstResponder"/>

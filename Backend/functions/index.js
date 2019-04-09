@@ -191,6 +191,25 @@ exports.useReferralCode = functions.https.onCall((data, context) => {
 	});
 });
 
+// Function for returning specials for a given bar on the current day
+exports.getSpecials = functions.https.onCall((data, context) => {
+	const barName = data.Bar;
+	const today = data.Today;
+	const getSpecialsPromise = admin.database().ref(`Categories/Bars/${barName}/Specials/${today}`).once("value");
+	return getSpecialsPromise.then(snapshot => {
+		if (snapshot.exists()) {
+			var todaysSpecials = snapshot.val();
+			return {
+				specials: todaysSpecials
+			};
+		} else {
+			return {
+				specials: "None today"
+			};
+		}
+	});
+});
+
 function calculateDistance(lat1,lon1,lat2,lon2) {
 	var R = 6371; // Radius of the earth in km
 	var dLat = deg2rad(lat2-lat1);  // deg2rad below

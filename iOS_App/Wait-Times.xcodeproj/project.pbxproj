@@ -54,6 +54,8 @@
 		28E9B6CB20B8D0E600C5CE72 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E9B6CA20B8D0E600C5CE72 /* User.swift */; };
 		28E9B6CD20B8D2F000C5CE72 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E9B6CC20B8D2F000C5CE72 /* LoginViewController.swift */; };
 		28E9B6D020B8D5AA00C5CE72 /* ReplaceSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E9B6CF20B8D5AA00C5CE72 /* ReplaceSegue.swift */; };
+		28F9B90A225C630D00FFC46A /* SpecialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F9B909225C630D00FFC46A /* SpecialsView.swift */; };
+		28F9B90C225C737000FFC46A /* DayOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F9B90B225C737000FFC46A /* DayOfWeek.swift */; };
 		556E8E0496340AE343CADAFE /* Pods_Wait_Times.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11C4714D563AB1A919531FB /* Pods_Wait_Times.framework */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +124,8 @@
 		28E9B6CA20B8D0E600C5CE72 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		28E9B6CC20B8D2F000C5CE72 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		28E9B6CF20B8D5AA00C5CE72 /* ReplaceSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceSegue.swift; sourceTree = "<group>"; };
+		28F9B909225C630D00FFC46A /* SpecialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialsView.swift; sourceTree = "<group>"; };
+		28F9B90B225C737000FFC46A /* DayOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayOfWeek.swift; sourceTree = "<group>"; };
 		61AF143A6AD3B95A51672346 /* Pods-Wait-Times.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wait-Times.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wait-Times/Pods-Wait-Times.release.xcconfig"; sourceTree = "<group>"; };
 		C155F2DA3207C9B4CFAB2E7C /* Pods-Wait-Times.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wait-Times.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wait-Times/Pods-Wait-Times.debug.xcconfig"; sourceTree = "<group>"; };
 		E11C4714D563AB1A919531FB /* Pods_Wait_Times.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wait_Times.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				2850CF732255D1FC00AD96AB /* CommentView.swift */,
+				28F9B909225C630D00FFC46A /* SpecialsView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -215,6 +220,7 @@
 				28E9B6CA20B8D0E600C5CE72 /* User.swift */,
 				28ADB49120D24AC700500798 /* SpinnerExtension.swift */,
 				2882E0EE20DAF15500A93CDB /* BorderExtension.swift */,
+				28F9B90B225C737000FFC46A /* DayOfWeek.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -515,6 +521,7 @@
 				2816AA61207F4E640014B8DC /* EntryTwoRowTableViewCell.swift in Sources */,
 				2882E0ED20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift in Sources */,
 				28ADB49220D24AC700500798 /* SpinnerExtension.swift in Sources */,
+				28F9B90A225C630D00FFC46A /* SpecialsView.swift in Sources */,
 				28A68E841FFB54980055193B /* MenuController.swift in Sources */,
 				28A68E821FFB54980055193B /* AppDelegate.swift in Sources */,
 				285045AB20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift in Sources */,
@@ -524,6 +531,7 @@
 				28E9B6D020B8D5AA00C5CE72 /* ReplaceSegue.swift in Sources */,
 				285045A820B6AC1200CF2291 /* AccountViewController.swift in Sources */,
 				28CD66AA20B699E2001657F7 /* LibraryWaitTimeController.swift in Sources */,
+				28F9B90C225C737000FFC46A /* DayOfWeek.swift in Sources */,
 				28A68E9A1FFB62130055193B /* CitiesController.swift in Sources */,
 				28CD66A820B699E2001657F7 /* GymWaitTimeController.swift in Sources */,
 				28A68EA31FFB705E0055193B /* LocationListController.swift in Sources */,

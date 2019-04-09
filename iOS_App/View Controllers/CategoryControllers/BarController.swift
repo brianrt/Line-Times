@@ -15,10 +15,13 @@ class BarController: BaseCategoryController {
     @IBOutlet weak var coverLabel: UILabel!
     @IBOutlet weak var coverAmount: UILabel!
     @IBOutlet weak var ratings: CosmosView!
+    @IBOutlet weak var waitTimeDivider: UILabel!
+    @IBOutlet weak var coverDivider: UILabel!
     
     var covers: NSMutableArray = []
     var barNameButton: UIButton!
     var specialsButton: UIButton!
+    var specialsView: SpecialsView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +36,11 @@ class BarController: BaseCategoryController {
         //For smaller iPhone
         if (recordEntry.frame.width < 100) {
             let buttonFrame = recordEntry.frame
-            recordEntry.frame = CGRect(x: buttonFrame.minX-50, y: coverLabel.frame.maxY+5, width: buttonFrame.width+55, height: buttonFrame.height)
+            recordEntry.frame = CGRect(x: buttonFrame.minX-50, y: coverLabel.frame.maxY+20, width: buttonFrame.width+55, height: buttonFrame.height)
         }
         
         setSpecialsButtons()
+        setSpecialsView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +92,10 @@ class BarController: BaseCategoryController {
         UIView.animate(withDuration: 0.15) {
             self.barNameButton.backgroundColor = UIColor(red: 0.94, green: 0.972, blue: 1.0, alpha: 1.0)
             self.specialsButton.backgroundColor = UIColor.white
+            self.entries.isHidden = false
+            self.specialsView.isHidden = true
+            self.waitTimeDivider.isHidden = false
+            self.coverDivider.isHidden = false
         }
     }
     
@@ -95,7 +103,18 @@ class BarController: BaseCategoryController {
         UIView.animate(withDuration: 0.15) {
             self.barNameButton.backgroundColor = UIColor.white
             self.specialsButton.backgroundColor = UIColor(red: 0.94, green: 0.972, blue: 1.0, alpha: 1.0)
+            self.entries.isHidden = true
+            self.specialsView.isHidden = false
+            self.waitTimeDivider.isHidden = true
+            self.coverDivider.isHidden = true
         }
+    }
+    
+    func setSpecialsView() {
+        specialsView = SpecialsView(frame: CGRect(x: 0, y: divider.frame.maxY, width: view.frame.width, height: view.frame.height - divider.frame.maxY))
+        specialsView.setSpecials(barName: name)
+        specialsView.isHidden = true
+        view.addSubview(specialsView)
     }
     
     override func fetchEntries(){

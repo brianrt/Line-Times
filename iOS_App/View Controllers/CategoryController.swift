@@ -14,7 +14,7 @@ import FirebaseDatabase
 
 class CategoryController: UITableViewController {
     var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
-    var counts = [46,6,7,6,2]
+    var counts = [46,7,7,6,2]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
      //TEMP
