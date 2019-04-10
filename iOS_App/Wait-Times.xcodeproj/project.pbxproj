@@ -738,7 +738,7 @@
 				DEVELOPMENT_TEAM = C87K5L3794;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Wait-Times/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TimeCrunch.TimeCrunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -762,7 +762,7 @@
 				DEVELOPMENT_TEAM = C87K5L3794;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Wait-Times/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TimeCrunch.TimeCrunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";

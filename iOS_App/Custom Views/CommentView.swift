@@ -15,10 +15,10 @@ class CommentView: UIView {
         self.layer.masksToBounds = false
         self.layer.shadowRadius = 2.0
         self.layer.shadowOpacity = 1.0
-        self.layer.cornerRadius = 0
+        self.layer.cornerRadius = 8.0
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 0.5
-        self.backgroundColor=UIColor.white
+        self.backgroundColor = UIColor(red: 0.94, green: 0.99, blue: 0.98, alpha: 1.0)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -26,12 +26,16 @@ class CommentView: UIView {
     }
     
     func setComment(comment: String) {
+        if (comment.isEmpty) {
+            self.isHidden = true
+        }
         let label = UILabel()
         label.frame = CGRect(x: 5, y: 5, width: self.frame.width - 10, height: self.frame.height-10)
         label.textAlignment = .center
         label.text = comment
-        label.font = UIFont(name: "AvenirNext-Regular", size: 15)
+        label.font = UIFont(name: "Demascus-Regular", size: 15)
         label.numberOfLines = 3
         self.addSubview(label)
     }
+    
 }

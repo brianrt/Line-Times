@@ -19,11 +19,13 @@ class SpecialsView: UIView {
     }
     
     func setSpecials(barName: String) {
+        let sv = UIViewController.displaySpinner(onView: self) //Start spinner
         let functions = Functions.functions()
         let today = getToday()
         let parameters = ["Bar": barName as Any, "Today": today as Any] as [String : Any]
         functions.httpsCallable("getSpecials").call(parameters) { (result, error) in
             if let todaysSpecials = (result?.data as? [String: Any])?["specials"] as? String {
+                UIViewController.removeSpinner(spinner: sv) //remove spinner
                 let dayLabel = UILabel()
                 dayLabel.frame = CGRect(x: 20, y: 15, width: self.frame.width - 20, height: 40)
                 dayLabel.text = today!

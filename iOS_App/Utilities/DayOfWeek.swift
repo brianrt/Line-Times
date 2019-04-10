@@ -8,6 +8,8 @@
 
 extension Date {
     func dayNumberOfWeek() -> Int? {
-        return Calendar.current.dateComponents([.weekday], from: self).weekday
+        let date = Calendar.current.date(byAdding: .hour, value: -2, to: self)
+        let weekDay = Calendar.current.component(.weekday, from: date!)
+        return weekDay
     }
 }

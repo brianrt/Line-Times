@@ -21,6 +21,7 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     var categoryType = ""
     var waitIdentifier = ""
     var commentView: CommentView!
+    var previousIndexRow = 0
     
     @IBOutlet var entries: UITableView!
     @IBOutlet var averageLabel: UILabel!
@@ -74,17 +75,30 @@ class BaseCategoryController: UIViewController, UITableViewDataSource, UITableVi
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
         let touchPoint = gestureRecognizer.location(in: self.entries)
         if let indexPath = entries.indexPathForRow(at: touchPoint) {
-            let comment = comments[indexPath.row] as! String
-            if (!comment.isEmpty) {
-                if gestureRecognizer.state == .began {
+            if (gestureRecognizer.state == .began) {
+                let height: CGFloat = 80
+                self.commentView = CommentView(frame: CGRect(x: 20, y: touchPoint.y+height-30, width: view.frame.width-40, height: height))
+                commentView.setComment(comment: comments[indexPath.row] as! String)
+                previousIndexRow = indexPath.row
+                self.view.addSubview(commentView);
+            } else if (gestureRecognizer.state == .ended) {
+                if (commentView != nil) {
+                    self.commentView.removeFromSuperview()
+                }
+            } else if (gestureRecognizer.state == .changed) {
+                if (indexPath.row != previousIndexRow) {
+                    previousIndexRow = indexPath.row
                     let height: CGFloat = 80
+                    if (commentView != nil) {
+                        self.commentView.removeFromSuperview()
+                    }
                     self.commentView = CommentView(frame: CGRect(x: 20, y: touchPoint.y+height-30, width: view.frame.width-40, height: height))
                     commentView.setComment(comment: comments[indexPath.row] as! String)
                     self.view.addSubview(commentView);
-                } else if (gestureRecognizer.state == .ended) {
-                    self.commentView.removeFromSuperview()
                 }
             }
+        } else if (commentView != nil) {
+            commentView.removeFromSuperview()
         }
     }
     

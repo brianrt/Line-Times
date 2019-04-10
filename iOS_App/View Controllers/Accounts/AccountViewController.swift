@@ -156,11 +156,15 @@ class AccountViewController: UIViewController, UITextFieldDelegate, MFMessageCom
             let composeVC = MFMessageComposeViewController()
             composeVC.messageComposeDelegate = self
             
-            // Configure the fields of the interface.
-            composeVC.body = "Try out Line Time! https://testflight.apple.com/join/KuyDmwWe. Use my code: " + referralCode
-            
-            // Present the view controller modally.
-            self.present(composeVC, animated: true, completion: nil)
+            // Fetch the application link message from FireBase
+            self.ref.child("ReferralMessage").observeSingleEvent(of: .value, with: { (snapshot) in
+                let message = snapshot.value as! String
+                // Configure the fields of the interface.
+                composeVC.body = message + " Use my code: " + self.referralCode
+                
+                // Present the view controller modally.
+                self.present(composeVC, animated: true, completion: nil)
+            })
         }
     }
     
