@@ -39,6 +39,9 @@
 		28A68EA31FFB705E0055193B /* LocationListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68EA21FFB705E0055193B /* LocationListController.swift */; };
 		28A68EA51FFB707F0055193B /* RestaurantController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A68EA41FFB707F0055193B /* RestaurantController.swift */; };
 		28ADB49220D24AC700500798 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28ADB49120D24AC700500798 /* SpinnerExtension.swift */; };
+		28C0FE6A226018A500BC4F5A /* EntryTwoRowTableViewBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0FE68226018A500BC4F5A /* EntryTwoRowTableViewBarCell.swift */; };
+		28C0FE6B226018A500BC4F5A /* EntryTwoRowTableViewBarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C0FE69226018A500BC4F5A /* EntryTwoRowTableViewBarCell.xib */; };
+		28C0FE6D22645EFE00BC4F5A /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0FE6C22645EFE00BC4F5A /* PrivacyPolicy.swift */; };
 		28CD669F20B69481001657F7 /* BarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD669E20B69481001657F7 /* BarController.swift */; };
 		28CD66A120B694DF001657F7 /* BarWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD66A020B694DF001657F7 /* BarWaitTimeController.swift */; };
 		28CD66A820B699E2001657F7 /* GymWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CD66A220B699DF001657F7 /* GymWaitTimeController.swift */; };
@@ -108,6 +111,9 @@
 		28A68EA21FFB705E0055193B /* LocationListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListController.swift; sourceTree = "<group>"; };
 		28A68EA41FFB707F0055193B /* RestaurantController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantController.swift; sourceTree = "<group>"; };
 		28ADB49120D24AC700500798 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
+		28C0FE68226018A500BC4F5A /* EntryTwoRowTableViewBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryTwoRowTableViewBarCell.swift; sourceTree = "<group>"; };
+		28C0FE69226018A500BC4F5A /* EntryTwoRowTableViewBarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryTwoRowTableViewBarCell.xib; sourceTree = "<group>"; };
+		28C0FE6C22645EFE00BC4F5A /* PrivacyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicy.swift; sourceTree = "<group>"; };
 		28CD669E20B69481001657F7 /* BarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarController.swift; sourceTree = "<group>"; };
 		28CD66A020B694DF001657F7 /* BarWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarWaitTimeController.swift; sourceTree = "<group>"; };
 		28CD66A220B699DF001657F7 /* GymWaitTimeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GymWaitTimeController.swift; sourceTree = "<group>"; };
@@ -268,6 +274,7 @@
 				282BCB7120C91CBA0055364A /* CategoryControllers */,
 				282BCB7220C91CC70055364A /* WaitTimeControllers */,
 				28A68E931FFB56AF0055193B /* SWRevealViewController */,
+				28C0FE6C22645EFE00BC4F5A /* PrivacyPolicy.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -308,6 +315,8 @@
 				2882E0E620DA282800A93CDB /* CategoryTableViewCell.xib */,
 				2816AA60207F4E640014B8DC /* EntryTwoRowTableViewCell.swift */,
 				2882E0E820DA3A9900A93CDB /* EntryTwoRowTableViewCell.xib */,
+				28C0FE68226018A500BC4F5A /* EntryTwoRowTableViewBarCell.swift */,
+				28C0FE69226018A500BC4F5A /* EntryTwoRowTableViewBarCell.xib */,
 				2882E0EB20DA42A800A93CDB /* EntryThreeRowTableViewCell.swift */,
 				2882E0EA20DA42A800A93CDB /* EntryThreeRowTableViewCell.xib */,
 				2832BEEB2206762B0071D02D /* TwoRowTopLabelTableViewCell.swift */,
@@ -434,6 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28A68E9E1FFB62D00055193B /* reveal-icon@2x.png in Resources */,
+				28C0FE6B226018A500BC4F5A /* EntryTwoRowTableViewBarCell.xib in Resources */,
 				2882E0E720DA282800A93CDB /* CategoryTableViewCell.xib in Resources */,
 				28A68E8C1FFB54980055193B /* LaunchScreen.storyboard in Resources */,
 				28A68E891FFB54980055193B /* Assets.xcassets in Resources */,
@@ -515,6 +525,7 @@
 				283404C620C9059C00E8B7F0 /* BaseCategoryController.swift in Sources */,
 				28CD66A920B699E2001657F7 /* LibraryController.swift in Sources */,
 				28CD66AB20B699E2001657F7 /* DiningHallWaitTimeController.swift in Sources */,
+				28C0FE6A226018A500BC4F5A /* EntryTwoRowTableViewBarCell.swift in Sources */,
 				28D16985217D2B4E009997B0 /* underlineView.swift in Sources */,
 				282D31CA20C8FBE30038F8E0 /* BasePickerWaitTimeController.swift in Sources */,
 				28A68EA11FFB6DB10055193B /* CategoryController.swift in Sources */,
@@ -527,6 +538,7 @@
 				285045AB20B7D84900CF2291 /* UITextField+DoneCancelToolbar.swift in Sources */,
 				28D90E5B2030EC0F00D1EA36 /* AboutViewController.swift in Sources */,
 				28E9B6CD20B8D2F000C5CE72 /* LoginViewController.swift in Sources */,
+				28C0FE6D22645EFE00BC4F5A /* PrivacyPolicy.swift in Sources */,
 				2850CF742255D1FC00AD96AB /* CommentView.swift in Sources */,
 				28E9B6D020B8D5AA00C5CE72 /* ReplaceSegue.swift in Sources */,
 				285045A820B6AC1200CF2291 /* AccountViewController.swift in Sources */,

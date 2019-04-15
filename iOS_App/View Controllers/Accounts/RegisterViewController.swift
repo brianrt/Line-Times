@@ -31,9 +31,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     func customSetup() {
-        //Hide nav bar
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
         //Set text field delegates
         emailField.delegate = self
         passwordField.delegate = self
@@ -58,10 +55,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         defaults = UserDefaults.standard
     }
     
+    @IBAction func didPressTermsOfUse(_ sender: Any) {
+        guard let url = URL(string: "https://app.termly.io/document/terms-of-use-for-website/3940cdca-a047-4b8f-8fd2-495e4986d083") else { return }
+        UIApplication.shared.open(url)
+    }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         // Show the Navigation Bar
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //Hide nav bar
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     @IBAction func didPressContinue(_ sender: Any) {

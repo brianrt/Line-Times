@@ -21,10 +21,12 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
     //entries contains main metrics like wait times or busy ratings, covers is just for bars
     var entries: NSMutableArray = []
     var covers: NSMutableArray = []
+    var ratings: NSMutableArray = []
     
     //filtered versions of main arrays
     var filteredEntries: NSMutableArray = []
     var filteredCovers: NSMutableArray = []
+    var filteredRatings: NSMutableArray = []
     
     //Search bar variables
     @IBOutlet weak var searchBar: UISearchBar!
@@ -51,7 +53,7 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         //Setup nib for custom cells
         var nib = UINib(nibName: "CategoryTableViewCell", bundle: nil)
         if(category == "Bars"){
-            nib = UINib(nibName: "EntryTwoRowTableViewCell", bundle: nil)
+            nib = UINib(nibName: "EntryTwoRowTableViewBarCell", bundle: nil)
         }
         tableView.register(nib, forCellReuseIdentifier: "CategoriesCell")
         
@@ -95,6 +97,7 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         locations = []
         entries = []
         covers = []
+        ratings = []
     }
     
     //Populate the locations array from the database
@@ -119,6 +122,8 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
                     } else {
                         self.entries.add(waitTime+" mins")
                     }
+                    let rating = data["Average Rating"] as! String
+                    self.ratings.add(rating)
                 } else if(self.category == "Restaurants"){
                     let waitTime = data["Average Wait Time"] as! String
                     if(waitTime == "N/A"){
@@ -224,11 +229,14 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
         var displayLocations = locations
         var displayEntries = entries
         var displayCovers = covers
+        var displayRatings = ratings
         
         if isSearching {
             displayLocations = filteredLocations
             displayEntries = filteredEntries
             displayCovers = filteredCovers
+            displayRatings = filteredRatings
+            
         }
         if(category == "Bars"){
             if indexPath.row == 0 {
@@ -238,10 +246,11 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
                 cell.selectionStyle = UITableViewCellSelectionStyle.none
                 return cell
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! EntryTwoRowTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! EntryTwoRowTableViewBarCell
             cell.mainLabel.text = displayLocations[indexPath.row - 1] as? String
             cell.firstInfoLabel.text = "\(displayEntries[indexPath.row - 1])"
             cell.secondInfoLabel.text = "\(displayCovers[indexPath.row - 1])"
+            cell.rating.rating = Double(displayRatings[indexPath.row - 1] as! String)!
             return cell
         } else if(category == "Restaurants"){
             let cell = tableView.dequeueReusableCell(withIdentifier: "CategoriesCell", for: indexPath) as! CategoryTableViewCell
@@ -264,6 +273,7 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
             filteredLocations = []
             filteredEntries = []
             filteredCovers = []
+            filteredRatings = []
             for i in 0..<locations.count {
                 let location = locations[i] as! String
                 if location.lowercased().range(of: searchBar.text!.lowercased()) != nil{
@@ -271,6 +281,7 @@ class LocationListController: UITableViewController, UISearchBarDelegate {
                     filteredEntries.add(entries[i])
                     if covers.count > 0 { //We are at a bar
                         filteredCovers.add(covers[i])
+                        filteredRatings.add(ratings[i])
                     }
                 }
             }
