@@ -44,6 +44,8 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         submitButton.layer.borderColor = UIColor.black.cgColor
         submitButton.layer.borderWidth = 1.0
         
+        feedback.delegate = self
+        
         //Add shadows to nav bar
         self.navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
@@ -68,6 +70,15 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
                 self.revealViewController().setFront(categoryViewController, animated: true)
             }
         }
+    }
+    
+    //Dismiss Keyboard
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     override func didReceiveMemoryWarning() {

@@ -14,7 +14,7 @@ import FirebaseDatabase
 
 class CategoryController: UITableViewController {
     var categories = ["Restaurants", "Bars", "Libraries", "Dining Halls", "Gyms"]
-    var counts = [46,7,7,6,2]
+    var counts = [0,0,0,0,0]
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
      //TEMP
@@ -54,7 +54,21 @@ class CategoryController: UITableViewController {
         self.navigationController?.navigationBar.layer.shadowOpacity = 1.0
         self.navigationController?.navigationBar.layer.masksToBounds = false
         self.navigationController?.navigationBar.isTranslucent = false
-
+        
+        //Fetch the venue counts
+        getVenueCounts()
+    }
+    
+    func getVenueCounts() {
+        self.ref.child("Counts").observeSingleEvent(of: .value, with: {(snapshot) in
+            let data = snapshot.value as? NSDictionary
+            for i in 0..<self.categories.count {
+                let venueCategory = self.categories[i]
+                let count = data![venueCategory] as? Int?
+                self.counts[i] = (count as? Int)!
+            }
+            self.tableView.reloadData()
+        })
     }
 
     func checkIfLoggedIn() {

@@ -10,6 +10,7 @@
 		2810898F20D7722800EBEDB0 /* Wait_TimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2810898E20D7722800EBEDB0 /* Wait_TimesTests.swift */; };
 		2816AA61207F4E640014B8DC /* EntryTwoRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA60207F4E640014B8DC /* EntryTwoRowTableViewCell.swift */; };
 		2816AA63207FD4270014B8DC /* RestaurantWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */; };
+		28266A58226D0A8C00541305 /* PrizesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28266A57226D0A8B00541305 /* PrizesViewController.swift */; };
 		282D31C820C8F72E0038F8E0 /* BaseWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282D31C720C8F72E0038F8E0 /* BaseWaitTimeController.swift */; };
 		282D31CA20C8FBE30038F8E0 /* BasePickerWaitTimeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282D31C920C8FBE30038F8E0 /* BasePickerWaitTimeController.swift */; };
 		2832BEEC2206762B0071D02D /* TwoRowTopLabelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2832BEEA2206762A0071D02D /* TwoRowTopLabelTableViewCell.xib */; };
@@ -78,6 +79,7 @@
 		2810899020D7722800EBEDB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2816AA60207F4E640014B8DC /* EntryTwoRowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryTwoRowTableViewCell.swift; sourceTree = "<group>"; };
 		2816AA62207FD4270014B8DC /* RestaurantWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantWaitTimeController.swift; sourceTree = "<group>"; };
+		28266A57226D0A8B00541305 /* PrizesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrizesViewController.swift; sourceTree = "<group>"; };
 		282D31C720C8F72E0038F8E0 /* BaseWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWaitTimeController.swift; sourceTree = "<group>"; };
 		282D31C920C8FBE30038F8E0 /* BasePickerWaitTimeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePickerWaitTimeController.swift; sourceTree = "<group>"; };
 		2832BEEA2206762A0071D02D /* TwoRowTopLabelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoRowTopLabelTableViewCell.xib; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				28A68E991FFB62130055193B /* CitiesController.swift */,
 				28D90E5A2030EC0F00D1EA36 /* AboutViewController.swift */,
 				289EEFE720F9832E00D01CA8 /* FeedbackViewController.swift */,
+				28266A57226D0A8B00541305 /* PrizesViewController.swift */,
 				28A68EA01FFB6DB10055193B /* CategoryController.swift */,
 				28A68EA21FFB705E0055193B /* LocationListController.swift */,
 				28E9B6D120B9DD8800C5CE72 /* Accounts */,
@@ -551,6 +554,7 @@
 				287B85E8216DC8EA00BA951F /* UnverifiedViewController.swift in Sources */,
 				28CD66A120B694DF001657F7 /* BarWaitTimeController.swift in Sources */,
 				28A68EA51FFB707F0055193B /* RestaurantController.swift in Sources */,
+				28266A58226D0A8C00541305 /* PrizesViewController.swift in Sources */,
 				28D90E572030BE0400D1EA36 /* CategoryTableViewCell.swift in Sources */,
 				289EEFE820F9832E00D01CA8 /* FeedbackViewController.swift in Sources */,
 				28CD669F20B69481001657F7 /* BarController.swift in Sources */,
@@ -750,7 +754,7 @@
 				DEVELOPMENT_TEAM = C87K5L3794;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Wait-Times/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TimeCrunch.TimeCrunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -774,7 +778,7 @@
 				DEVELOPMENT_TEAM = C87K5L3794;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Wait-Times/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TimeCrunch.TimeCrunch;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -4,7 +4,8 @@ const functions = require('firebase-functions'),
 admin.initializeApp();
 
 // Radius for location check
-var radius = 50.0 //meters
+var barRadius = 50.0 //meters
+var defaultRadius = 30.0 //meters
 
 // Time for time check
 var timeInterval = 1800.0 //seconds
@@ -88,7 +89,11 @@ app.post('/:userSubmitEntry', (req, res) => {
 
 		var distance = calculateDistance(userLat,userLon,venueLat,venueLon);
 
-		if (distance < radius || locationDisabled){ // We are at the venue, can continue with our checks
+		var radius = defaultRadius;
+		if (category == "Bars") {
+			radius = barRadius;
+		}
+		if (distance < radius){ // We are at the venue, can continue with our checks
 			// Check for a past entry here for this user in the past 30 minutes
 			return admin.database().ref(`Users/${uid}`).once('value', (snapshot) => {
 				var data = snapshot.val();
@@ -228,21 +233,6 @@ function deg2rad(deg) {
 // Requests need to be authorized by providing an `Authorization` HTTP header
 // with value `Bearer <Firebase ID Token>`.
 exports.app = functions.https.onRequest(app);
-
-function getToday(){
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
-
-	var yyyy = today.getFullYear();
-	if(dd<10){
-	    dd='0'+dd;
-	} 
-	if(mm<10){
-	    mm='0'+mm;
-	} 
-	return mm+'/'+dd+'/'+yyyy;
-}
 
 // Requests a timestamp so we don't have to rely on the local device time
 exports.getTimeStamp = functions.https.onRequest((req, res)=>{
@@ -601,3 +591,89 @@ function mode(array){
     }
     return maxEl;
 }
+
+function getToday(today){
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+
+	var yyyy = today.getFullYear();
+	if(dd<10){
+	    dd='0'+dd;
+	} 
+	if(mm<10){
+	    mm='0'+mm;
+	} 
+	return mm+'/'+dd+'/'+(yyyy-2000);
+}
+
+// Get the date range of the week assuming it's tomorrow since this will be run on Sunday
+function getNextWeekTimeRange() {
+    var start = new Date();
+    start.setDate(start.getDate()+1);
+	var end = new Date(start);
+	end.setDate(end.getDate()+6);
+	return getToday(start) + " - " + getToday(end);
+}
+
+// Function to be run weekly to end the raffle and start the next one
+exports.endWeeklyRaffle = functions.https.onRequest((req, res)=>{
+	var nextDateRangeString = getNextWeekTimeRange();
+	return admin.database().ref('Raffle/CurrentWeek/').once('value', (snapshot) => {
+		var previousDateRangeString = snapshot.val();
+		var previousDateRangeKey = previousDateRangeString.replace(/\//g,"").replace(/ /g,"");
+		return admin.database().ref('Raffle/CurrentWeek').set(nextDateRangeString).then(() => {
+			return admin.database().ref('Users/').once('value', (snapshot) => {
+				var data = snapshot.val();
+				var userIDs = Object.keys(snapshot.val());
+				updateRaffleSingleUser(0, userIDs, data, previousDateRangeKey, res);
+			});
+		});
+	});
+});
+
+// Resets users contributions to 0, subtracts off from entryCount, records entries under /Raffles/<date_range>
+function updateRaffleSingleUser(i, userIDs, data, previousDateRangeKey, res){
+	var userID = userIDs[i];
+	var user = data[userID];
+	var amazonPoints = user["WeeklyRaffle"]["AmazonPoints"];
+	var visaPoints = user["WeeklyRaffle"]["VisaPoints"];
+	var entryCount = user["entryCount"];
+	var totalContribution = amazonPoints + visaPoints;
+	var newEntryCount = Math.max(entryCount - totalContribution, 0);
+	return admin.database().ref(`Raffle/${previousDateRangeKey}/Amazon/${userID}`).set(amazonPoints).then(() => {
+		return admin.database().ref(`Raffle/${previousDateRangeKey}/Visa/${userID}`).set(visaPoints).then(() => {
+			return admin.database().ref(`Users/${userID}/entryCount`).set(newEntryCount).then(() => {
+				return admin.database().ref(`Users/${userID}/WeeklyRaffle/AmazonPoints`).set(0).then(() => {
+					return admin.database().ref(`Users/${userID}/WeeklyRaffle/VisaPoints`).set(0).then(() => {
+						if(i < userIDs.length - 1){
+							i = i + 1;
+							return updateRaffleSingleUser(i, userIDs, data, previousDateRangeKey, res);
+						} else {
+							res.send("Done");
+							return;
+						}
+					});
+				});
+			});
+		});
+	});
+}
+
+// Returns current week range and user information
+exports.getRaffleInfo = functions.https.onCall((data, context) => {
+	const userID = data.userID;
+	const getWeekTimeRangePromise = admin.database().ref(`Raffle/CurrentWeek/`).once("value");
+	return getWeekTimeRangePromise.then(snapshot => {
+		var range = snapshot.val();
+		const getUserRaffleInfoPromise = admin.database().ref(`Users/${userID}`).once("value");
+		return getUserRaffleInfoPromise.then(snapshot => {
+			var user = snapshot.val();
+			return {
+				raffleEnds: range.substring(range.indexOf(" - ")+3),
+				entryCount: user.entryCount,
+				amazonPoints: user.WeeklyRaffle.AmazonPoints,
+				visaPoints: user.WeeklyRaffle.VisaPoints
+			};
+		});
+	});
+});

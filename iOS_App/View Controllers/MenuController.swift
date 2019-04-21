@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 
 class MenuController: UITableViewController {
-    var menuItems = ["Champaign", "About", "Account", "Feedback", "Logout"] //TEMP
+    var menuItems = ["Champaign", "Prizes", "Account", "About", "Feedback", "Logout"] //TEMP
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let defaults = UserDefaults.standard
     var tap: UITapGestureRecognizer!
@@ -81,6 +81,10 @@ class MenuController: UITableViewController {
         else if(menuItems[indexPath.row] == "Account"){
             let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "Account")
             self.revealViewController().setFront(aboutViewController, animated: false)
+        }
+        else if(menuItems[indexPath.row] == "Prizes"){
+            let prizesViewController = self.storyboard?.instantiateViewController(withIdentifier: "Prizes")
+            self.revealViewController().setFront(prizesViewController, animated: false)
         }
         else if(menuItems[indexPath.row] == "Feedback"){
             let aboutViewController = self.storyboard?.instantiateViewController(withIdentifier: "Feedback")
