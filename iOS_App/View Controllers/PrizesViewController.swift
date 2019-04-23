@@ -99,7 +99,7 @@ class PrizesViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         visaImage.frame = CGRect(x: 10, y: visaLabelTop.frame.maxY+5, width: giftFrame.width, height: giftFrame.height)
         visaEntriesLabel.frame = CGRect(x: amazonEntriesLabel.frame.minX , y: visaImage.frame.minY + 30, width: visaEntriesLabel.frame.width, height: 25)
         visaEntries.frame = CGRect(x: amazonEntries.frame.minX, y: visaEntriesLabel.frame.maxY+7, width: 50, height: 30)
-        saveEntries.frame = CGRect(x: view.frame.width/2 - saveEntries.frame.width/2, y: visaImage.frame.maxY + 70, width: 130, height: saveEntries.frame.height)
+        saveEntries.frame = CGRect(x: view.frame.width/2 - saveEntries.frame.width/2, y: min(visaImage.frame.maxY + 180, view.frame.height - saveEntries.frame.height - 15), width: 130, height: saveEntries.frame.height)
         
         
         
@@ -119,8 +119,10 @@ class PrizesViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                 self.raffleEndsText = data["raffleEnds"] as? String
                 
                 //Set UI
-                self.totalPoints.text = "Your total Points: \(self.entryCount)"
-                self.raffleEnds.text = "Giveaway ends on " + self.raffleEndsText
+                self.totalPoints.text = "Your Total Points: \(self.entryCount)"
+                self.raffleEnds.text = "Giveaway ends at 8 pm on " + self.raffleEndsText
+                self.amazonEntries.text = "\(self.amazonPoints)"
+                self.visaEntries.text = "\(self.visaPoints)"
                 
                 //Check for new raffle
                 let cachedRaffleEndValue = self.defaults.object(forKey: "cachedRaffleEnd")
@@ -197,6 +199,31 @@ class PrizesViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                     self.view.frame.origin.y -= self.viewShift
                 }
             }
+        }
+    }
+    
+    @IBAction func savedEntriesPressed(_ sender: Any) {
+        sv = UIViewController.displaySpinner(onView: self.view)
+        let functions = Functions.functions()
+        let userID = self.defaults.object(forKey: "userId") as? String
+        let amazonPoints = Int(amazonEntries.text!)
+        let visaPoints = Int(visaEntries.text!)
+        let parameters = ["userID": userID as Any, "amazonPoints": amazonPoints as Any, "visaPoints": visaPoints as Any] as [String : Any]
+        functions.httpsCallable("updateRaffleContributions").call(parameters) { (result, error) in
+            if let data = result?.data as? [String: Any]{
+                let title = data["title"] as? String
+                let message = data["message"] as? String
+                self.amazonPoints = data["amazonPoints"] as! Int
+                self.visaPoints = data["visaPoints"] as! Int
+                
+                //Set UI
+                self.amazonEntries.text = "\(self.amazonPoints)"
+                self.visaEntries.text = "\(self.visaPoints)"
+                
+                //Display popup
+                self.displayAlert(title: title!, message: message!)
+            }
+            UIViewController.removeSpinner(spinner: self.sv)
         }
     }
 }

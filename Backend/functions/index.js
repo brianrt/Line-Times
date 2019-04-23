@@ -677,3 +677,38 @@ exports.getRaffleInfo = functions.https.onCall((data, context) => {
 		});
 	});
 });
+
+// Updates the raffle contributions, called by the app
+exports.updateRaffleContributions = functions.https.onCall((data, context) => {
+	const userID = data.userID;
+	const newAmazonPoints = data.amazonPoints;
+	const newVisaPoints = data.visaPoints;
+	var totalPoints = newAmazonPoints + newVisaPoints;
+	const getUserPromise = admin.database().ref(`Users/${userID}`).once("value");
+	return getUserPromise.then(snapshot => {
+		var user = snapshot.val();
+		var currentAmazonPoints = user["WeeklyRaffle"]["AmazonPoints"];
+		var currentVisaPoints = user["WeeklyRaffle"]["VisaPoints"];
+		var entryCount = user["entryCount"];
+		if (totalPoints > entryCount) {
+			return {
+				title: "Over limit",
+				message: "You cannot contribute more than your total points",
+				amazonPoints: currentAmazonPoints,
+				visaPoints: currentVisaPoints
+			}
+		} else {
+			user["WeeklyRaffle"]["AmazonPoints"] = newAmazonPoints;
+			user["WeeklyRaffle"]["VisaPoints"] = newVisaPoints;
+			const updateUserPromise = admin.database().ref(`Users/${userID}`).set(user);
+			return updateUserPromise.then(() => {
+				return {
+					title: "Save successfull",
+					message: "Updated contributions successfully. Feel free to edit these until the giveaway deadline",
+					amazonPoints: newAmazonPoints,
+					visaPoints: newVisaPoints
+				};
+			});
+		}
+	});
+});

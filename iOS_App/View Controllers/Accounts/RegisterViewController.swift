@@ -120,7 +120,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
                                 let keyUsername = "Users/"+(user?.uid)!+"/username"
                                 let keyEntryCount = "Users/"+(user?.uid)!+"/entryCount"
-                                let childUpdates = [keyUsername: username!, keyEntryCount: entryCount] as [String : Any]
+                                let keyAmazonPoints = "Users/"+(user?.uid)!+"/WeeklyRaffle/AmazonPoints"
+                                let keyVisaPoints = "Users/"+(user?.uid)!+"/WeeklyRaffle/VisaPoints"
+                                let childUpdates = [keyUsername: username!, keyEntryCount: entryCount, keyAmazonPoints: 0, keyVisaPoints: 0] as [String : Any]
                                 self.ref.updateChildValues(childUpdates, withCompletionBlock: { (error, reference) in
                                     self.navigationController?.popViewController(animated: true)
                                 })
@@ -137,7 +139,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
                         let keyUsername = "Users/"+(user?.uid)!+"/username"
                         let keyEntryCount = "Users/"+(user?.uid)!+"/entryCount"
-                        let childUpdates = [keyUsername: username!, keyEntryCount: entryCount] as [String : Any]
+                        let keyAmazonPoints = "Users/"+(user?.uid)!+"/WeeklyRaffle/AmazonPoints"
+                        let keyVisaPoints = "Users/"+(user?.uid)!+"/WeeklyRaffle/VisaPoints"
+                        let childUpdates = [keyUsername: username!, keyEntryCount: entryCount, keyAmazonPoints: 0, keyVisaPoints: 0] as [String : Any]
                         self.ref.updateChildValues(childUpdates, withCompletionBlock: { (error, reference) in
                             self.navigationController?.popViewController(animated: true)
                         })

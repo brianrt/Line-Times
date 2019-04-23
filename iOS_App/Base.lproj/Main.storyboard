@@ -1738,6 +1738,7 @@ If you have any questions or suggestions about my Privacy Policy, do not hesitat
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
+                                    <action selector="savedEntriesPressed:" destination="H5n-0e-4Ff" eventType="touchUpInside" id="pt3-tu-1mC"/>
                                     <action selector="submitPressed:" destination="XNi-nd-7Tm" eventType="touchUpInside" id="kjj-QU-MHm"/>
                                 </connections>
                             </button>
