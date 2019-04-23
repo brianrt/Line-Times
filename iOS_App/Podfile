@@ -11,5 +11,6 @@ target 'Wait-Times' do
   pod 'Firebase/Auth'
   pod 'Firebase/Functions'
   pod 'Cosmos', '~> 11.0.3'
+  pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift4.2' # Swift 4.2
 
 end

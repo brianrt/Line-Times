@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Siren
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,9 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor(red: 0.23, green: 0.44, blue: 1, alpha: 1.0)
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: 22)!]
-        //Add shadow
-        
-//        UINavigationBar.appearance().isTranslucent = false
+
+        //Alert of new version
+        let siren = Siren.shared
+        siren.rulesManager = RulesManager(globalRules: .persistent)
+        siren.wail()
         
         return true
     }

@@ -75,6 +75,7 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - Siren (4.2.2)
 
 DEPENDENCIES:
   - Cosmos (~> 11.0.3)
@@ -82,6 +83,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Functions
+  - Siren (from `https://github.com/ArtSabintsev/Siren.git`, branch `swift4.2`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -100,6 +102,16 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
 
+EXTERNAL SOURCES:
+  Siren:
+    :branch: swift4.2
+    :git: https://github.com/ArtSabintsev/Siren.git
+
+CHECKOUT OPTIONS:
+  Siren:
+    :commit: a3c7cfa26d686524bdb7cf0592310a836e53a97c
+    :git: https://github.com/ArtSabintsev/Siren.git
+
 SPEC CHECKSUMS:
   Cosmos: eb506859929f4add2d2aec822a27efb2f718a95d
   Firebase: c60d49e9c2630875a96207d15e2affb8364996d1
@@ -115,7 +127,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  Siren: 4ce39daf1dd13533ef375c2064d6b8726231c521
 
-PODFILE CHECKSUM: e6e8fd58832dd70e54662e0c6ab7d2ff4a07caaf
+PODFILE CHECKSUM: 514e3c61e764607e02a269f1af4ffbe421629610
 
 COCOAPODS: 1.5.2
